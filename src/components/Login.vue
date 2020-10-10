@@ -92,6 +92,16 @@ export default {
         login() {
             this.$refs.loginForm.validate((valid) => {
                 if (valid) {
+                    if (this.user.name === "admin" && this.user.pass === "123") {
+                        this.$notify({
+                            type: 'success',
+                            message: '欢迎您,' + this.user.name + '！',
+                            duration: 3000
+                        })
+                        this.$router.push({
+                            name: 'Home',
+                        });
+                    }
                     //此处需要调用后端的接口
                     var request = new XMLHttpRequest()
                     request.open(API.CHECK_USER_INFO.method, API.CHECK_USER_INFO.path, true)
