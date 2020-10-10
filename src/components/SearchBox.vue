@@ -3,7 +3,7 @@
     <el-container>
         <el-main>
             <div class="searchbox">
-                <el-input placeholder="请输入内容" v-model="searchinput" class="input-with-select" @focus="focus" @blur="blur" @keyup.enter.native="searchHandler" @input="textChange" clearable prefix-icon="el-icon-search">
+                <el-input placeholder="请输入内容" ref="searchbox" v-model="searchinput" class="input-with-select" @focus="focus" @blur="blur" @keyup.enter.native="searchHandler" @input="textChange" clearable prefix-icon="el-icon-search">
                     <el-select v-model="select" slot="prepend" placeholder="请选择">
                         <el-option label="Woohoo~" value="1"></el-option>
                         <el-option label="Baidu" value="2"></el-option>
@@ -52,10 +52,11 @@ import {
 export default {
     name: "SearchBox",
     props: {
-        searchinput: String, //搜索内容, 为了保证进入类别后输入框清空，请不要更改到data中。
+        searchInputProp: String,
     },
     data() {
         return {
+            searchinput: this.searchInputProp, //搜索内容, 为了保证进入类别后输入框清空，请不要更改到data中。
             select: '',
             isFocus: false, //是否聚焦
             hotSearchList: new Array(5).fill("热门搜索"), //热门搜索数据
@@ -137,9 +138,11 @@ export default {
         removeAllHistory() {
             Store.removeAllHistory();
         },
+
     },
     created() {},
     mounted() {},
+
 }
 </script>
 
