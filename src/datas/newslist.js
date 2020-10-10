@@ -1,6 +1,6 @@
 
+import API from "../utils/API.js";
 import RandomUtil from "../utils/random.js"
-const { default: API } = require("../utils/API")
 
 const newsClassMap = ["热点", "国内", "国际", "军事", "财经", "娱乐", "体育", "科技"];
 
