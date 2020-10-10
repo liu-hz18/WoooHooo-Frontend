@@ -4,6 +4,7 @@ import VueRouter from "vue-router"
 import HelloWorld from "../components/HelloWorld.vue"
 import Home from "../components/Home.vue"
 import SearchResult from "../components/SearchResult.vue"
+import Login from '../components/Login.vue'
 
 const originalPush = VueRouter.prototype.push
    VueRouter.prototype.push = function push(location) {
@@ -26,7 +27,12 @@ const routes = [
       path: '/result',
       name: "SearchResult",
       component: SearchResult
-    }
+    },
+    {
+      path: '/login',
+      name: "Login",
+      component: Login
+    },
   ]
   
 const router = new VueRouter({
