@@ -20,10 +20,11 @@
             <el-menu-item index="3-2"><a href="https://news.sina.com.cn/" rel="noopener noreferrer" target="_blank">新浪新闻</a></el-menu-item>
             <el-menu-item index="3-3"><a href="http://www.people.com.cn/" rel="noopener noreferrer" target="_blank">人民网</a></el-menu-item>
         </el-submenu>
-        <el-row type="flex" justify="end">
+
+        <el-row style="margin-top: 10px; margin-bottom: 10px; display: flex; justify-content: flex-end; ">
             <div class="login-bar">
-                <el-button round type="success" slot="append" icon="el-icon-user-solid">登录</el-button>
-                <el-button round type="" slot="append" icon="el-icon-user">注册</el-button>
+                <el-button round type="success" slot="append" icon="el-icon-user-solid" @click="handleLogin">登录</el-button>
+                <el-button round type="" slot="append" icon="el-icon-user" @click="handleQuit">退出</el-button>
             </div>
         </el-row>
     </el-menu>
@@ -59,6 +60,14 @@ export default {
                 });
             }
         },
+        handleLogin() {
+            this.$router.push({
+                name: 'Login'
+            });
+        },
+        handleQuit() {
+            //用户退出
+        }
     },
     created() {
         this.activeIndex = "0";
@@ -83,10 +92,5 @@ li {
 
 a {
     color: #42b983;
-}
-
-.login-bar {
-    margin-top: 8px;
-    margin-right: 10px;
 }
 </style>
