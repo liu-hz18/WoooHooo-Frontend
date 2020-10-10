@@ -1,8 +1,9 @@
 <template>
-<div>
+<div class="loginbg">
+
     <!--flex弹性盒子模型，justify-content：主抽 -->
-    <div style="display: flex;justify-content: center;margin-top: 150px">
-        <el-card style="width: 400px">
+    <div style="display: flex;justify-content: center">
+        <el-card style="width: 400px;margin-top: 150px">
             <div slot="header" class="clearfix">
                 <span>登录</span>
             </div>
@@ -155,5 +156,14 @@ export default {
     &:last-child {
         margin-bottom: 0;
     }
+}
+
+.loginbg {
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+    background: #99a9bf;
+    background-image: url("../assets/bg.jpg");
+    background-size: cover;
 }
 </style>
