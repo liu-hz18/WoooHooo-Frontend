@@ -61,7 +61,7 @@ export function getNewsClassList(newsclassnumber, page, number) {
         }
     }
     request.send(JSON.stringify({
-        class: newsclass,   // 查询新闻类别, str
+        newstype: newsclass,   // 查询新闻类别, str
         page: page,     // 请求 第page页 的结果, int
         number: number, // 每个page的新闻个数, int
     }))
