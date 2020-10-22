@@ -112,10 +112,7 @@ export default {
     margin-top: 20px;
     margin-left: 40px;
     margin-right: 40px;
-
-    &:last-child {
-        margin-bottom: 0;
-    }
+    margin-bottom: 0px;
 }
 
 .loginbg {
