@@ -1,10 +1,10 @@
 const API = {
     GET_NEWS_LIST: {
-        path: "/api/news",
+        path: "/api/search",
         method: "get",
     },
     POST_NEWS_LIST: {
-        path: "/api/news",
+        path: "/api/search",
         method: "post",
     },
     CHECK_USER_INFO: {
