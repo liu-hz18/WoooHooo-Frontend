@@ -10,6 +10,7 @@
     "test": "vue-cli-service test:unit --coverage --testResultsProcessor=jest-sonar-reporter --silent --watchAll=false"
   },
   "dependencies": {
+    "@cnamts/vue-cli-plugin-proxy": "^2.2.1",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "element-ui": "^2.13.2",
