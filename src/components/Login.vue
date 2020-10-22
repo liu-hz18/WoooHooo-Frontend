@@ -48,47 +48,7 @@ export default {
     },
     methods: {
         register() {
-            this.$refs.loginForm.validate((valid) => {
-                if (valid) {
-                    //此处需要调用后端的接口
-                    var request = new XMLHttpRequest()
-                    request.open(API.UPDATE_USER_INFO.method, API.UPDATE_USER_INFO.path, true)
-
-                    request.onreadystatechange = function () {
-                        if (request.readyState === 4 && request.status === 200) {
-                            var registerSuccess = JSON.parse(request.response);
-                            if (Boolean(registerSuccess) === true) {
-                                this.$notify({
-                                    type: 'success',
-                                    message: '注册成功,用户名：' + this.user.name + '！',
-                                    duration: 3000
-                                })
-                                //页面跳转？
-                                this.$router.push({
-                                    name: 'Home',
-                                });
-                            } else {
-                                this.$message({
-                                    type: 'error',
-                                    message: '该用户名已被注册！',
-                                    showClose: true
-                                })
-                            }
-                        } else if (this.readyState === 1) {
-                            console.log('请求中')
-                        } else {
-                            console.log('请求失败')
-                        }
-                    }
-                    request.send(JSON.stringify({
-                        useraction: "register",
-                        username: this.user.name,
-                        userpass: this.user.pass,
-                    }))
-                } else {
-                    return false
-                }
-            })
+            this.$router.replace('/register')
         },
         login() {
             this.$refs.loginForm.validate((valid) => {
