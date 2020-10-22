@@ -1,3 +1,5 @@
+import API from "../utils/API.js";
+
 export default {
     methods: {
         register () {
@@ -5,7 +7,7 @@ export default {
                 if (valid) {
                     //此处需要调用后端的接口
                     var request = new XMLHttpRequest()
-                    request.open("GET","http://localhost:8080/api/register",true)
+                    request.open(API.REGISTER.method, API.REGISTER.path, true)
                     request.send(JSON.stringify({
                         useraction: "register",
                         username : this.user.name,
