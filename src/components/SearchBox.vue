@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import RandomUtil from "../utils/random";
+import RandomUtil from "../utils/RandomUtil";
 import Store from "../utils/store";
 import {
     getNewsList
