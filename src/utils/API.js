@@ -15,9 +15,6 @@ const API = {
         path: "/api/login",
         method: "post",
     },
-    REGISTER: {
-        path: "/api/register",
-        method: "get",
-    }
+
 }
 export default API
