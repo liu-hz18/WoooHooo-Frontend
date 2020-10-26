@@ -32,7 +32,7 @@
     </div>
 </template>
  
-<script src="../element/register.js">
+<script src="../datas/register.js">
 </script>
 
 <style>
