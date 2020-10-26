@@ -1,4 +1,5 @@
 import API from "../utils/API.js"
+import {urlParam}  from "@/utils/communication"
 
 export default {
     data() {
@@ -40,14 +41,18 @@ export default {
 
                     var request = new XMLHttpRequest()
                     
-                    var url = API.CHECK_USER_INFO.path;
+                    var url = urlParam(API.CHECK_USER_INFO.path,"useraction","login");
+                    url = urlParam(url,"username",this.user.name);
+                    url = urlParam(url,"userpass",this.user.pass);
+
+                    /*var url = API.CHECK_USER_INFO.path;
                     url += (url.indexOf('?') == -1 ) ? '?' : '&' ;
                     url += encodeURIComponent("useraction") + "=" + encodeURIComponent("login");
                     url += (url.indexOf('?') == -1 ) ? '?' : '&' ;
                     url += encodeURIComponent("username") + "=" + encodeURIComponent(this.user.name);
                     url += (url.indexOf('?') == -1 ) ? '?' : '&' ;
                     url += encodeURIComponent("userpass") + "=" + encodeURIComponent(this.user.pass);
-
+                    */
                     request.open(API.CHECK_USER_INFO.method, url, false)
                     
                     request.onreadystatechange = function () {
