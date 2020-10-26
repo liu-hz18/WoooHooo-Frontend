@@ -6,7 +6,15 @@ const newsClassMap = ["热点", "国内", "国际", "军事", "财经", "娱乐"
 
 export function getNewsList(query, page, number) {
     var request = new XMLHttpRequest()
-    request.open(API.GET_NEWS_LIST.method, API.GET_NEWS_LIST.path, false)
+    var url = API.GET_NEWS_LIST.path;
+    url += (url.indexOf('?') == -1 ) ? '?' : '&' ;
+    url += encodeURIComponent("query") + "=" + encodeURIComponent(query);// 查询关键词，未分词
+    url += (url.indexOf('?') == -1 ) ? '?' : '&' ;
+    url += encodeURIComponent("page") + "=" + encodeURIComponent(page);// 请求 第page页 的结果
+    url += (url.indexOf('?') == -1 ) ? '?' : '&' ;
+    url += encodeURIComponent("number") + "=" + encodeURIComponent(number);// 每个page的新闻个数, 也就是后端本次需要返回的新闻个数
+
+    request.open(API.GET_NEWS_LIST.method,url, false)
     var newsList
     var totalNumber = 100
     var start = new Date().getMilliseconds()
@@ -26,11 +34,7 @@ export function getNewsList(query, page, number) {
             newsList = randomInitNews(query)
         }
     }
-    request.send(JSON.stringify({
-        query: query,   // 查询关键词，未分词
-        page: page,     // 请求 第page页 的结果
-        number: number, // 每个page的新闻个数, 也就是后端本次需要返回的新闻个数
-    }))
+    request.send(null)
     var ret = {
         data: newsList,
         total: totalNumber,
