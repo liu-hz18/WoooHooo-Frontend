@@ -1,7 +1,7 @@
 
-function urlParam(url, name, value) {
+function urlParam(url, key, value) {
     url += (url.indexOf('?') == -1 ) ? '?' : '&' ; 
-    url += encodeURIComponent(name) + "=" + encodeURIComponent(value);
+    url += encodeURIComponent(key) + "=" + encodeURIComponent(value);
     return url;
 }
 
