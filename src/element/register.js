@@ -7,16 +7,13 @@ export default {
                 if (valid) {
                     //此处需要调用后端的接口
                     var request = new XMLHttpRequest()
-                    request.open(API.REGISTER.method, API.REGISTER.path, true)
-                    request.send(JSON.stringify({
-                        useraction: "register",
-                        username : this.user.name,
-                        userpass : this.user.pass,
-                    }))
+                    request.open(API.UPDATE_USER_INFO.method, API.UPDATE_USER_INFO.path, false)
                     request.onreadystatechange = function () {
+                        console.log("从后端收到：")
+                        console.log(request.readyState, request.status, request.responseText)
                         if (request.readyState === 4 && request.status === 200){
-                            var registerSuccess = JSON.parse(request.response);
-                            if (Boolean(registerSuccess) === true) {
+                            //var registerSuccess = JSON.parse(request.response);
+                            //if (Boolean(registerSuccess) === true) {
                                 this.$notify({
                                     type: 'success',
                                     message: '注册成功,用户名：' + this.user.name + '！',
@@ -24,14 +21,14 @@ export default {
                                 })
                                 //页面跳转？
                                 this.$router.replace('/')
-                            } 
-                            else {
+                            //} 
+                            /*else {
                                 this.$message({
                                     type: 'error',
                                     message: '该用户名已被注册！',
                                     showClose: true
                                 })
-                            }
+                            }*/
                         }
                         else if (this.readyState === 1) {
                             console.log('请求中')
@@ -40,6 +37,13 @@ export default {
                             console.log('请求失败')
                         }
                     }
+                    request.send(JSON.stringify({
+                        useraction: "register",
+                        username : this.user.name,
+                        userpass : this.user.pass,
+                    }))
+                    //console.log("发送：")
+                    //console.log()
                 }
                 else {
                     return false
