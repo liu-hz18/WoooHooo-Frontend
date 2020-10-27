@@ -46,6 +46,8 @@ import {
     getNewsClassList
 } from "../datas/newslist.js";
 
+import {searchResult} from "@/utils/communication"
+
 export default {
     name: "SearchResult",
     components: {
@@ -100,42 +102,13 @@ export default {
     },
     created() {
         console.log("created: ", this.$route.query);
-        if ("{}" === JSON.stringify(this.$route.query)) {
-            this.$router.push({
-                name: "Home"
-            });
-        }
-        this.isSearch = String(this.$route.query.issearch);
-        if (this.isSearch === "true") {
-            this.searchinput = this.$route.query.query;
-            this.newsInfo = getNewsList(this.searchinput, 0, 10);
-        } else {
-            this.searchinput = "";
-            this.newsInfo["keywords"] = [];
-            this.currentClass = Number(this.$route.query.query) - 1;
-            this.newsInfo["data"] = getNewsClassList(this.currentClass, 0, 10);
-        }
+        searchResult(this);
     },
     mounted() {},
     watch: {
         $route() {
             console.log("changed: ", this.$route.query);
-            if ("{}" === JSON.stringify(this.$route.query)) {
-                this.$router.push({
-                    name: "Home"
-                }); //重定向到Home
-            }
-            this.isSearch = String(this.$route.query.issearch);
-            if (this.isSearch === "true") {
-                this.searchinput = this.$route.query.query;
-                this.newsInfo = getNewsList(this.searchinput, 0, 10);
-            } else {
-                this.searchinput = "";
-                this.newsInfo["keywords"] = [];
-                this.currentClass = Number(this.$route.query.query) - 1;
-                this.newsInfo["data"] = getNewsClassList(this.currentClass, 0, 10);
-            }
-            this.reload();
+            searchResult(this);
         },
     },
 };
