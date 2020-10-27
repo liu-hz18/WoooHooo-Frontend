@@ -1,0 +1,152 @@
+<template>
+<div class="home">
+    <el-container>
+        <el-header>
+            <NavBar> </NavBar>
+        </el-header>
+
+        <el-row :gutter="20">
+            <el-col :span="4" :offset="11">
+                <div class="home-icon">
+                    <img v-bind:src="homeicon" alt="WooHoo~" />
+                </div>
+            </el-col>
+        </el-row>
+
+        <SearchBox> </SearchBox>
+
+        <el-container>
+            <div class="news">
+                <el-tabs type="border-card" v-model="activeTab" @tab-click="handleClick">
+                    <el-tab-pane>
+                        <span slot="label"><em class="el-icon-date"></em>热点</span>
+                        <el-row :gutter="15">
+                            <el-col :span="15">
+                                <NewsList v-bind:newsList="newsArray"> </NewsList>
+                            </el-col>
+                            <el-col :span="9">
+                                <HotList v-bind:hotList="hotList"> </HotList>
+                            </el-col>
+                        </el-row>
+                    </el-tab-pane>
+                    <el-tab-pane>
+                        <span slot="label"><em class="el-icon-date"></em>国内</span>
+                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                    </el-tab-pane>
+                    <el-tab-pane>
+                        <span slot="label"><em class="el-icon-date"></em>国际</span>
+                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                    </el-tab-pane>
+                    <el-tab-pane>
+                        <span slot="label"><em class="el-icon-date"></em>军事</span>
+                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                    </el-tab-pane>
+                    <el-tab-pane>
+                        <span slot="label"><em class="el-icon-date"></em>财经</span>
+                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                    </el-tab-pane>
+                    <el-tab-pane>
+                        <span slot="label"><em class="el-icon-date"></em>娱乐</span>
+                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                    </el-tab-pane>
+                    <el-tab-pane>
+                        <span slot="label"><em class="el-icon-date"></em>体育</span>
+                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                    </el-tab-pane>
+                    <el-tab-pane>
+                        <span slot="label"><em class="el-icon-date"></em>科技</span>
+                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                    </el-tab-pane>
+                </el-tabs>
+            </div>
+        </el-container>
+    </el-container>
+</div>
+</template>
+
+<script>
+import {
+    getNewsClassList
+} from "../datas/newslist.js";
+import logo from "../assets/logo.png";
+import NewsList from "./NewsList.vue";
+import HotList from "./HotList.vue";
+import SearchBox from "./SearchBox.vue";
+import NavBar from "./NavBar.vue";
+
+export default {
+    name: "Home",
+    components: {
+        NewsList,
+        HotList,
+        SearchBox,
+        NavBar,
+    },
+    props: {
+        homeicon: {
+            type: String,
+            default: () => logo,
+        },
+    },
+    data() {
+        return {
+            searchinput: "中国",
+            keywordlist: ["news", "is"],
+            newsArray: getNewsClassList("热点", 0, 10),
+            hotList: new Array(10).fill({
+                uid: 0,
+                link: "https://www.baidu.com",
+                title: "This is a hot news news " + 0,
+                hot: "100万",
+            }),
+            activeTab: "0",
+            pageNumber: 0,
+        };
+    },
+    computed: {},
+    methods: {
+        handleClick() {
+            this.newsArray = getNewsClassList(this.activeTab, this.pageNumber, 10);
+        }
+    },
+    created() {
+        this.newsArray = getNewsClassList(this.activeTab, 0, 10);
+    },
+};
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+
+<style scoped>
+h3 {
+    margin: 40px 0 0;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+a {
+    color: #42b983;
+}
+
+.home-icon {
+    margin-top: 20px;
+    height: 100px;
+    width: auto;
+}
+
+.news {
+    position: relative;
+    width: 80%;
+    margin-top: 3%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+</style>

@@ -1,12 +1,26 @@
 
-import RandomUtil from "../utils/random.js"
-const { default: API } = require("../utils/API")
+import API from "../utils/API.js";
+import RandomUtil from "../utils/RandomUtil.js"
+import {urlParam}  from "@/utils/communication"
 
 const newsClassMap = ["热点", "国内", "国际", "军事", "财经", "娱乐", "体育", "科技"];
 
 export function getNewsList(query, page, number) {
     var request = new XMLHttpRequest()
-    request.open(API.GET_NEWS_LIST.method, API.GET_NEWS_LIST.path, false)
+
+    var url = urlParam(API.CHECK_USER_INFO.path,"query",query);// 查询关键词，未分词
+    url = urlParam(url,"page",page);// 请求 第page页 的结果
+    url = urlParam(url,"number",number);// 每个page的新闻个数, 也就是后端本次需要返回的新闻个数
+/*
+    var url = API.GET_NEWS_LIST.path;
+    url += (url.indexOf('?') == -1 ) ? '?' : '&' ;
+    url += encodeURIComponent("query") + "=" + encodeURIComponent(query);// 查询关键词，未分词
+    url += (url.indexOf('?') == -1 ) ? '?' : '&' ;
+    url += encodeURIComponent("page") + "=" + encodeURIComponent(page);// 请求 第page页 的结果
+    url += (url.indexOf('?') == -1 ) ? '?' : '&' ;
+    url += encodeURIComponent("number") + "=" + encodeURIComponent(number);// 每个page的新闻个数, 也就是后端本次需要返回的新闻个数
+*/
+    request.open(API.GET_NEWS_LIST.method,url, false)
     var newsList
     var totalNumber = 100
     var start = new Date().getMilliseconds()
@@ -26,11 +40,7 @@ export function getNewsList(query, page, number) {
             newsList = randomInitNews(query)
         }
     }
-    request.send(JSON.stringify({
-        query: query,   // 查询关键词，未分词
-        page: page,     // 请求 第page页 的结果
-        number: number, // 每个page的新闻个数, 也就是后端本次需要返回的新闻个数
-    }))
+    request.send(null)
     var ret = {
         data: newsList,
         total: totalNumber,
@@ -61,7 +71,7 @@ export function getNewsClassList(newsclassnumber, page, number) {
         }
     }
     request.send(JSON.stringify({
-        class: newsclass,   // 查询新闻类别, str
+        newstype: newsclass,   // 查询新闻类别, str
         page: page,     // 请求 第page页 的结果, int
         number: number, // 每个page的新闻个数, int
     }))
