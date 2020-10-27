@@ -1,3 +1,7 @@
+import {
+    getNewsList,
+    getNewsClassList
+} from "../datas/newslist.js";
 
 function urlParam(url, key, value) {
     url += (url.indexOf('?') == -1 ) ? '?' : '&' ; 
