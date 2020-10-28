@@ -101,8 +101,8 @@ export default {
             if (this.searchinput.length === 0)
                 return;
             //随机生成搜索历史tag式样
-            console.log("input:", this.searchinput)
-            this.$emit('update-news', getNewsList(this.searchinput, 0, 10))
+            console.log("input:", this.searchinput);
+            this.$emit('update-news', getNewsList(this.searchinput, 0, 10));
             this.$emit("text-change", this.searchinput);
             this.$router.push({
                 name: 'SearchResult',

@@ -1,26 +1,20 @@
 
 import API from "../utils/API.js";
 import RandomUtil from "../utils/RandomUtil.js"
-import {urlParam}  from "@/utils/communication"
+import {urlParam}  from "../utils/communication.js"
 
 const newsClassMap = ["热点", "国内", "国际", "军事", "财经", "娱乐", "体育", "科技"];
 
 export function getNewsList(query, page, number) {
-    var request = new XMLHttpRequest()
-
-    var url = urlParam(API.CHECK_USER_INFO.path,"query",query);// 查询关键词，未分词
-    url = urlParam(url,"page",page);// 请求 第page页 的结果
-    url = urlParam(url,"number",number);// 每个page的新闻个数, 也就是后端本次需要返回的新闻个数
-/*
-    var url = API.GET_NEWS_LIST.path;
-    url += (url.indexOf('?') == -1 ) ? '?' : '&' ;
-    url += encodeURIComponent("query") + "=" + encodeURIComponent(query);// 查询关键词，未分词
-    url += (url.indexOf('?') == -1 ) ? '?' : '&' ;
-    url += encodeURIComponent("page") + "=" + encodeURIComponent(page);// 请求 第page页 的结果
-    url += (url.indexOf('?') == -1 ) ? '?' : '&' ;
-    url += encodeURIComponent("number") + "=" + encodeURIComponent(number);// 每个page的新闻个数, 也就是后端本次需要返回的新闻个数
-*/
-    request.open(API.GET_NEWS_LIST.method,url, false)
+    var request = new XMLHttpRequest();
+    console.log("getNewsList")
+    var params = {
+        page: page,
+        number: number,
+        query: query,
+    }
+    var url = urlParam(API.GET_NEWS_LIST.path, params) // 查询关键词，未分词
+    request.open(API.GET_NEWS_LIST.method, url, false)
     var newsList
     var totalNumber = 100
     var start = new Date().getMilliseconds()

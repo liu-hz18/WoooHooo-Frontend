@@ -46,7 +46,9 @@ import {
     getNewsClassList
 } from "../datas/newslist.js";
 
-import {searchResult} from "@/utils/communication"
+import {
+    searchResult
+} from "@/utils/communication"
 
 export default {
     name: "SearchResult",
@@ -80,6 +82,7 @@ export default {
     },
     methods: {
         updateNews(newsInfo) {
+            console.log(newsInfo)
             this.newsInfo = newsInfo;
             this.currentPage = 1;
         },

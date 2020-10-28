@@ -3,12 +3,21 @@ import {
     getNewsClassList
 } from "../datas/newslist.js";
 
-function urlParam(url, key, value) {
-    url += (url.indexOf('?') == -1 ) ? '?' : '&' ; 
-    url += encodeURIComponent(key) + "=" + encodeURIComponent(value);
+export function urlParam(baseurl, params) {
+    var url = baseurl
+    var i = 0
+    url += '?'
+    console.log('urlParam')
+    for (var key in params) {
+        if (i > 0) {
+            url += '&';
+        }
+        i += 1
+        url += encodeURIComponent(key) + "=" + encodeURIComponent(params[key])
+    }
+    console.log(url)
     return url;
 }
-
 
 function searchResult(that){
     if ("{}" === JSON.stringify(that.$route.query)) {
@@ -28,7 +37,4 @@ function searchResult(that){
     }
 }
 
-export{
-    searchResult,
-    urlParam
- }
+export{ searchResult }

@@ -40,21 +40,12 @@ export default {
                     //此处需要调用后端的接口
 
                     var request = new XMLHttpRequest()
-                    
-                    var url = urlParam(API.CHECK_USER_INFO.path,"useraction","login");
-                    url = urlParam(url,"username",this.user.name);
-                    url = urlParam(url,"userpass",this.user.pass);
-
-                    /*var url = API.CHECK_USER_INFO.path;
-                    url += (url.indexOf('?') == -1 ) ? '?' : '&' ;
-                    url += encodeURIComponent("useraction") + "=" + encodeURIComponent("login");
-                    url += (url.indexOf('?') == -1 ) ? '?' : '&' ;
-                    url += encodeURIComponent("username") + "=" + encodeURIComponent(this.user.name);
-                    url += (url.indexOf('?') == -1 ) ? '?' : '&' ;
-                    url += encodeURIComponent("userpass") + "=" + encodeURIComponent(this.user.pass);
-                    */
+                    var url = urlParam(API.CHECK_USER_INFO.path, {
+                        useraction: "login",
+                        username: this.user.name,
+                        userpass: this.user.pass,
+                    })
                     request.open(API.CHECK_USER_INFO.method, url, false)
-                    
                     request.onreadystatechange = function () {
                         console.log("从后端收到：")
                         console.log(request.readyState, request.status, request.responseText)
