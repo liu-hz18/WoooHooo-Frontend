@@ -49,7 +49,7 @@ export function getNewsClassList(newsclassnumber, page, number) {
     var newsclass = newsClassMap[newsclassnumber];
     console.log(newsclass);
     var request = new XMLHttpRequest()
-    request.open(API.GET_NEWS_LIST.method, API.GET_NEWS_LIST.path, false)
+    request.open(API.POST_NEWS_LIST.method, API.POST_NEWS_LIST.path, false)
     var newsList
     request.onreadystatechange = function () {
         console.log(request.readyState, request.status, request.responseText)
