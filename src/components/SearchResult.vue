@@ -89,7 +89,7 @@ export default {
         handleCurrentChange() {
             console.log("input in result ", this.searchinput, this.isSearch);
             if (!this.isSearch || this.isSearch === "false") {
-                this.newsInfo = getNewsClassList(this.currentClass, this.currentPage - 1, 10);
+                this.newsInfo = getNewsClassList(this.currentClass, this.currentPage - 1, 10)
             } else {
                 this.newsInfo = getNewsList(this.searchinput, this.currentPage - 1, 10)
             }
