@@ -92,7 +92,7 @@ export default {
         return {
             searchinput: "中国",
             keywordlist: ["news", "is"],
-            newsArray: getNewsClassList("热点", 0, 10),
+            newsArray: getNewsClassList("热点", 0, 10).data,
             hotList: new Array(10).fill({
                 uid: 0,
                 link: "https://www.baidu.com",
@@ -106,11 +106,11 @@ export default {
     computed: {},
     methods: {
         handleClick() {
-            this.newsArray = getNewsClassList(this.activeTab, this.pageNumber, 10);
+            this.newsArray = getNewsClassList(this.activeTab, this.pageNumber, 10).data;
         }
     },
     created() {
-        this.newsArray = getNewsClassList(this.activeTab, 0, 10);
+        this.newsArray = getNewsClassList(this.activeTab, 0, 10).data;
     },
 };
 </script>

@@ -50,6 +50,7 @@ export function getNewsClassList(newsclassnumber, page, number) {
     console.log(newsclass);
     var request = new XMLHttpRequest()
     request.open(API.POST_NEWS_LIST.method, API.POST_NEWS_LIST.path, false)
+    var total
     var newsList
     request.onreadystatechange = function () {
         console.log(request.readyState, request.status, request.responseText)
@@ -57,8 +58,10 @@ export function getNewsClassList(newsclassnumber, page, number) {
             try{
                 var jsonobj = JSON.parse(request.responseText);
                 newsList = jsonobj["data"];
+                total = jsonobj["total"];
             } catch ( error ) {
                 newsList = randomInitNews(newsclass)
+                total = 1000
             }
         } else {
             newsList = randomInitNews(newsclass)
@@ -69,7 +72,13 @@ export function getNewsClassList(newsclassnumber, page, number) {
         page: page,     // 请求 第page页 的结果, int
         number: number, // 每个page的新闻个数, int
     }))
-    return newsList
+    var ret = {
+        data: newsList,
+        time: 0.0001,
+        total: total,
+        keywords: [],
+    }
+    return ret
 }
 
 function randomInitNews(query) {

@@ -1,5 +1,5 @@
 import API from "../utils/API.js"
-import {urlParam}  from "@/utils/communication"
+import {urlParam}  from "../utils/communication.js"
 
 export default {
     data() {
@@ -45,6 +45,7 @@ export default {
                         username: this.user.name,
                         userpass: this.user.pass,
                     })
+                    print(url)
                     request.open(API.CHECK_USER_INFO.method, url, false)
                     request.onreadystatechange = function () {
                         console.log("从后端收到：")
