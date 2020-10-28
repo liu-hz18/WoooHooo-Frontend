@@ -87,7 +87,7 @@ export default {
             this.currentPage = 1;
         },
         handleCurrentChange() {
-            console.log("input in result ", this.searchinput);
+            console.log("input in result ", this.searchinput, this.isSearch);
             if (this.isSearch) {
                 this.newsInfo = getNewsList(this.searchinput, this.currentPage - 1, 10);
             } else {
@@ -97,6 +97,7 @@ export default {
                     10
                 );
             }
+            console.log(this.newsInfo)
         },
         updateInput(searchinput) {
             this.searchinput = searchinput;
