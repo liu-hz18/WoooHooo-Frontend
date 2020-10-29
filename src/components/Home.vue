@@ -57,6 +57,18 @@
                         <span slot="label"><em class="el-icon-date"></em>科技</span>
                         <NewsList v-bind:newsList="newsArray"> </NewsList>
                     </el-tab-pane>
+                    <el-tab-pane>
+                        <span slot="label"><em class="el-icon-date"></em>游戏</span>
+                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                    </el-tab-pane>
+                    <el-tab-pane>
+                        <span slot="label"><em class="el-icon-date"></em>文化</span>
+                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                    </el-tab-pane>
+                    <el-tab-pane>
+                        <span slot="label"><em class="el-icon-date"></em>社会</span>
+                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                    </el-tab-pane>
                 </el-tabs>
             </div>
         </el-container>

@@ -3,7 +3,7 @@ import API from "../utils/API.js";
 import RandomUtil from "../utils/RandomUtil.js"
 import {urlParam}  from "../utils/communication.js"
 
-const newsClassMap = ["热点", "国内", "国际", "军事", "财经", "娱乐", "体育", "科技", "游戏", "文化"];
+const newsClassMap = ["热点", "国内", "国际", "军事", "财经", "娱乐", "体育", "科技", "游戏", "文化", "社会"];
 
 export function getNewsList(query, page, number) {
     var request = new XMLHttpRequest();
@@ -20,7 +20,7 @@ export function getNewsList(query, page, number) {
     var start = new Date().getMilliseconds()
     var keywords = [query]
     request.onreadystatechange = function () {
-        console.log(request.readyState, request.status, request.responseText)
+        console.log(request.readyState, request.status)
         if (request.readyState === 4 && request.status === 200) {
             try{
                 var jsonobj = JSON.parse(request.responseText);
@@ -41,11 +41,12 @@ export function getNewsList(query, page, number) {
         time: (new Date().getMilliseconds() - start) / 1000,
         keywords: keywords,
     }
-    console.log(ret)
+    // console.log(ret)
     return ret
 }
 
 export function getNewsClassList(newsclassnumber, page, number) {
+    console.log(newsclassnumber)
     var newsclass = newsClassMap[newsclassnumber];
     console.log(newsclass);
     var request = new XMLHttpRequest()
@@ -53,7 +54,7 @@ export function getNewsClassList(newsclassnumber, page, number) {
     var total
     var newsList
     request.onreadystatechange = function () {
-        console.log(request.readyState, request.status, request.responseText)
+        console.log(request.readyState, request.status)
         if (request.readyState === 4 && request.status === 200) {
             try{
                 var jsonobj = JSON.parse(request.responseText);
@@ -97,3 +98,4 @@ function randomInitNews(query) {
     return newsList
 }
 
+export default newsClassMap

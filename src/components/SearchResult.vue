@@ -2,10 +2,10 @@
 <el-container>
     <div class="result">
         <el-header>
-            <NavBar> </NavBar>
+            <NavBar v-bind:isSearch="String(isSearch)"> </NavBar>
         </el-header>
 
-        <div class="search-box">
+        <div class=" search-box">
             <SearchBox ref="searchbox" @update-news="updateNews" @text-change="updateInput" v-bind:searchInputProp="searchinput">
             </SearchBox>
         </div>

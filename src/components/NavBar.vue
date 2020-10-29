@@ -22,7 +22,9 @@
             <el-menu-item index="3-2"><a href="https://news.sina.com.cn/" rel="noopener noreferrer" target="_blank">新浪新闻</a></el-menu-item>
             <el-menu-item index="3-3"><a href="http://www.people.com.cn/" rel="noopener noreferrer" target="_blank">人民网</a></el-menu-item>
         </el-submenu>
-
+        <el-menu-item index="4" v-if="isSearch==='false'">
+            <el-tag>{{newsType}}</el-tag>
+        </el-menu-item>
         <el-row style="margin-top: 10px; margin-bottom: 10px; display: flex; justify-content: flex-end; ">
             <div class="login-bar">
                 <el-button round type="success" slot="append" icon="el-icon-user-solid" @click="handleLogin">登录</el-button>
@@ -34,25 +36,34 @@
 </template>
 
 <script>
+import newsClassMap from "../datas/newslist.js"
+
 export default {
     name: "NavBar",
     props: {
         activeIndexProp: String,
+        isSearch: String,
     },
     data() {
         return {
             activeIndex: this.activeIndexProp,
+            subitem: 0,
         };
+    },
+    computed: {
+        newsType() {
+            return newsClassMap[this.subitem];
+        },
     },
     methods: {
         handleSelect(key, keyPath) {
             if (keyPath[0] === "2") {
-                var subitem = String(keyPath[1].split('-')[1]);
-                console.log(subitem);
+                this.subitem = String(keyPath[1].split('-')[1]);
+                console.log(this.subitem);
                 this.$router.push({
                     name: 'SearchResult',
                     query: {
-                        query: subitem,
+                        query: this.subitem,
                         issearch: false
                     }
                 });
