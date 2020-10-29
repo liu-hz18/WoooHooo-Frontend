@@ -84,7 +84,10 @@ export default {
     },
     created() {
         this.activeIndex = "0";
+        this.subitem = Number(this.$route.query.query);
+        console.log("create", this.subitem)
     },
+    watch: {},
 };
 </script>
 
