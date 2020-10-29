@@ -5,14 +5,16 @@
         <el-menu-item index="1">个人中心</el-menu-item>
         <el-submenu index="2">
             <template slot="title">分类新闻</template>
-            <el-menu-item index="2-1">热点</el-menu-item>
-            <el-menu-item index="2-2">国内</el-menu-item>
-            <el-menu-item index="2-3">国际</el-menu-item>
-            <el-menu-item index="2-4">军事</el-menu-item>
-            <el-menu-item index="2-5">财经</el-menu-item>
-            <el-menu-item index="2-6">娱乐</el-menu-item>
-            <el-menu-item index="2-7">体育</el-menu-item>
-            <el-menu-item index="2-8">科技</el-menu-item>
+            <el-menu-item index="2-0">热点</el-menu-item>
+            <el-menu-item index="2-1">国内</el-menu-item>
+            <el-menu-item index="2-2">国际</el-menu-item>
+            <el-menu-item index="2-3">军事</el-menu-item>
+            <el-menu-item index="2-4">财经</el-menu-item>
+            <el-menu-item index="2-5">娱乐</el-menu-item>
+            <el-menu-item index="2-6">体育</el-menu-item>
+            <el-menu-item index="2-7">科技</el-menu-item>
+            <el-menu-item index="2-8">游戏</el-menu-item>
+            <el-menu-item index="2-9">文化</el-menu-item>
         </el-submenu>
         <el-submenu index="3">
             <template slot="title">前往新闻网站</template>

@@ -31,7 +31,7 @@ function searchResult(that){
         that.newsInfo = getNewsList(that.searchinput, 0, 10);
     } else {
         that.searchinput = "";
-        that.currentClass = Number(that.$route.query.query) - 1;
+        that.currentClass = Number(that.$route.query.query);
         that.newsInfo = getNewsClassList(that.currentClass, 0, 10);
     }
 }
