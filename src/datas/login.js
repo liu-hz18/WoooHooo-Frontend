@@ -1,4 +1,5 @@
 import API from "../utils/API.js"
+import md5 from 'js-md5';
 import {urlParam}  from "../utils/communication.js"
 
 export default {
@@ -43,9 +44,10 @@ export default {
                     var url = urlParam(API.CHECK_USER_INFO.path, {
                         useraction: "login",
                         username: this.user.name,
-                        userpass: this.user.pass,
+                        userpass: md5(this.user.pass),
                     })
-                    print(url)
+                    console.log("访问后端")
+                    console.log(url)
                     request.open(API.CHECK_USER_INFO.method, url, false)
                     request.onreadystatechange = function () {
                         console.log("从后端收到：")
@@ -76,16 +78,7 @@ export default {
                         }
                     }
                     request.send(null)
-                    /*request.send(JSON.stringify({
-                        useraction: "login",
-                        username: this.user.name,
-                        userpass: this.user.pass,
-                    }))
-                    console.log(JSON.stringify({
-                        useraction: "login",
-                        username: this.user.name,
-                        userpass: this.user.pass,
-                    }))*/
+                    
                 } else {
                     return false
                 }
