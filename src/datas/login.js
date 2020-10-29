@@ -39,7 +39,7 @@ export default {
                     }
                     */
                     //此处需要调用后端的接口
-
+                    var parent = this;
                     var request = new XMLHttpRequest()
                     var url = urlParam(API.CHECK_USER_INFO.path, {
                         useraction: "login",
@@ -55,17 +55,17 @@ export default {
                         if (request.readyState === 4 && request.status === 200) {
                             var loginSuccess = JSON.parse(request.response);
                             if (Boolean(loginSuccess) === true) {
-                                this.$notify({
+                                parent.$notify({
                                     type: 'success',
-                                    message: '欢迎您,' + this.user.name + '！',
+                                    message: '欢迎您,' + parent.user.name + '！',
                                     duration: 3000
                                 })
                                 //页面跳转？
-                                this.$router.push({
+                                parent.$router.push({
                                     name: 'Home',
                                 });
                             } else {
-                                this.$message({
+                                parent.$message({
                                     type: 'error',
                                     message: '用户名或密码错误',
                                     showClose: true
@@ -74,6 +74,11 @@ export default {
                         } else if (this.readyState === 1) {
                             console.log('请求中')
                         } else {
+                            parent.$message({
+                                type: 'error',
+                                message: '用户名或密码错误',
+                                showClose: true
+                            })
                             console.log('请求失败')
                         }
                     }

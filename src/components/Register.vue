@@ -8,6 +8,15 @@
             <span style = "font-size: 25px;">欢迎注册</span>
           </div>
           <el-form ref="registerForm" :model="user" :rules="rules" status-icon label-width="80px">
+                  <p style="margin-top: 0px">
+                    已有账号？
+                    <span id = "login_btn">
+                      <a href="/login">
+                      登录
+                      </a>
+                    </span>
+                  </p>
+              
               <el-form-item label="用户名" prop="name" style="margin-right:28px;">
                   <el-input v-model="user.name" ></el-input>
               </el-form-item>
