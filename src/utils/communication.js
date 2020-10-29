@@ -36,4 +36,6 @@ function searchResult(that){
     }
 }
 
+
+
 export{ searchResult }

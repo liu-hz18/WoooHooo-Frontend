@@ -19,7 +19,7 @@
               </el-form-item>
               <el-form-item label="验证码" prop="validation">
                     <el-col :span="14"><el-input v-model="user.validation"></el-input></el-col>
-                    <el-col :span="10"><el-button icon="el-icon-message" @click="getvalidation" v-model="validationbutton">获取</el-button></el-col>
+                    <el-col :span="10"><el-button icon="el-icon-message" @click="getvalidation" >获取</el-button></el-col>
                   
               </el-form-item>
               <el-row type="flex" class="row-bg" justify="space-around">

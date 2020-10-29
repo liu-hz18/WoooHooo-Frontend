@@ -1,8 +1,14 @@
 import API from "../utils/API.js";
+import md5 from 'js-md5';
 
 export default {
     methods: {
         register () {
+            this.$notify({
+                type: 'success',
+                message: '注册ing',
+                duration: 3000 
+            })
             this.$refs.registerForm.validate((valid) => {
                 if (valid) {
                     //此处需要调用后端的接口
@@ -40,7 +46,7 @@ export default {
                     request.send(JSON.stringify({
                         useraction: "register",
                         username : this.user.name,
-                        userpass : this.user.pass,
+                        userpass : md5(this.user.pass),
                     }))
                     //console.log("发送：")
                     //console.log()
