@@ -70,7 +70,7 @@ export default {
             },
             hotList: new Array(10).fill({
                 uid: 0,
-                link: "www.baidu.com",
+                link: "https://www.baidu.com",
                 title: "This is a hot news news" + 0,
                 hot: "100万",
             }),

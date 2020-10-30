@@ -1,11 +1,11 @@
 <template>
 <div class="news-info">
     <h4 class="news-heading">
-        <a v-bind:href="link" v-line-clamp:100="1" v-html="ruleTitle()"></a>
+        <a v-bind:href="link" v-line-clamp:100="1" v-html="ruleTitle()" target="_blank"></a>
     </h4>
     <h6 class="news-content" v-line-clamp:20="3" v-html="ruleContent()"></h6>
     <p class="news-source">
-        <em>by {{ source + " @ " + time }}</em>
+        <em>来源: {{ source }}, 时间: {{ time }}</em>
     </p>
 </div>
 </template>
@@ -32,7 +32,6 @@ export default {
     },
     methods: {
         ruleTitle() {
-
             return this.highlightString(this.title, this.keywords);
         },
         ruleContent() {
@@ -44,15 +43,16 @@ export default {
                 return "";
             }
             if (keywords && keywords.length > 0) {
-                // 匹配关键字正则
-                let replaceReg = new RegExp('(' + keywords.join('|') + ')', "gi");
-                // 开始替换
-                titleString = titleString.replace(
+                let replaceReg = new RegExp('(' + keywords.join('|') + ')', "gi"); // 匹配关键字正则
+                titleString = titleString.replace( // 开始替换
                     replaceReg,
                     '<span class="highlight-text" style="color:#F75F5F;">$1</span>'
                 );
             }
             return titleString;
+        },
+        openNews() {
+            window.open(this.link)
         },
     },
 };
