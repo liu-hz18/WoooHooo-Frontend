@@ -6,6 +6,7 @@ import Home from "../components/Home.vue"
 import SearchResult from "../components/SearchResult.vue"
 import Login from '../components/Login.vue'
 import Register from '../components/Register.vue'
+import NotFound from "../components/NotFound.vue"
 
 const originalPush = VueRouter.prototype.push
    VueRouter.prototype.push = function push(location) {
@@ -39,6 +40,13 @@ const routes = [
       name: "Register",
       component: Register
     },
+    {
+      path: "*",
+      meta: {
+        pagename: "404 Not Found"
+      },
+      component: NotFound
+    }
   ]
   
 const router = new VueRouter({

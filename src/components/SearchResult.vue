@@ -1,25 +1,24 @@
 <template>
-<el-container>
-    <div class="result">
+<div class="result">
+    <el-container>
         <el-header>
             <NavBar v-bind:isSearch="String(isSearch)"> </NavBar>
         </el-header>
 
-        <div class=" search-box">
+        <div class="search-box">
             <SearchBox ref="searchbox" @update-news="updateNews" @text-change="updateInput" v-bind:searchInputProp="searchinput">
             </SearchBox>
         </div>
         <div class="info" v-if="isSearch==='true'">
             <p>
-                查询到 {{ newsInfo["total"] }}条结果, 用时{{
-            Math.max(newsInfo["time"], 0.0)
-          }}s
+                查询到 {{ newsInfo["total"] }}条结果, 用时{{ newsInfo["time"]}}s
             </p>
         </div>
 
         <el-row :gutter="20">
             <el-col :span="12" :offset="3">
-                <NewsList v-bind:newsList="newsInfo['data']" :keywords="newsInfo['keywords']">
+                <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                <NewsList v-if="!isLoading" v-bind:newsList="newsInfo['data']" :keywords="newsInfo['keywords']">
                 </NewsList>
             </el-col>
             <el-col :span="6">
@@ -31,8 +30,8 @@
             <el-pagination background layout="prev, pager, next" :total="newsInfo['total']" @current-change="handleCurrentChange" :current-page.sync="currentPage">
             </el-pagination>
         </div>
-    </div>
-</el-container>
+    </el-container>
+</div>
 </template>
 
 <script>
@@ -41,6 +40,7 @@ import SearchBox from "./SearchBox.vue";
 import NewsList from "./NewsList.vue";
 import HotList from "./HotList.vue";
 import NavBar from "./NavBar.vue";
+import load from "../assets/loading.gif"
 import {
     getNewsList,
     getNewsClassList
@@ -59,7 +59,12 @@ export default {
         NavBar,
     },
     inject: ['reload'],
-    props: {},
+    props: {
+        loadgif: {
+            type: String,
+            default: () => load,
+        },
+    },
     data() {
         return {
             newsInfo: {
@@ -78,6 +83,7 @@ export default {
             searchinput: "",
             currentClass: 0,
             isSearch: true,
+            isLoading: false,
         };
     },
     methods: {
@@ -89,15 +95,19 @@ export default {
         handleCurrentChange() {
             console.log("input in result ", this.searchinput, this.isSearch);
             if (!this.isSearch || this.isSearch === "false") {
-                this.newsInfo = getNewsClassList(this.currentClass, this.currentPage - 1, 10)
+                getNewsClassList(this.currentClass, this.currentPage - 1, 10, this)
             } else {
-                this.newsInfo = getNewsList(this.searchinput, this.currentPage - 1, 10)
+                getNewsList(this.searchinput, this.currentPage - 1, 10, this)
             }
-            console.log(this.newsInfo)
+            console.log(this.isLoading)
+            this.backTop()
         },
         updateInput(searchinput) {
             this.searchinput = searchinput;
             this.isSearch = true;
+        },
+        backTop() {
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
         },
     },
     created() {
@@ -107,8 +117,10 @@ export default {
     mounted() {},
     watch: {
         $route() {
+            console.log(this.isLoading)
             console.log("changed: ", this.$route.query);
             searchResult(this);
+            console.log(this.isLoading)
         },
     },
 };
@@ -158,5 +170,17 @@ mark {
 .highlight-text {
     background: transparent;
     color: red;
+}
+
+img {
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 18%;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
 }
 </style>

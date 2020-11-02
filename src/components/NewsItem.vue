@@ -3,7 +3,6 @@
 <div class="NewsItem">
     <el-card v-if="haveImg">
         <div class="news-body">
-
             <el-col :span="16">
                 <NewsInfo v-bind:link="link" :title="title" :content="content" :source="source" :time="time" :keywords="keywords"></NewsInfo>
             </el-col>
@@ -12,7 +11,6 @@
                     <img class="news-img" v-bind:src="imgurl" alt="News Image" />
                 </a>
             </el-col>
-
         </div>
     </el-card>
 

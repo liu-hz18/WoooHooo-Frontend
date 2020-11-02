@@ -22,7 +22,7 @@
                         <span slot="label"><em class="el-icon-date"></em>热点</span>
                         <el-row :gutter="15">
                             <el-col :span="15">
-                                <NewsList v-bind:newsList="newsArray"> </NewsList>
+                                <NewsList v-bind:newsList="newsInfo.data"> </NewsList>
                             </el-col>
                             <el-col :span="9">
                                 <HotList v-bind:hotList="hotList"> </HotList>
@@ -31,43 +31,43 @@
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>国内</span>
-                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                        <NewsList v-bind:newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>国际</span>
-                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                        <NewsList v-bind:newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>军事</span>
-                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                        <NewsList v-bind:newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>财经</span>
-                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                        <NewsList v-bind:newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>娱乐</span>
-                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                        <NewsList v-bind:newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>体育</span>
-                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                        <NewsList v-bind:newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>科技</span>
-                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                        <NewsList v-bind:newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>游戏</span>
-                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                        <NewsList v-bind:newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>文化</span>
-                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                        <NewsList v-bind:newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>社会</span>
-                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                        <NewsList v-bind:newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                 </el-tabs>
             </div>
@@ -104,7 +104,12 @@ export default {
         return {
             searchinput: "中国",
             keywordlist: ["news", "is"],
-            newsArray: getNewsClassList("热点", 0, 10).data,
+            newsInfo: {
+                data: [],
+                time: 0.0001,
+                total: 1000,
+                keywords: [],
+            },
             hotList: new Array(10).fill({
                 uid: 0,
                 link: "https://www.baidu.com",
@@ -113,16 +118,17 @@ export default {
             }),
             activeTab: "0",
             pageNumber: 0,
+            isLoading: false,
         };
     },
     computed: {},
     methods: {
         handleClick() {
-            this.newsArray = getNewsClassList(this.activeTab, this.pageNumber, 10).data;
+            getNewsClassList(this.activeTab, this.pageNumber, 10, this);
         }
     },
     created() {
-        this.newsArray = getNewsClassList(this.activeTab, 0, 10).data;
+        getNewsClassList(this.activeTab, 0, 10, this);
     },
 };
 </script>

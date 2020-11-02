@@ -46,7 +46,7 @@
 import RandomUtil from "../utils/RandomUtil";
 import Store from "../utils/store";
 import {
-    getNewsList
+    //getNewsList
 } from "../datas/newslist.js";
 
 export default {
@@ -102,7 +102,7 @@ export default {
                 return;
             //随机生成搜索历史tag式样
             console.log("input:", this.searchinput);
-            this.$emit('update-news', getNewsList(this.searchinput, 0, 10));
+            //this.$emit('update-news', getNewsList(this.searchinput, 0, 10));
             this.$emit("text-change", this.searchinput);
             this.$router.push({
                 name: 'SearchResult',
@@ -111,6 +111,7 @@ export default {
                     issearch: true
                 }
             });
+            console.log("path changed")
             let n = RandomUtil.getRandomNumber(0, 5);
             let exist =
                 this.historySearchList.filter((value) => {
