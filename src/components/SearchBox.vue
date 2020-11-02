@@ -45,9 +45,7 @@
 <script>
 import RandomUtil from "../utils/RandomUtil";
 import Store from "../utils/store";
-import {
-    getNewsList
-} from "../datas/newslist.js";
+//import {getNewsList} from "../datas/newslist.js";
 
 export default {
     name: "SearchBox",
@@ -102,7 +100,7 @@ export default {
                 return;
             //随机生成搜索历史tag式样
             console.log("input:", this.searchinput);
-            this.$emit('update-news', getNewsList(this.searchinput, 0, 10));
+            //this.$emit('update-news', getNewsList(this.searchinput, 0, 10));
             this.$emit("text-change", this.searchinput);
             this.$router.push({
                 name: 'SearchResult',
