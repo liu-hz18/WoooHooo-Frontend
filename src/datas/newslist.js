@@ -17,7 +17,7 @@ export function getNewsList(query, page, number) {
     request.open(API.GET_NEWS_LIST.method, url, false)
     var newsList
     var totalNumber = 100
-    var start = new Date().getMilliseconds()
+    var start = new Date().getTime()
     var keywords = [query]
     request.onreadystatechange = function () {
         console.log(request.readyState, request.status)
@@ -38,7 +38,7 @@ export function getNewsList(query, page, number) {
     var ret = {
         data: newsList,
         total: totalNumber,
-        time: (new Date().getMilliseconds() - start) / 1000,
+        time: (new Date().getTime() - start) / 1000,
         keywords: keywords,
     }
     // console.log(ret)
