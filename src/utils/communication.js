@@ -3,7 +3,7 @@ import {
     getNewsClassList
 } from "../datas/newslist.js";
 
-export function urlParam(baseurl, params) {
+function urlParam(baseurl, params) {
     var url = baseurl
     var i = 0
     url += '?'
@@ -36,6 +36,19 @@ function searchResult(that){
     }
 }
 
+function vaildateEmail(rule,value,callback){
+    if (value === '') {
+        callback(new Error('请正确填写邮箱'));
+      } 
+    else {
+        if (value !== '') { 
+            var reg=/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+            if(!reg.test(value)){
+            callback(new Error('请输入有效的邮箱'));
+            }
+        }
+    callback();
+    }
+}
 
-
-export{ searchResult }
+export{ searchResult,urlParam,vaildateEmail }

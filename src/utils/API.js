@@ -15,6 +15,10 @@ const API = {
         path: "/api/login",
         method: "post",
     },
+    SEND_USER_EMAIL: {
+        path: "/api/email",
+        method : "get",
+    }
 
 }
 export default API

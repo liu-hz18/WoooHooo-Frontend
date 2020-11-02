@@ -27,9 +27,8 @@
                   <el-input v-model="user.pass" type="password"></el-input>
               </el-form-item>
               <el-form-item label="验证码" prop="validation">
-                    <el-col :span="14"><el-input v-model="user.validation"></el-input></el-col>
+                    <el-col :span="14"><el-input v-model="user.validation" ></el-input></el-col>
                     <el-col :span="10"><el-button icon="el-icon-message" @click="getvalidation" >获取</el-button></el-col>
-                  
               </el-form-item>
               <el-row type="flex" class="row-bg" justify="space-around">
                   <el-button icon="el-icon-user" @click="register" round class="registerbutton">注册</el-button>

@@ -1,5 +1,7 @@
 import API from "../utils/API.js";
 import md5 from 'js-md5';
+import {vaildateEmail,urlParam}  from "../utils/communication.js"
+
 
 export default {
     methods: {
@@ -7,7 +9,7 @@ export default {
             
             this.$refs.registerForm.validate((valid) => {
                 if (valid) {
-                    //此处需要调用后端的接口
+                    //此处调用后端的接口
                     var parent = this;
                     var request = new XMLHttpRequest()
                     request.open(API.UPDATE_USER_INFO.method, API.UPDATE_USER_INFO.path, false)
@@ -51,9 +53,9 @@ export default {
                         useraction: "register",
                         username : this.user.name,
                         userpass : md5(this.user.pass),
+                        useremail : this.user.email,
+                        uservalidation: this.user.vaildation === null? "": this.user.vaildation
                     }))
-                    //console.log("发送：")
-                    //console.log()
                 }
                 else {
                     return false
@@ -64,15 +66,31 @@ export default {
         getvalidation() {
             this.$refs.registerForm.validate((valid) => {
                 if (valid) {
-                    console.log('请求中')
-                    //发送邮件
-                    //改变按钮显示
                     
+                    //给后端发送邮箱
+                    //改变按钮显示
+                    console.log('向邮箱发送验证码')
+                    var request = new XMLHttpRequest()
+                    var url = urlParam(API.SEND_USER_EMAIL.path, {
+                        useraction: "login",
+                        username: this.user.name,
+                        userpass: md5(this.user.pass),
+                        useremail : this.user.email
+                    })
+                    request.open(API.SEND_USER_EMAIL.method, url, false)
+
+                    request.onreadystatechange = function () {
+                        console.log("从后端收到：")
+                        console.log(request.readyState, request.status, request.responseText)
+
+                    }
+                    request.send(null)
                 }
                 else {
                     return false
                 }
             })
+            
         }
     },
     data () {
@@ -83,15 +101,20 @@ export default {
                     {required: true, message: '用户名不能为空', trigger: 'blur'}
                 ],
                 email: [
-                    {required: true, message: '邮箱不能为空', trigger: 'blur'}
+                    {required: true, message: '邮箱不能为空', trigger: 'blur'},
+                    {
+                        validator:vaildateEmail,
+                        message: '邮箱格式错误',
+                        trigger: 'blur'
+                        }
                 ],
                 pass: [
-                    {required: true, message: '密码不能为空', trigger: 'blur'}
-                ],
-                validation: [
-                    {required: true, message: '请输入验证码', trigger: 'blur'}
+                    {required: true, message: '密码不能为空', trigger: 'blur'},
+                    {min:8, message:'密码不能少于8个字符',trigger: 'blur'}
                 ]
-            }
+            },
+            
+
         }
     }
 }
