@@ -42,7 +42,7 @@ function vaildateEmail(rule,value,callback){
       } 
     else {
         if (value !== '') { 
-            var reg=/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+            var reg=/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
             if(!reg.test(value)){
             callback(new Error('请输入有效的邮箱'));
             }
