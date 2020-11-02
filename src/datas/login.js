@@ -27,18 +27,7 @@ export default {
         login() {
             this.$refs.loginForm.validate((valid) => {
                 if (valid) {
-                    /*if (this.user.name === "admin" && this.user.pass === "123") {
-                        this.$notify({
-                            type: 'success',
-                            message: '欢迎您,' + this.user.name + '！',
-                            duration: 3000
-                        })
-                        this.$router.push({
-                            name: 'Home',
-                        });
-                    }
-                    */
-                    //此处需要调用后端的接口
+                    //此处调用后端的接口
                     var parent = this;
                     var request = new XMLHttpRequest()
                     var url = urlParam(API.CHECK_USER_INFO.path, {
@@ -52,33 +41,31 @@ export default {
                     request.onreadystatechange = function () {
                         console.log("从后端收到：")
                         console.log(request.readyState, request.status, request.responseText)
-                        if (request.readyState === 4 && request.status === 200) {
-                            var loginSuccess = JSON.parse(request.response);
-                            if (Boolean(loginSuccess) === true) {
-                                parent.$notify({
-                                    type: 'success',
-                                    message: '欢迎您,' + parent.user.name + '！',
-                                    duration: 3000
-                                })
-                                //页面跳转？
-                                parent.$router.push({
-                                    name: 'Home',
-                                });
-                            } else {
-                                parent.$message({
-                                    type: 'error',
-                                    message: '用户名或密码错误',
-                                    showClose: true
-                                })
+                        if (request.readyState === 4) {
+                            if(request.status === 200){
+                                var loginSuccess = JSON.parse(request.response);
+                                if (Boolean(loginSuccess) === true) {
+                                    parent.$notify({
+                                        type: 'success',
+                                        message: '欢迎您,' + parent.user.name + '！',
+                                        duration: 3000
+                                    })
+                                    //页面跳转
+                                    parent.$router.push({
+                                        name: 'Home',
+                                    });
+                                }
                             }
-                        } else if (this.readyState === 1) {
-                            console.log('请求中')
-                        } else {
+                            else if(request.status === 401){
                             parent.$message({
                                 type: 'error',
                                 message: '用户名或密码错误',
                                 showClose: true
                             })
+                        }
+                        } else if (this.readyState === 1) {
+                            console.log('请求中')
+                        } else {
                             console.log('请求失败')
                         }
                     }

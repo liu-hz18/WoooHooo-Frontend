@@ -68,7 +68,7 @@
 import {
     getNewsClassList
 } from "../datas/newslist.js";
-import logo from "../assets/logo.png";
+import logo from "../assets/search_icon.png";
 import NewsList from "./NewsList.vue";
 import HotList from "./HotList.vue";
 import SearchBox from "./SearchBox.vue";
