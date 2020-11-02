@@ -109,6 +109,7 @@ export default {
                     issearch: true
                 }
             });
+            console.log("path changed")
             let n = RandomUtil.getRandomNumber(0, 5);
             let exist =
                 this.historySearchList.filter((value) => {

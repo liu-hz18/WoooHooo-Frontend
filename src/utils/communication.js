@@ -28,11 +28,11 @@ function searchResult(that){
     that.isSearch = String(that.$route.query.issearch);
     if (that.isSearch === "true") {
         that.searchinput = that.$route.query.query;
-        that.newsInfo = getNewsList(that.searchinput, 0, 10);
+        getNewsList(that.searchinput, 0, 10, that);
     } else {
         that.searchinput = "";
         that.currentClass = Number(that.$route.query.query);
-        that.newsInfo = getNewsClassList(that.currentClass, 0, 10);
+        getNewsClassList(that.currentClass, 0, 10, that);
     }
 }
 

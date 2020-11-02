@@ -1,22 +1,21 @@
 <template>
 <div class="loginbg">
-
     <!--flex弹性盒子模型，justify-content：主抽 -->
     <div style="display: flex;opacity: 0.85;justify-content: center">
         <el-card style="width: 400px;margin-top: 150px">
             <div slot="header" class="clearfix">
-                <span style = "font-size: 25px;">登录</span>
+                <span style="font-size: 25px;">登录</span>
             </div>
             <p style="margin-top: 0px">
-                    暂不登录？
-                    <span id = "login_btn">
-                      <a href="/home">
-                      访客模式
-                      </a>
-                    </span>
-                  </p>
+                暂不登录？
+                <span id="login_btn">
+                    <a href="/home">
+                        访客模式
+                    </a>
+                </span>
+            </p>
             <el-form ref="loginForm" :model="user" :rules="rules" status-icon label-width="80px">
-                
+
                 <el-form-item label="用户名" prop="name">
                     <el-input v-model="user.name"></el-input>
                 </el-form-item>
