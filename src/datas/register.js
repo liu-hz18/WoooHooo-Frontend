@@ -9,7 +9,8 @@ export default {
             
             this.$refs.registerForm.validate((valid) => {
                 if (valid) {
-                    if( this.user.vaildation === this.validationcode){
+                    if( md5(this.user.validation) === this.validationcode){
+                        console.log(md5(this.user.validation) +"=="+ this.validationcode)
                         console.log("验证成功")
                         //此处调用后端的接口
                         var parent = this;
@@ -60,7 +61,7 @@ export default {
                         }))
                     }
                     else{
-                        console.log(this.user.vaildation +"!="+ this.validationcode)
+                        console.log(this.user.validation +"!="+ this.validationcode)
                         console.log("验证失败")
                     }
                 }
@@ -78,20 +79,26 @@ export default {
                     //改变按钮显示
                     console.log('向邮箱发送验证码')
                     var request = new XMLHttpRequest()
-                    
+                    var parent = this
                     request.open(API.SEND_USER_EMAIL.method,API.SEND_USER_EMAIL.path, false)
-
+                    var VC;
                     request.onreadystatechange = function () {
+                        parent.$message({
+                            type: 'success',
+                            message: '验证码已发送',
+                            showClose: true
+                        })
                         console.log("从后端收到：")
                         console.log(request.readyState, request.status, request.responseText)
                         var jsonobj = JSON.parse(request.responseText);
-                        this.validationcode = jsonobj["data"];
-                        console.log("validationcode =" + this.validationcode)
+                        VC = jsonobj["data"];
+                        console.log("validationcode =" + VC)
                     }
                     request.send(JSON.stringify({
                         username : this.user.name,
                         mail : this.user.email,
                     }))
+                    this.validationcode = VC;
                 }
                 else {
                     return false
@@ -100,12 +107,11 @@ export default {
             
         }
     },
-    props: {
-        validationcode: String,
-    },
+    
     data () {
         return {
             user: {},
+            
             rules: {
                 name: [
                     {required: true, message: '用户名不能为空', trigger: 'blur'}
@@ -121,9 +127,11 @@ export default {
                 pass: [
                     {required: true, message: '密码不能为空', trigger: 'blur'},
                     {min:8, message:'密码不能少于8个字符',trigger: 'blur'}
-                ]
+                ],
+                validation:[]
             },
-           
+            validationcode:"sssss"
+            
 
         }
     }
