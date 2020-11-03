@@ -104,7 +104,9 @@ export default {
         return {
 
             //用户状态记录
-
+            userstate:{
+                login:false
+            },
             searchinput: "中国",
             keywordlist: ["news", "is"],
             newsInfo: {
