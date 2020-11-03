@@ -4,7 +4,7 @@
     <el-card v-if="haveImg">
         <div class="news-body">
             <el-col :span="16">
-                <NewsInfo v-bind:link="link" :title="title" :content="content" :source="source" :time="time" :keywords="keywords"></NewsInfo>
+                <NewsInfo v-bind:username="username" :link="link" :title="title" :content="content" :source="source" :time="time" :keywords="keywords"></NewsInfo>
             </el-col>
             <el-col :span="5">
                 <a v-bind:href="imgurl">
@@ -33,6 +33,7 @@ export default {
         NewsInfo,
     },
     props: {
+        username:String,
         uid: Number,
         title: String,
         imgurl: String,
@@ -91,4 +92,7 @@ li {
     margin-left: 0%;
     margin-right: 0%;
 }
+
+
+
 </style>

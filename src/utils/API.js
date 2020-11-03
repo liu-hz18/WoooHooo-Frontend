@@ -18,6 +18,10 @@ const API = {
     SEND_USER_EMAIL: {
         path: "/api/validate",
         method : "post",
+    },
+    POST_USER_CLICK:{
+        path: "/api/browsehis",
+        method : "post",
     }
 
 }
