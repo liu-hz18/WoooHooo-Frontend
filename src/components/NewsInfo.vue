@@ -1,7 +1,7 @@
 <template>
 <div class="news-info">
     <h4 class="news-heading">
-        <a v-bind:href="link" v-line-clamp:100="1" v-html="ruleTitle()" target="_blank"></a>
+        <a v-bind:href="link" v-line-clamp:100="1" v-html="ruleTitle()" target="_blank" :class="{active:clicked === true}" @click="clickTitle"></a>
     </h4>
     <h6 class="news-content" v-line-clamp:20="3" v-html="ruleContent()"></h6>
     <p class="news-source">
@@ -25,12 +25,17 @@ export default {
         keywords: Array,
     },
     data() {
-        return {};
+        return {
+            clicked:false
+        };
     },
     computed: {
 
     },
     methods: {
+        clickTitle(){
+            this.clicked = true
+        },
         ruleTitle() {
             return this.highlightString(this.title, this.keywords);
         },
@@ -97,4 +102,8 @@ li {
     font-size: 10%;
     color: #909399;
 }
+
+.active{
+            color: rgb(243, 169, 162);
+        }
 </style>
