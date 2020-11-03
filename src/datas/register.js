@@ -63,6 +63,11 @@ export default {
                     else{
                         console.log(this.user.validation +"!="+ this.validationcode)
                         console.log("验证失败")
+                        this.$message({
+                            type: 'error',
+                            message: '验证码错误！',
+                            showClose: true
+                        })
                     }
                 }
                 else {
