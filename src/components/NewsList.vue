@@ -5,6 +5,7 @@
         <NewsItem
           v-for="(newsitem, index) in newsList"
           v-bind:key="index"
+          :username="username"
           :title="newsitem.title"
           :content="newsitem.content"
           :source="newsitem.source"
@@ -28,10 +29,14 @@ export default {
     NewsItem,
   },
   props: {
+    username:{
+      type:String,
+      default: () =>"Bob"},
     newsList: {
       type: Array,
       default: () =>
         new Array(6).fill({
+          //username:"Alice",
           uid: 0,
           link: "www.baidu.com",
           title: "This is a news Title " + 0,
@@ -66,4 +71,6 @@ ul {
 a {
   color: #42b983;
 }
+
+
 </style>
