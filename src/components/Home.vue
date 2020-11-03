@@ -102,6 +102,9 @@ export default {
     },
     data() {
         return {
+
+            //用户状态记录
+
             searchinput: "中国",
             keywordlist: ["news", "is"],
             newsInfo: {
