@@ -6,6 +6,8 @@ import {urlParam}  from "../utils/communication.js"
 const newsClassMap = ["热点", "国内", "国际", "军事", "财经", "娱乐", "体育", "科技", "游戏", "文化", "社会"];
 
 export function getNewsList(query, page, number, that) {
+    //开始搜索则显示加载页面
+    that.isLoading = true
     var request = new XMLHttpRequest();
     console.log("getNewsList")
     var params = {
@@ -33,6 +35,8 @@ export function getNewsList(query, page, number, that) {
                     time: ((new Date().getTime()) - start) / 1000,
                     keywords: keywords,
                 }
+                //得到搜索结果则关闭加载页面
+                that.isLoading = false
                 console.log(that.newsInfo)
             } catch ( error ) {
                 newsList = randomInitNews(query)

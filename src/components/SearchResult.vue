@@ -88,6 +88,7 @@ export default {
     },
     methods: {
         updateNews(newsInfo) {
+            console.log("updateNews")
             console.log(newsInfo)
             this.newsInfo = newsInfo;
             this.currentPage = 1;
@@ -121,6 +122,7 @@ export default {
             console.log("changed: ", this.$route.query);
             searchResult(this);
             console.log(this.isLoading)
+            //this.isLoading = true
         },
     },
 };
