@@ -20,7 +20,7 @@ const API = {
         method : "post",
     },
     POST_USER_CLICK:{
-        path: "/api/userclick",
+        path: "/api/browsehis",
         method : "post",
     }
 
