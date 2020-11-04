@@ -2,7 +2,7 @@
 <div class="result">
     <el-container>
         <el-header>
-            <NavBar v-bind:isSearch="String(isSearch)"> </NavBar>
+            <NavBar v-bind:isSearch="String(isSearch)" :username = "userstate.username" @user-logout = "userLogout"> </NavBar>
         </el-header>
 
         <div class="search-box">
@@ -18,7 +18,7 @@
         <el-row :gutter="20">
             <el-col :span="12" :offset="3">
                 <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
-                <NewsList v-if="!isLoading" v-bind:newsList="newsInfo['data']" :keywords="newsInfo['keywords']">
+                <NewsList v-bind:username = "userstate.username" v-if="!isLoading" v-bind:newsList="newsInfo['data']" :keywords="newsInfo['keywords']">
                 </NewsList>
             </el-col>
             <el-col :span="6">
@@ -67,6 +67,10 @@ export default {
     },
     data() {
         return {
+            //用户状态记录
+            userstate:{
+                username:this.$cookies.get("username")?this.$cookies.get("username"):""
+            },
             newsInfo: {
                 data: [],
                 time: 0.0001,
@@ -87,6 +91,10 @@ export default {
         };
     },
     methods: {
+        userLogout(){
+            this.$cookies.remove("username")
+            this.userstate.username = ""
+        },
         updateNews(newsInfo) {
             console.log("updateNews")
             console.log(newsInfo)
