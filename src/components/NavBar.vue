@@ -65,6 +65,7 @@ export default {
             if (keyPath[0] === "2") {
                 this.subitem = String(keyPath[1].split('-')[1]);
                 console.log(this.subitem);
+                
                 this.$router.push({
                     name: 'SearchResult',
                     query: {
@@ -73,15 +74,23 @@ export default {
                     }
                 });
             } else if (keyPath[0] === "0") {
+                
                 this.$router.push({
                     name: 'Home'
                 });
             }
             //用户个人中心页面
             else if(keyPath[0] === "1"){
-                this.$router.push({
-                    name: 'Home'
-                });
+                if(this.username != ""){
+                    this.$router.push({
+                        name: 'Center'
+                    });
+                }
+                else{
+                    this.$router.push({
+                        name: 'Login'
+                    });
+                }
             }
         },
         handleLogin() {
@@ -122,7 +131,7 @@ export default {
         }
     },
     created() {
-        this.activeIndex = "0";
+        //this.activeIndex = "0";
         this.subitem = Number(this.$route.query.query);
         console.log("create", this.subitem)
     },

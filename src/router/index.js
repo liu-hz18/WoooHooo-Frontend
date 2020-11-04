@@ -3,6 +3,7 @@ import VueRouter from "vue-router"
 
 import HelloWorld from "../components/HelloWorld.vue"
 import Home from "../components/Home.vue"
+import UserCenter from "../components/UserCenter.vue"
 import SearchResult from "../components/SearchResult.vue"
 import Login from '../components/Login.vue'
 import Register from '../components/Register.vue'
@@ -24,6 +25,11 @@ const routes = [
       path: '/home',
       name: "Home",
       component: Home
+    },
+    {
+      path: '/i-center',
+      name: "Center",
+      component: UserCenter
     },
     {
       path: '/search',
