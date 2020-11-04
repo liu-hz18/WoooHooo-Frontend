@@ -22,6 +22,10 @@ const API = {
     POST_USER_CLICK:{
         path: "/api/browsehis",
         method : "post",
+    },
+    POST_USER_SEARCH:{
+        path: "/api/searchhis",
+        method : "post",
     }
 
 }

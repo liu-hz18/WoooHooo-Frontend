@@ -65,7 +65,7 @@ export default {
                                     //parent.$emit("userLogin",parent.user.name)
                                 }
                             }
-                            else if(request.status === 401){
+                            else if(request.status === 400){
                             parent.$message({
                                 type: 'error',
                                 message: '用户名或密码错误',
