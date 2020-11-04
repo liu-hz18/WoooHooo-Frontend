@@ -77,6 +77,12 @@ export default {
                     name: 'Home'
                 });
             }
+            //用户个人中心页面
+            else if(keyPath[0] === "1"){
+                this.$router.push({
+                    name: 'Home'
+                });
+            }
         },
         handleLogin() {
             if(this.username != ""){

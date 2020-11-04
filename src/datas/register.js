@@ -29,7 +29,7 @@ export default {
                                     //页面跳转
                                     parent.$router.replace('/login')
                                 }
-                                else if(request.status === 401){
+                                else if(request.status === 400){
                                     parent.$message({
                                         type: 'error',
                                         message: '该用户名已被注册！',
