@@ -2,7 +2,7 @@
 <div class="home">
     <el-container>
         <el-header>
-            <NavBar v-bind:username = "userstate.username" @user-logout = "userLogout"> </NavBar>
+            <NavBar v-bind:activeIndexProp="activeIndexProp" :username = "userstate.username" @user-logout = "userLogout"> </NavBar>
         </el-header>
 
         <el-row :gutter="20">
@@ -108,6 +108,7 @@ export default {
                 //username:this.$route.params.username?this.$route.params.username:""
                 username:this.$cookies.get("username")?this.$cookies.get("username"):""
             },
+            activeIndexProp:"0",
             searchinput: "中国",
             keywordlist: ["news", "is"],
             newsInfo: {

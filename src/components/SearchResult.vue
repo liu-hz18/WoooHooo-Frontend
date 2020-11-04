@@ -2,7 +2,7 @@
 <div class="result">
     <el-container>
         <el-header>
-            <NavBar v-bind:isSearch="String(isSearch)" :username = "userstate.username" @user-logout = "userLogout"> </NavBar>
+            <NavBar v-bind:activeIndexProp="activeIndexProp" :isSearch="String(isSearch)" :username = "userstate.username" @user-logout = "userLogout"> </NavBar>
         </el-header>
 
         <div class="search-box">
@@ -71,6 +71,7 @@ export default {
             userstate:{
                 username:this.$cookies.get("username")?this.$cookies.get("username"):""
             },
+            activeIndexProp:"2",
             newsInfo: {
                 data: [],
                 time: 0.0001,
