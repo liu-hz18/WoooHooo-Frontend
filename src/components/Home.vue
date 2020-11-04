@@ -2,7 +2,7 @@
 <div class="home">
     <el-container>
         <el-header>
-            <NavBar> </NavBar>
+            <NavBar v-bind:username = "userstate.username" @user-logout = "userLogout"> </NavBar>
         </el-header>
 
         <el-row :gutter="20">
@@ -22,7 +22,7 @@
                         <span slot="label"><em class="el-icon-date"></em>热点</span>
                         <el-row :gutter="15">
                             <el-col :span="15">
-                                <NewsList v-bind:newsList="newsInfo.data"> </NewsList>
+                                <NewsList v-bind:username = "userstate.username" :newsList="newsInfo.data"> </NewsList>
                             </el-col>
                             <el-col :span="9">
                                 <HotList v-bind:hotList="hotList"> </HotList>
@@ -105,11 +105,13 @@ export default {
 
             //用户状态记录
             userstate:{
-                login:false
+                //username:this.$route.params.username?this.$route.params.username:""
+                username:this.$cookies.get("username")?this.$cookies.get("username"):""
             },
             searchinput: "中国",
             keywordlist: ["news", "is"],
             newsInfo: {
+                
                 data: [],
                 time: 0.0001,
                 total: 1000,
@@ -130,6 +132,10 @@ export default {
     methods: {
         handleClick() {
             getNewsClassList(this.activeTab, this.pageNumber, 10, this);
+        },
+        userLogout(){
+            this.$cookies.remove("username")
+            this.userstate.username = ""
         }
     },
     created() {

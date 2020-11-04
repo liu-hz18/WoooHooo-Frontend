@@ -41,6 +41,11 @@ import newsClassMap from "../datas/newslist.js"
 export default {
     name: "NavBar",
     props: {
+        //用户状态记录
+        username:{
+            type:String,
+            default: () =>"Nike"
+        },
         activeIndexProp: String,
         isSearch: String,
     },
@@ -74,12 +79,40 @@ export default {
             }
         },
         handleLogin() {
-            this.$router.push({
-                name: 'Login'
-            });
+            if(this.username != ""){
+                this.$notify({
+                    type: 'success',
+                    message: '您已经在线了！',
+                    duration: 3000
+                })
+            }
+            else{
+                this.$router.push({
+                    name: 'Login'
+                });
+            }
+            
         },
         handleQuit() {
             //用户退出
+            if(this.username != ""){
+                this.$notify({
+                    type: 'success',
+                    message: this.username + '，下线成功！',
+                    duration: 3000
+                })
+
+                //
+                this.$emit("user-logout")
+
+            }
+            else{
+                this.$notify({
+                    type: 'error',
+                    message: '您已不在线上！',
+                    duration: 3000
+                })
+            }
         }
     },
     created() {

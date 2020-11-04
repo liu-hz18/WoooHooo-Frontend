@@ -1,6 +1,9 @@
 import API from "../utils/API.js"
 import md5 from 'js-md5';
 import {urlParam}  from "../utils/communication.js"
+import Vue from 'vue'
+import VueCookies from 'vue-cookies'
+Vue.use(VueCookies)
 
 export default {
     data() {
@@ -47,13 +50,19 @@ export default {
                                 if (Boolean(loginSuccess) === true) {
                                     parent.$notify({
                                         type: 'success',
-                                        message: '欢迎您,' + parent.user.name + '！',
+                                        message: '欢迎您，' + parent.user.name + '！',
                                         duration: 3000
                                     })
                                     //页面跳转
                                     parent.$router.push({
                                         name: 'Home',
+                                        params: {
+                                            username: parent.user.name
+                                        }
                                     });
+                                    parent.$cookies.set("username", parent.user.name)
+                                    //修改用户状态
+                                    //parent.$emit("userLogin",parent.user.name)
                                 }
                             }
                             else if(request.status === 401){

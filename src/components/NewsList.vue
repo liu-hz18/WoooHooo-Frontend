@@ -36,7 +36,6 @@ export default {
       type: Array,
       default: () =>
         new Array(6).fill({
-          //username:"Alice",
           uid: 0,
           link: "www.baidu.com",
           title: "This is a news Title " + 0,

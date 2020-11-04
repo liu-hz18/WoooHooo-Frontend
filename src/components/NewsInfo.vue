@@ -37,30 +37,34 @@ export default {
     methods: {
         clickTitle(){
             this.clicked = true
-
-            //将用户行为发送给后端
-            var request = new XMLHttpRequest()
-            //异步？
-            request.open(API.POST_USER_CLICK.method, API.POST_USER_CLICK.path, true)
-            /*request.onreadystatechange = function () {
-                            console.log("从后端收到：")
-                            console.log(request.readyState, request.status, request.responseText)
-            }*/
-            request.send(JSON.stringify({
-                username:this.username,
-                newsinfo:{
-                        uid: this.uid,
-                        title: this.title,
-                        imgurl: this.imgurl,
-                        content:this.content,
-                        link: this.link,
-                        source: this.source,
-                        time: this.time,
-                        keywords: this.keywords,
-                }
-                
-            }))
-            console.log("用户："+this.username+" 点击了新闻："+this.title)
+            if(this.username != ""){
+                //将用户行为发送给后端
+                var request = new XMLHttpRequest()
+                //异步？
+                request.open(API.POST_USER_CLICK.method, API.POST_USER_CLICK.path, true)
+                /*request.onreadystatechange = function () {
+                                console.log("从后端收到：")
+                                console.log(request.readyState, request.status, request.responseText)
+                }*/
+                request.send(JSON.stringify({
+                    username:this.username,
+                    newsinfo:{
+                            uid: this.uid,
+                            title: this.title,
+                            imgurl: this.imgurl,
+                            content:this.content,
+                            link: this.link,
+                            source: this.source,
+                            time: this.time,
+                            keywords: this.keywords,
+                    }
+                    
+                }))
+                console.log("用户："+this.username+" 点击了新闻："+this.title)
+            }
+            else{
+                console.log("用户未登录")
+            }
         },
         ruleTitle() {
             return this.highlightString(this.title, this.keywords);
