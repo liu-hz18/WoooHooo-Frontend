@@ -31,43 +31,43 @@
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>国内</span>
-                        <NewsList v-bind:newsList="newsInfo.data"> </NewsList>
+                        <NewsList v-bind:username = "userstate.username"  :newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>国际</span>
-                        <NewsList v-bind:newsList="newsInfo.data"> </NewsList>
+                        <NewsList v-bind:username = "userstate.username"  :newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>军事</span>
-                        <NewsList v-bind:newsList="newsInfo.data"> </NewsList>
+                        <NewsList v-bind:username = "userstate.username"  :newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>财经</span>
-                        <NewsList v-bind:newsList="newsInfo.data"> </NewsList>
+                        <NewsList v-bind:username = "userstate.username"  :newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>娱乐</span>
-                        <NewsList v-bind:newsList="newsInfo.data"> </NewsList>
+                        <NewsList v-bind:username = "userstate.username"  :newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>体育</span>
-                        <NewsList v-bind:newsList="newsInfo.data"> </NewsList>
+                        <NewsList v-bind:username = "userstate.username"  :newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>科技</span>
-                        <NewsList v-bind:newsList="newsInfo.data"> </NewsList>
+                        <NewsList v-bind:username = "userstate.username"  :newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>游戏</span>
-                        <NewsList v-bind:newsList="newsInfo.data"> </NewsList>
+                        <NewsList v-bind:username = "userstate.username"  :newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>文化</span>
-                        <NewsList v-bind:newsList="newsInfo.data"> </NewsList>
+                        <NewsList v-bind:username = "userstate.username"  :newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>社会</span>
-                        <NewsList v-bind:newsList="newsInfo.data"> </NewsList>
+                        <NewsList v-bind:username = "userstate.username"  :newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                 </el-tabs>
             </div>

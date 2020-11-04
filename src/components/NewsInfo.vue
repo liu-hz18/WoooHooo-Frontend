@@ -16,7 +16,10 @@ export default {
     name: "NewsInfo",
     components: {},
     props: {
-        username:String,
+        username:{
+            type:String,
+            default: () => "Info username"
+        },
         uid: Number,
         title: String,
         imgurl: String,
