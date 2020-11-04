@@ -1,4 +1,3 @@
-
 import API from "../utils/API.js";
 import RandomUtil from "../utils/RandomUtil.js"
 import {urlParam}  from "../utils/communication.js"
@@ -16,7 +15,7 @@ export function getNewsList(query, page, number, that) {
     var url = urlParam(API.GET_NEWS_LIST.path, params) // 查询关键词，未分词
     request.open(API.GET_NEWS_LIST.method, url, true)
     var newsList
-    var totalNumber = 100
+    var total = 100
     var start = new Date().getTime()
     var keywords = [query]
     request.onreadystatechange = function () {
@@ -25,14 +24,15 @@ export function getNewsList(query, page, number, that) {
             try{
                 var jsonobj = JSON.parse(request.responseText);
                 newsList = jsonobj["data"];       //新闻列表，属性不变
-                totalNumber = jsonobj["total"];   //总结果条数
+                total = jsonobj["total"];   //总结果条数
                 keywords = jsonobj["keywords"];   //关键词分词结果，list[str]
                 that.newsInfo = {
                     data: newsList,
-                    total: totalNumber,
+                    total: total,
                     time: ((new Date().getTime()) - start) / 1000,
                     keywords: keywords,
                 }
+                that.totalpage = Math.floor(total / 10)
                 console.log(that.newsInfo)
             } catch ( error ) {
                 newsList = randomInitNews(query)
@@ -67,6 +67,7 @@ export function getNewsClassList(newsclassnumber, page, number, that) {
                     keywords: [],
                 }
                 that.isLoading = false
+                that.totalpage = Math.floor(total / 10)
                 console.log(that.newsInfo)
             } catch ( error ) {
                 newsList = randomInitNews(newsclass)

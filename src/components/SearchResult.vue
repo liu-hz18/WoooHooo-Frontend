@@ -27,7 +27,7 @@
         </el-row>
 
         <div class="pagination">
-            <el-pagination background layout="prev, pager, next" :total="newsInfo['total']" @current-change="handleCurrentChange" :current-page.sync="currentPage">
+            <el-pagination background layout="prev, pager, next" :total="totalpage" @current-change="handleCurrentChange" :current-page.sync="currentPage">
             </el-pagination>
         </div>
     </el-container>
@@ -84,6 +84,7 @@ export default {
             currentClass: 0,
             isSearch: true,
             isLoading: false,
+            totalpage: 1,
         };
     },
     methods: {
