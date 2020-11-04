@@ -45,11 +45,16 @@
 <script>
 import RandomUtil from "../utils/RandomUtil";
 import Store from "../utils/store";
+import API from "../utils/API.js";
 //import {getNewsList} from "../datas/newslist.js";
 
 export default {
     name: "SearchBox",
     props: {
+        username:{
+            type:String,
+            default: () =>"Searchbox username"
+        },
         searchInputProp: String,
     },
     data() {
@@ -102,6 +107,21 @@ export default {
             console.log("input:", this.searchinput);
             //this.$emit('update-news', getNewsList(this.searchinput, 0, 10));
             this.$emit("text-change", this.searchinput);
+            //将用户的搜索内容发给后端
+            if(this.username!=""){
+                var request = new XMLHttpRequest()
+                //异步？
+                request.open(API.POST_USER_SEARCH.method, API.POST_USER_SEARCH.path, true)
+                /*request.onreadystatechange = function () {
+                                console.log("从后端收到：")
+                                console.log(request.readyState, request.status, request.responseText)
+                }*/
+                request.send(JSON.stringify({
+                    username:this.username,
+                    data:this.searchinput
+                }))
+                console.log("用户："+this.username+" 搜索了关键词："+this.searchinput)
+            }
             this.$router.push({
                 name: 'SearchResult',
                 query: {

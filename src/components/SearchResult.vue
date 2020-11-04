@@ -6,7 +6,7 @@
         </el-header>
 
         <div class="search-box">
-            <SearchBox ref="searchbox" @update-news="updateNews" @text-change="updateInput" v-bind:searchInputProp="searchinput">
+            <SearchBox ref="searchbox" @update-news="updateNews" @text-change="updateInput" v-bind:username = "userstate.username" :searchInputProp="searchinput">
             </SearchBox>
         </div>
         <div class="info" v-if="isSearch==='true'">

@@ -13,7 +13,7 @@
             </el-col>
         </el-row>
 
-        <SearchBox> </SearchBox>
+        <SearchBox v-bind:username = "userstate.username"> </SearchBox>
 
         <el-container>
             <div class="news">
