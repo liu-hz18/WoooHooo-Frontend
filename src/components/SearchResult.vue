@@ -2,11 +2,11 @@
 <div class="result">
     <el-container>
         <el-header>
-            <NavBar v-bind:activeIndexProp="activeIndexProp" :isSearch="String(isSearch)" :username = "userstate.username" @user-logout = "userLogout"> </NavBar>
+            <NavBar v-bind:activeIndexProp="activeIndexProp" :isSearch="String(isSearch)" :username="userstate.username" @user-logout="userLogout"> </NavBar>
         </el-header>
 
         <div class="search-box">
-            <SearchBox ref="searchbox" @update-news="updateNews" @text-change="updateInput" v-bind:username = "userstate.username" :searchInputProp="searchinput">
+            <SearchBox ref="searchbox" @update-news="updateNews" @text-change="updateInput" v-bind:username="userstate.username" :searchInputProp="searchinput">
             </SearchBox>
         </div>
         <div class="info" v-if="isSearch==='true'">
@@ -18,7 +18,7 @@
         <el-row :gutter="20">
             <el-col :span="12" :offset="3">
                 <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
-                <NewsList v-bind:username = "userstate.username" v-if="!isLoading" v-bind:newsList="newsInfo['data']" :keywords="newsInfo['keywords']">
+                <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo['data']" :keywords="newsInfo['keywords']">
                 </NewsList>
             </el-col>
             <el-col :span="6">
@@ -68,10 +68,10 @@ export default {
     data() {
         return {
             //用户状态记录
-            userstate:{
-                username:this.$cookies.get("username")?this.$cookies.get("username"):""
+            userstate: {
+                username: this.$cookies.get("username") ? this.$cookies.get("username") : ""
             },
-            activeIndexProp:"2",
+            activeIndexProp: "2",
             newsInfo: {
                 data: [],
                 time: 0.0001,
@@ -93,7 +93,7 @@ export default {
         };
     },
     methods: {
-        userLogout(){
+        userLogout() {
             this.$cookies.remove("username")
             this.userstate.username = ""
         },

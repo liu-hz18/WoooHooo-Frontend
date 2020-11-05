@@ -2,7 +2,7 @@
 <div class="home">
     <el-container>
         <el-header>
-            <NavBar v-bind:activeIndexProp="activeIndexProp" :username = "userstate.username" @user-logout = "userLogout"> </NavBar>
+            <NavBar v-bind:activeIndexProp="activeIndexProp" :username="userstate.username" @user-logout="userLogout"> </NavBar>
         </el-header>
 
         <el-row :gutter="20">
@@ -13,7 +13,7 @@
             </el-col>
         </el-row>
 
-        <SearchBox v-bind:username = "userstate.username"> </SearchBox>
+        <SearchBox v-bind:username="userstate.username"> </SearchBox>
 
         <el-container>
             <div class="news">
@@ -22,7 +22,8 @@
                         <span slot="label"><em class="el-icon-date"></em>热点</span>
                         <el-row :gutter="15">
                             <el-col :span="15">
-                                <NewsList v-bind:username = "userstate.username" :newsList="newsInfo.data"> </NewsList>
+                                <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                                <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data"> </NewsList>
                             </el-col>
                             <el-col :span="9">
                                 <HotList v-bind:hotList="hotList"> </HotList>
@@ -31,43 +32,53 @@
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>国内</span>
-                        <NewsList v-bind:username = "userstate.username"  :newsList="newsInfo.data"> </NewsList>
+                        <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>国际</span>
-                        <NewsList v-bind:username = "userstate.username"  :newsList="newsInfo.data"> </NewsList>
+                        <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>军事</span>
-                        <NewsList v-bind:username = "userstate.username"  :newsList="newsInfo.data"> </NewsList>
+                        <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>财经</span>
-                        <NewsList v-bind:username = "userstate.username"  :newsList="newsInfo.data"> </NewsList>
+                        <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>娱乐</span>
-                        <NewsList v-bind:username = "userstate.username"  :newsList="newsInfo.data"> </NewsList>
+                        <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>体育</span>
-                        <NewsList v-bind:username = "userstate.username"  :newsList="newsInfo.data"> </NewsList>
+                        <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>科技</span>
-                        <NewsList v-bind:username = "userstate.username"  :newsList="newsInfo.data"> </NewsList>
+                        <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>游戏</span>
-                        <NewsList v-bind:username = "userstate.username"  :newsList="newsInfo.data"> </NewsList>
+                        <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>文化</span>
-                        <NewsList v-bind:username = "userstate.username"  :newsList="newsInfo.data"> </NewsList>
+                        <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>社会</span>
-                        <NewsList v-bind:username = "userstate.username"  :newsList="newsInfo.data"> </NewsList>
+                        <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data"> </NewsList>
                     </el-tab-pane>
                 </el-tabs>
             </div>
@@ -81,6 +92,7 @@ import {
     getNewsClassList
 } from "../datas/newslist.js";
 import logo from "../assets/search_icon.png";
+import load from "../assets/loading.gif"
 import NewsList from "./NewsList.vue";
 import HotList from "./HotList.vue";
 import SearchBox from "./SearchBox.vue";
@@ -99,20 +111,23 @@ export default {
             type: String,
             default: () => logo,
         },
+        loadgif: {
+            type: String,
+            default: () => load,
+        },
     },
     data() {
         return {
-
             //用户状态记录
-            userstate:{
+            userstate: {
                 //username:this.$route.params.username?this.$route.params.username:""
-                username:this.$cookies.get("username")?this.$cookies.get("username"):""
+                username: this.$cookies.get("username") ? this.$cookies.get("username") : ""
             },
-            activeIndexProp:"0",
+            activeIndexProp: "0",
             searchinput: "中国",
             keywordlist: ["news", "is"],
             newsInfo: {
-                
+
                 data: [],
                 time: 0.0001,
                 total: 1000,
@@ -134,7 +149,7 @@ export default {
         handleClick() {
             getNewsClassList(this.activeTab, this.pageNumber, 10, this);
         },
-        userLogout(){
+        userLogout() {
             this.$cookies.remove("username")
             this.userstate.username = ""
         }
@@ -178,5 +193,18 @@ a {
     margin-top: 3%;
     margin-left: 10%;
     margin-right: 10%;
+}
+
+img {
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 18%;
+    margin-bottom: 18%;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
 }
 </style>
