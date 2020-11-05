@@ -56,7 +56,7 @@ export default {
                             useraction: "register",
                             username : this.user.name,
                             userpass : md5(this.user.pass),
-                            useremail : this.user.email,
+                            mail : this.user.email,
                             
                         }))
                     }
