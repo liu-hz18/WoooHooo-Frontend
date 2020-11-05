@@ -117,8 +117,8 @@ export function getBrowseNewsList(username,that){
         number: 10,
         page: 0,
     }
-    var url = urlParam(API.GET_RECOMMEND.path, params) // 历史记录
-    request.open(API.GET_RECOMMEND.method, url, true)
+    var url = urlParam(API.GET_BROWSE.path, params) // 历史记录
+    request.open(API.GET_BROWSE.method, url, true)
     console.log(url)
 
     request.onreadystatechange = function () {

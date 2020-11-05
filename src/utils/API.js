@@ -23,6 +23,10 @@ const API = {
         path: "/api/browsehis",
         method : "post",
     },
+    GET_BROWSE:{
+        path:"/api/browsehis",
+        method:"get",
+    },
     POST_USER_SEARCH:{
         path: "/api/searchhis",
         method : "post",
