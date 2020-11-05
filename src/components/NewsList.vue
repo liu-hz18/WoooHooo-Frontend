@@ -2,7 +2,7 @@
 <div class="news-list">
     <ul>
         <li>
-            <NewsItem v-for="(newsitem, index) in newsList" v-bind:key="index" :username="username" :title="newsitem.title" :content="newsitem.content" :source="newsitem.source" :time="newsitem.time" :imgurl="newsitem.imgurl" :link="newsitem.link" :keywords="keywords">
+            <NewsItem v-for="(newsitem, index) in newsList" v-bind:key="index" :username="username" :title="newsitem.title" :content="newsitem.content" :source="newsitem.source" :time="newsitem.time" :imgurl="newsitem.imgurl" :uid="newsitem.uid" :link="newsitem.link" :keywords="keywords">
             </NewsItem>
         </li>
     </ul>

@@ -4,7 +4,7 @@
     <el-card v-if="haveImg">
         <div class="news-body">
             <el-col :span="18">
-                <NewsInfo v-bind:username="username" :link="link" :title="title" :content="content" :source="source" :time="time" :keywords="keywords"></NewsInfo>
+                <NewsInfo v-bind:username="username" :link="link" :title="title" :content="content" :source="source" :time="time" :keywords="keywords" :imgurl="imgurl" :uid="uid"></NewsInfo>
             </el-col>
             <el-col :span="5">
                 <a v-bind:href="imgurl">
@@ -17,7 +17,7 @@
     <el-card v-if="!haveImg">
         <div class="news-body">
             <el-col :span="24">
-                <NewsInfo v-bind:username="username" :link="link" :title="title" :content="content" :source="source" :time="time" :keywords="keywords"></NewsInfo>
+                <NewsInfo v-bind:username="username" :link="link" :title="title" :content="content" :source="source" :time="time" :keywords="keywords" :imgurl="imgurl" :uid="uid"></NewsInfo>
             </el-col>
         </div>
     </el-card>
@@ -37,7 +37,7 @@ export default {
             type: String,
             default: () => "Item username"
         },
-        uid: Number,
+        uid: String,
         title: String,
         imgurl: String,
         content: String,

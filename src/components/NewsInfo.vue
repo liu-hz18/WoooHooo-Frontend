@@ -19,7 +19,7 @@ export default {
             type: String,
             default: () => "Info username"
         },
-        uid: Number,
+        uid: String,
         title: String,
         imgurl: String,
         content: String,
@@ -63,6 +63,16 @@ export default {
 
                 }))
                 console.log("用户：" + this.username + " 点击了新闻：" + this.title)
+                console.log({
+                        uid: this.uid,
+                        title: this.title,
+                        imgurl: this.imgurl,
+                        content: this.content,
+                        link: this.link,
+                        source: this.source,
+                        time: this.time,
+                        //keywords: this.keywords,
+                    })
             } else {
                 console.log("用户未登录")
             }
