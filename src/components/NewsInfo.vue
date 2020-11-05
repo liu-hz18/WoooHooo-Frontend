@@ -44,10 +44,10 @@ export default {
                 var request = new XMLHttpRequest()
                 //异步？
                 request.open(API.POST_USER_CLICK.method, API.POST_USER_CLICK.path, true)
-                /*request.onreadystatechange = function () {
+                request.onreadystatechange = function () {
                                 console.log("从后端收到：")
                                 console.log(request.readyState, request.status, request.responseText)
-                }*/
+                }
                 request.send(JSON.stringify({
                     username: this.username,
                     newsinfo: {
@@ -58,7 +58,7 @@ export default {
                         link: this.link,
                         source: this.source,
                         time: this.time,
-                        keywords: this.keywords,
+                        //keywords: this.keywords,
                     }
 
                 }))
