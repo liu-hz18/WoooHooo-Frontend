@@ -93,14 +93,14 @@ export function getBrowseNewsList(username,that){
     var infoparams = {
         username: that.userstate.username,
     }
-    var infourl = urlParam(API.GET_RECOMMEND.path, infoparams)
+    var infourl = urlParam(API.GET_USERINFO.path, infoparams)
     inforequest.open(API.GET_USERINFO.method,infourl,true)
     console.log(infourl)
     inforequest.onreadystatechange = function () {
-        console.log(request.readyState, request.status)
-        if (request.readyState === 4 && request.status === 200) {
+        console.log(inforequest.readyState, inforequest.status)
+        if (inforequest.readyState === 4 && inforequest.status === 200) {
             try{
-                var jsonobj = JSON.parse(request.responseText);
+                var jsonobj = JSON.parse(inforequest.responseText);
                 that.userinfo.mail = jsonobj["mail"]
                 console.log("后端返回的邮箱："+jsonobj["mail"])
             }
@@ -109,6 +109,7 @@ export function getBrowseNewsList(username,that){
             }
         }
     }
+    inforequest.send(null)
 
     var request = new XMLHttpRequest();
     console.log("getBrowseNewsList")
