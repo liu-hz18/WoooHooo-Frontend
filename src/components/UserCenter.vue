@@ -14,40 +14,66 @@
         </el-row>
     </el-container>
 
-<div class="clear-space">
-    <section class="info-message">
-        <div class="info-title">
-            <span class="active">账号信息</span>
-        </div>
-        <el-form >
-            <el-form-item label="用户名" class="item">
-                    <span style="color: #000000;">David</span>
-            </el-form-item>
-            <el-form-item label="注册邮箱" class="item">
-                    <span style="color: #000000;">xxx@xx.xx</span>
-            </el-form-item>
-            <el-form-item label="密码" class="item">
-                    <span style="color: #42b983;">重置密码</span>
-            </el-form-item>
-        
-        </el-form>
-    </section>
-    <section class="info-message info-message2" id="my-object">
-        <div class="info-title">
-            <span class="active">历史足迹</span>
-        </div>
-        
-    </section>
-    <div class="pup-bg"></div>
-        <!--    重设密码弹框-->
+    <div class="clear-space">
+        <section class="info-message">
+            <div class="info-title">
+                <span class="active">账号信息</span>
+            </div>
+            <el-form >
+                <el-form-item label="用户名" class="item">
+                        <span style="color: #000000;">David</span>
+                </el-form-item>
+                <el-form-item label="注册邮箱" class="item">
+                        <span style="color: #000000;">xxx@xx.xx</span>
+                </el-form-item>
+                <el-form-item label="密码" class="item">
+                        <span style="color: #42b983;" @click="handleRstPass">重置密码</span>
+                </el-form-item>
+            </el-form>
+        </section>
+        <section class="info-message info-message2" id="my-object">
+            <div class="info-title">
+                <span class="active">历史足迹</span>
+            </div>
             
+        </section>
+        <div class="pup-bg">
+            <!--    重设密码弹框-->
+            <div class="my-info-pup reset-password" id="reset-password-pup" style="display: block;">
+                <div class="my-info-warp">
+                    <div class="close iconfont icon_demo_close">
+
+                    </div>
+                    <h6>重设密码</h6>
+                <div class="list">
+                    <span>原密码</span>
+                    <input id="oldPwd" type="password" class="text" placeholder="原密码" data-error="密码长度为6-20">
+                </div>
+                <div class="list">
+                    <span>新密码</span>
+                    <input id="newPwd" type="password" class="text" placeholder="新密码" data-error="密码长度为6-20">
+                </div>
+                <div class="list">
+                    <span>重复新密码</span>
+                    <input id="confPwd" type="password" class="text" placeholder="确认新密码" data-error="两次输入密码不一致">
+                </div>
+                <p class="error-message">密码长度为6-20</p>
+                <div class="button-warp">
+                    <button data-text="重置密码成功" class="ok" id="submitPwd">确定</button>
+                    <button class="cancel">取消</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        
+        
         <!--    产品偏好设置-->
             
         <!--    重命名昵称-->
             
         <!--   密码保护 -->
             
-        </div>
+    </div>
 
 </div>
 </template>
@@ -90,6 +116,9 @@ export default {
         userLogout(){
             this.$cookies.remove("username")
             this.userstate.username = ""
+        },
+        handleRstPass(){
+
         }
     },
     created() {
@@ -163,6 +192,15 @@ section {
     position: relative;
     padding-left: 30px;
 }
-
+.pup-bg {
+    width: 100%;
+    position: fixed;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 98;
+    left: 0;
+    top: 0;
+    display: none;
+}
 
 </style>
