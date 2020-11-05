@@ -42,8 +42,6 @@ export function getNewsList(query, page, number, that) {
                 newsList = randomInitNews(query)
                 that.isLoading = false
             }
-        } else {
-            //newsList = randomInitNews(query)
         }
     }
     request.send(null)
@@ -79,8 +77,6 @@ export function getNewsClassList(newsclassnumber, page, number, that) {
                 total = 1000
                 that.isLoading = false
             }
-        } else {
-            //newsList = randomInitNews(newsclass)
         }
     }
     request.send(JSON.stringify({

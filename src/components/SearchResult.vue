@@ -4,18 +4,24 @@
         <el-header>
             <NavBar v-bind:activeIndexProp="activeIndexProp" :isSearch="String(isSearch)" :username="userstate.username" @user-logout="userLogout"> </NavBar>
         </el-header>
-
-        <div class="search-box">
-            <SearchBox ref="searchbox" @update-news="updateNews" @text-change="updateInput" v-bind:username="userstate.username" :searchInputProp="searchinput">
-            </SearchBox>
-        </div>
+        <el-row style="margin-top: 0px; height: 90px;">
+            <el-col :span="2" :offset="2">
+                <img class="home-img" v-bind:src="homeicon" alt="WoooHooo~" />
+            </el-col>
+            <el-col :span="20">
+                <div class="search-box">
+                    <SearchBox ref="searchbox" @update-news="updateNews" @text-change="updateInput" v-bind:username="userstate.username" :searchInputProp="searchinput">
+                    </SearchBox>
+                </div>
+            </el-col>
+        </el-row>
         <div class="info" v-if="isSearch==='true'">
             <p>
                 查询到 {{ newsInfo["total"] }}条结果, 用时{{ newsInfo["time"]}}s
             </p>
         </div>
 
-        <el-row :gutter="20">
+        <el-row :gutter="20" style="margin-top: 5px">
             <el-col :span="12" :offset="3">
                 <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
                 <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo['data']" :keywords="newsInfo['keywords']">
@@ -40,6 +46,7 @@ import SearchBox from "./SearchBox.vue";
 import NewsList from "./NewsList.vue";
 import HotList from "./HotList.vue";
 import NavBar from "./NavBar.vue";
+import logo from "../assets/home.svg";
 import load from "../assets/loading.gif"
 import {
     getNewsList,
@@ -64,6 +71,10 @@ export default {
             type: String,
             default: () => load,
         },
+        homeicon: {
+            type: String,
+            default: () => logo,
+        }
     },
     data() {
         return {
@@ -159,8 +170,13 @@ a {
     color: #42b983;
 }
 
+.search-box {
+    position: relative;
+    width: 107%;
+}
+
 .info {
-    position: relateive;
+    position: relative;
     margin-left: 21%;
     color: #909399;
     font-size: 9px;
@@ -194,5 +210,20 @@ img {
     text-align: center;
     justify-content: center;
     align-items: center;
+}
+
+.home-img {
+    position: relative;
+    max-width: 100%;
+    max-height: 40px;
+    margin-left: 60%;
+    margin-top: 35%;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1em;
+    overflow: hidden;
+    display: block;
+    min-height: 0;
+    line-height: 0;
 }
 </style>

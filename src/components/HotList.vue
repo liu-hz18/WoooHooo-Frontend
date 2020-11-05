@@ -52,7 +52,7 @@ ul {
 }
 
 a {
-    color: #42b983;
+    color: #00809d;
 }
 
 .hot-list {

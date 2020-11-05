@@ -1,12 +1,11 @@
 <template>
 <div class="news-info">
-    <h4 class="news-heading">
+    <p class="news-heading">
         <a v-bind:href="link" v-line-clamp:100="1" v-html="ruleTitle()" target="_blank" :class="{active:clicked === true}" @click="clickTitle"></a>
-    </h4>
-    <h6 class="news-content" v-line-clamp:20="3" v-html="ruleContent()"></h6>
-    <p class="news-source">
-        <em>来源: {{ source }}, 时间: {{ time }}</em>
     </p>
+    <span class=news-time> {{time}} </span>
+    <p class="news-content" v-line-clamp:20="3" v-html="ruleContent()"></p>
+    <p class="news-source"> {{ " " + source }} </p>
 </div>
 </template>
 
@@ -16,8 +15,8 @@ export default {
     name: "NewsInfo",
     components: {},
     props: {
-        username:{
-            type:String,
+        username: {
+            type: String,
             default: () => "Info username"
         },
         uid: Number,
@@ -31,16 +30,16 @@ export default {
     },
     data() {
         return {
-            clicked:false
+            clicked: false
         };
     },
     computed: {
 
     },
     methods: {
-        clickTitle(){
+        clickTitle() {
             this.clicked = true
-            if(this.username != ""){
+            if (this.username != "") {
                 //将用户行为发送给后端
                 var request = new XMLHttpRequest()
                 //异步？
@@ -50,22 +49,21 @@ export default {
                                 console.log(request.readyState, request.status, request.responseText)
                 }*/
                 request.send(JSON.stringify({
-                    username:this.username,
-                    newsinfo:{
-                            uid: this.uid,
-                            title: this.title,
-                            imgurl: this.imgurl,
-                            content:this.content,
-                            link: this.link,
-                            source: this.source,
-                            time: this.time,
-                            keywords: this.keywords,
+                    username: this.username,
+                    newsinfo: {
+                        uid: this.uid,
+                        title: this.title,
+                        imgurl: this.imgurl,
+                        content: this.content,
+                        link: this.link,
+                        source: this.source,
+                        time: this.time,
+                        keywords: this.keywords,
                     }
-                    
+
                 }))
-                console.log("用户："+this.username+" 点击了新闻："+this.title)
-            }
-            else{
+                console.log("用户：" + this.username + " 点击了新闻：" + this.title)
+            } else {
                 console.log("用户未登录")
             }
         },
@@ -80,7 +78,8 @@ export default {
             if (!titleString) {
                 return "";
             }
-            if (keywords && keywords.length > 0) {
+            if (keywords && keywords.length > 0 && keywords[0] !== "") {
+                console.log(keywords)
                 let replaceReg = new RegExp('(' + keywords.join('|') + ')', "gi"); // 匹配关键字正则
                 titleString = titleString.replace( // 开始替换
                     replaceReg,
@@ -109,7 +108,7 @@ ul {
 }
 
 a {
-    color: #42b983;
+    color: #00809d;
 }
 
 li {
@@ -119,24 +118,41 @@ li {
 .news-heading {
     position: relative;
     margin-top: 0%;
+    margin-bottom: 3%;
     height: 5px;
+    font-size: 115%;
+    font-family: "Arial, sans-serif, Courier New";
+    font-weight: 550;
+    text-decoration-line: underline;
 }
 
 .news-content {
     position: relative;
-    height: 10%;
-    font-size: 12px;
+    font-size: 87%;
+    line-height: 140%;
+    margin-block-start: 0.1em;
+    margin-block-end: 0.4em;
+    color: #00000F;
+    font-family: "Arial, sans-serif, Courier New";
 }
 
 .news-source {
     position: relative;
-    margin-top: 5%;
-    height: 5%;
-    font-size: 10%;
+    font-size: 20%;
     color: #909399;
 }
 
-.active{
-            color: rgb(243, 169, 162);
-        }
+.news-time {
+    position: relative;
+    font-size: 20%;
+    color: #909399;
+}
+
+.news-info {
+    margin-block-end: 0.5em;
+}
+
+.active {
+    color: #771caa;
+}
 </style>

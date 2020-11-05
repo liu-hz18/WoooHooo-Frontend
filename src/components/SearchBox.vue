@@ -51,9 +51,9 @@ import API from "../utils/API.js";
 export default {
     name: "SearchBox",
     props: {
-        username:{
-            type:String,
-            default: () =>"Searchbox username"
+        username: {
+            type: String,
+            default: () => "Searchbox username"
         },
         searchInputProp: String,
     },
@@ -108,7 +108,7 @@ export default {
             //this.$emit('update-news', getNewsList(this.searchinput, 0, 10));
             this.$emit("text-change", this.searchinput);
             //将用户的搜索内容发给后端
-            if(this.username!=""){
+            if (this.username != "") {
                 var request = new XMLHttpRequest()
                 //异步？
                 request.open(API.POST_USER_SEARCH.method, API.POST_USER_SEARCH.path, true)
@@ -117,10 +117,10 @@ export default {
                                 console.log(request.readyState, request.status, request.responseText)
                 }*/
                 request.send(JSON.stringify({
-                    username:this.username,
-                    data:this.searchinput
+                    username: this.username,
+                    data: this.searchinput
                 }))
-                console.log("用户："+this.username+" 搜索了关键词："+this.searchinput)
+                console.log("用户：" + this.username + " 搜索了关键词：" + this.searchinput)
             }
             this.$router.push({
                 name: 'SearchResult',
@@ -168,8 +168,7 @@ export default {
 <style>
 .searchbox {
     margin-top: 20px;
-    margin-left: 300px;
-    margin-right: 300px;
+    margin-right: 600px;
 }
 
 .search-title {
@@ -199,12 +198,13 @@ export default {
     cursor: pointer;
 }
 
-#search-box {
-    width: 555px;
-    height: auto;
-    padding-bottom: 10px;
-    z-index: 200;
+.search-box {
     position: relative;
+    width: 100%;
+    height: auto;
+    padding-bottom: 0%;
+    margin-left: 0%;
+    z-index: 200;
 }
 
 #search {

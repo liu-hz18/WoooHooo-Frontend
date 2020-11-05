@@ -6,14 +6,14 @@
         </el-header>
 
         <el-row :gutter="20">
-            <el-col :span="4" :offset="11">
+            <el-col :span="4" :offset="10">
                 <div class="home-icon">
-                    <img v-bind:src="homeicon" alt="WooHoo~" />
+                    <img v-bind:src="homeicon" alt="WoooHooo~" />
                 </div>
             </el-col>
         </el-row>
 
-        <SearchBox v-bind:username="userstate.username"> </SearchBox>
+        <SearchBox class="home-search" v-bind:username="userstate.username"> </SearchBox>
 
         <el-container>
             <div class="news">
@@ -91,7 +91,7 @@
 import {
     getNewsClassList
 } from "../datas/newslist.js";
-import logo from "../assets/search_icon.png";
+import logo from "../assets/home.svg";
 import load from "../assets/loading.gif"
 import NewsList from "./NewsList.vue";
 import HotList from "./HotList.vue";
@@ -179,6 +179,13 @@ li {
 
 a {
     color: #42b983;
+}
+
+.home-search {
+    position: relative;
+    margin-top: 2%;
+    margin-left: 19%;
+    width: 100%;
 }
 
 .home-icon {
