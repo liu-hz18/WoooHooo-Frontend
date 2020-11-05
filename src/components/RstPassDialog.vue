@@ -16,7 +16,7 @@
     </el-form>
     <span slot="footer" class="dialog-footer">
                 <el-button @click="canclebtn">取 消</el-button>
-                <el-button >确 定</el-button>
+                <el-button @click="yesbtn">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -38,6 +38,11 @@ export default {
   },
   methods: {
 	canclebtn(){
+        console.log("点击取消放弃修改")
+        this.$emit("canclebtn")
+    },
+    yesbtn(){
+        console.log("点击确认修改密码")
         this.$emit("canclebtn")
     },
   },
