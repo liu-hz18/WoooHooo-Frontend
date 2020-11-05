@@ -87,12 +87,70 @@ export function getNewsClassList(newsclassnumber, page, number, that) {
 }
 
 export function getBrowseNewsList(username,that){
-    that.newsInfo = {
-        data: randomInitNews(username),
-        time: 0.0001,
-        total: 1000,
-        keywords: [],
+    
+    var inforequest = new XMLHttpRequest();
+    console.log("getuserinfo")
+    var infoparams = {
+        username: that.userstate.username,
     }
+    var infourl = urlParam(API.GET_RECOMMEND.path, infoparams)
+    inforequest.open(API.GET_USERINFO.method,infourl,true)
+    console.log(infourl)
+    inforequest.onreadystatechange = function () {
+        console.log(request.readyState, request.status)
+        if (request.readyState === 4 && request.status === 200) {
+            try{
+                var jsonobj = JSON.parse(request.responseText);
+                that.userinfo.mail = jsonobj["mail"]
+                console.log("后端返回的邮箱："+jsonobj["mail"])
+            }
+            catch(error){
+                that.userinfo.mail = "error"
+            }
+        }
+    }
+
+    var request = new XMLHttpRequest();
+    console.log("getBrowseNewsList")
+    var params = {
+        username: that.userstate.username,
+        number: 10,
+        page: 0,
+    }
+    var url = urlParam(API.GET_RECOMMEND.path, params) // 历史记录
+    request.open(API.GET_RECOMMEND.method, url, true)
+    console.log(url)
+
+    request.onreadystatechange = function () {
+        console.log(request.readyState, request.status)
+        var newsList
+        var total
+        if (request.readyState === 4 && request.status === 200) {
+            try{
+                var jsonobj = JSON.parse(request.responseText);
+                newsList = jsonobj["data"];       //新闻列表，属性不变
+                total = jsonobj["total"]
+                that.newsInfo = {
+                    data: newsList,
+                    total: total,
+                    time: 0,
+                    keywords: [],
+                }
+                
+                console.log(that.newsInfo)
+            } catch ( error ) {
+                newsList = randomInitNews(that.userstate.username)
+                total = 0
+                that.newsInfo = {
+                    data: newsList,
+                    total: total,
+                    time: 0,
+                    keywords: [],
+                }
+            }
+        }
+    }
+    request.send(null)
 }
 
 function randomInitNews(query) {
