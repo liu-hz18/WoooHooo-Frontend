@@ -43,7 +43,7 @@ export default {
     },
     yesbtn(){
         console.log("点击确认修改密码")
-        this.$emit("canclebtn")
+        this.$emit("rstpass")
     },
   },
   

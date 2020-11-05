@@ -86,6 +86,15 @@ export function getNewsClassList(newsclassnumber, page, number, that) {
     }))
 }
 
+export function getBrowseNewsList(username,that){
+    that.newsInfo = {
+        data: randomInitNews(username),
+        time: 0.0001,
+        total: 1000,
+        keywords: [],
+    }
+}
+
 function randomInitNews(query) {
     var newsList = []
     for (let index = 0; index < 10; index++) {
