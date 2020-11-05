@@ -3,7 +3,7 @@
 <div class="NewsItem">
     <el-card v-if="haveImg">
         <div class="news-body">
-            <el-col :span="16">
+            <el-col :span="18">
                 <NewsInfo v-bind:username="username" :link="link" :title="title" :content="content" :source="source" :time="time" :keywords="keywords"></NewsInfo>
             </el-col>
             <el-col :span="5">
@@ -33,8 +33,8 @@ export default {
         NewsInfo,
     },
     props: {
-        username:{
-            type:String,
+        username: {
+            type: String,
             default: () => "Item username"
         },
         uid: Number,
@@ -81,9 +81,18 @@ li {
 
 .news-img {
     position: relative;
-    width: 140%;
-    margin-top: 10%;
-    margin-left: 20%;
+    max-width: 120%;
+    max-height: 110px;
+    margin-left: 10%;
+    background: #f5f5f6;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1em;
+    overflow: hidden;
+    display: block;
+    min-height: 0;
+    line-height: 0;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, .5);
 }
 
 .NewsItem {
@@ -95,7 +104,4 @@ li {
     margin-left: 0%;
     margin-right: 0%;
 }
-
-
-
 </style>
