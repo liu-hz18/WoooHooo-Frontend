@@ -43,8 +43,7 @@ export function getNewsList(query, page, number, that) {
                 that.isLoading = false
             }
         } else {
-            newsList = randomInitNews(query)
-            that.isLoading = false
+            //newsList = randomInitNews(query)
         }
     }
     request.send(null)
@@ -81,8 +80,7 @@ export function getNewsClassList(newsclassnumber, page, number, that) {
                 that.isLoading = false
             }
         } else {
-            newsList = randomInitNews(newsclass)
-            that.isLoading = false
+            //newsList = randomInitNews(newsclass)
         }
     }
     request.send(JSON.stringify({
