@@ -27,7 +27,7 @@
                         <span style="color: #000000;">xxx@xx.xx</span>
                 </el-form-item>
                 <el-form-item label="密码" class="item">
-                        <span style="color: #42b983;" @click="handleRstPass">重置密码</span>
+                        <span style="color: #42b983;cursor: pointer;" @click="handleRstPass">重置密码</span>
                 </el-form-item>
             </el-form>
         </section>
@@ -37,33 +37,14 @@
             </div>
             
         </section>
+        <RstPassDialog v-bind:oldpass = "rstPassDialog.form.oldpass"
+                        v-bind:newpass= "rstPassDialog.form.newpass"
+                        v-bind:dialogVisible= "rstPassDialog.visible"
+                        @canclebtn = "closedialog"
+                        />
         <div class="pup-bg">
             <!--    重设密码弹框-->
-            <div class="my-info-pup reset-password" id="reset-password-pup" style="display: block;">
-                <div class="my-info-warp">
-                    <div class="close iconfont icon_demo_close">
-
-                    </div>
-                    <h6>重设密码</h6>
-                <div class="list">
-                    <span>原密码</span>
-                    <input id="oldPwd" type="password" class="text" placeholder="原密码" data-error="密码长度为6-20">
-                </div>
-                <div class="list">
-                    <span>新密码</span>
-                    <input id="newPwd" type="password" class="text" placeholder="新密码" data-error="密码长度为6-20">
-                </div>
-                <div class="list">
-                    <span>重复新密码</span>
-                    <input id="confPwd" type="password" class="text" placeholder="确认新密码" data-error="两次输入密码不一致">
-                </div>
-                <p class="error-message">密码长度为6-20</p>
-                <div class="button-warp">
-                    <button data-text="重置密码成功" class="ok" id="submitPwd">确定</button>
-                    <button class="cancel">取消</button>
-                </div>
-                </div>
-            </div>
+            
         </div>
         
         
@@ -84,11 +65,13 @@ import {
 } from "../datas/newslist.js";
 import logo from "../assets/search_icon.png";
 import NavBar from "./NavBar.vue";
+import RstPassDialog from "@/components/RstPassDialog"
 
 export default {
     name: "Home",
     components: {
         NavBar,
+        RstPassDialog
     },
     props: {
         homeicon: {
@@ -104,12 +87,20 @@ export default {
                 //username:this.$route.params.username?this.$route.params.username:""
                 username:this.$cookies.get("username")?this.$cookies.get("username"):""
             },
-            activeIndexProp:"1"
+            activeIndexProp:"1",
+            rstPassDialog:{
+                visible:false,
+                  form:{
+                      oldpass:"",
+                      newpass:""
+                    }
+                },
             
         };
     },
     computed: {},
     methods: {
+        
         handleClick() {
             getNewsClassList(this.activeTab, this.pageNumber, 10, this);
         },
@@ -118,7 +109,11 @@ export default {
             this.userstate.username = ""
         },
         handleRstPass(){
-
+            console.log("修改密码")
+            this.rstPassDialog.visible = true
+        },
+        closedialog(){
+            this.rstPassDialog.visible = false
         }
     },
     created() {
