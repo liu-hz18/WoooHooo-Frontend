@@ -16,6 +16,7 @@ export function getNewsList(query, page, number, that) {
     }
     var url = urlParam(API.GET_NEWS_LIST.path, params) // 查询关键词，未分词
     request.open(API.GET_NEWS_LIST.method, url, true)
+    console.log(url)
     var newsList
     var total = 100
     var start = new Date().getTime()
@@ -35,12 +36,15 @@ export function getNewsList(query, page, number, that) {
                     keywords: keywords,
                 }
                 that.totalpage = Math.floor(total / 10)
+                that.isLoading = false
                 console.log(that.newsInfo)
             } catch ( error ) {
                 newsList = randomInitNews(query)
+                that.isLoading = false
             }
         } else {
             newsList = randomInitNews(query)
+            that.isLoading = false
         }
     }
     request.send(null)
@@ -74,9 +78,11 @@ export function getNewsClassList(newsclassnumber, page, number, that) {
             } catch ( error ) {
                 newsList = randomInitNews(newsclass)
                 total = 1000
+                that.isLoading = false
             }
         } else {
             newsList = randomInitNews(newsclass)
+            that.isLoading = false
         }
     }
     request.send(JSON.stringify({
