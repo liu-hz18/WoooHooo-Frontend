@@ -2,7 +2,8 @@
 <div class="hot-list">
     <el-card>
         <em class="el-icon-date"> 今日热榜</em>
-        <ul>
+        <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+        <ul v-if="!isLoading">
             <li v-for="(hotnews, index) in hotList" v-bind:key="index">
                 <div class="hot-item">
                     <ul>
@@ -12,7 +13,7 @@
                             </a>
                         </li>
                         <li>
-                            <em class="el-icon-date"> {{ hotnews.hot }} </em>
+                            <em class="el-icon-date"> {{ hotnews.time }} </em>
                         </li>
                     </ul>
                 </div>
@@ -23,21 +24,25 @@
 </template>
 
 <script>
+import {
+    getHotList
+} from "../datas/newslist.js"
+import load from "../assets/loading.gif"
 export default {
     name: "HotList",
     components: {},
     props: {
-        hotList: {
-            type: Array,
-            default: () =>
-                new Array(6).fill({
-                    uid: 0,
-                    link: "https://www.baidu.com",
-                    title: "This is a news Title Title" + 0,
-                    hot: "100万",
-                }),
+        loadgif: {
+            type: String,
+            default: () => load,
         },
     },
+    data() {
+        return {
+            isLoading: false,
+            hotList: getHotList(this),
+        }
+    }
 };
 </script>
 

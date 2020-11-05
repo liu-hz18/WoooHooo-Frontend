@@ -86,6 +86,26 @@ export function getNewsClassList(newsclassnumber, page, number, that) {
     }))
 }
 
+export function getHotList(that) {
+    that.isLoading = true;
+    var request = new XMLHttpRequest();
+    request.open(API.GET_NEWS_LIST.method, API.GET_HOT_LIST.path, true)
+    request.onreadystatechange = function () {
+        console.log(request.readyState, request.status)
+        if (request.readyState === 4 && request.status === 200) {
+            try{
+                var jsonobj = JSON.parse(request.responseText);
+                that.hotList = jsonobj["data"];
+                that.isLoading = false;
+                console.log(that.hotList)
+            } catch ( error ) {
+                // do nothing
+            }
+        }
+    }
+    request.send(null)
+}
+
 function randomInitNews(query) {
     var newsList = []
     for (let index = 0; index < 10; index++) {

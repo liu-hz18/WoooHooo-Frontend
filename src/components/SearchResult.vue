@@ -41,7 +41,6 @@
 </template>
 
 <script>
-//import { highlightKeyWords } from "../utils/highlight.js";
 import SearchBox from "./SearchBox.vue";
 import NewsList from "./NewsList.vue";
 import HotList from "./HotList.vue";
@@ -183,7 +182,7 @@ a {
 }
 
 .pagination {
-    position: relateive;
+    position: relative;
     margin-left: 14%;
     margin-top: 1%;
     margin-bottom: 5%;
