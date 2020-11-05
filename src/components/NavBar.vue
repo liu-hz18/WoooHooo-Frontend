@@ -27,7 +27,7 @@
         </el-menu-item>
         <el-row style="margin-top: 10px; margin-bottom: 10px; display: flex; justify-content: flex-end; ">
             <div class="login-bar">
-                <el-button round type="success" slot="append" icon="el-icon-user-solid" @click="handleLogin">{{loginBtnText}}</el-button>
+                <el-button round type="primary" slot="append" icon="el-icon-user-solid" @click="handleLogin">{{loginBtnText}}</el-button>
                 <el-button round type="" slot="append" icon="el-icon-user" @click="handleQuit">退出</el-button>
             </div>
         </el-row>
@@ -158,6 +158,6 @@ li {
 }
 
 a {
-    color: #42b983;
+    color: #6b9cd3;
 }
 </style>

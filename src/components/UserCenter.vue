@@ -1,21 +1,15 @@
 <template>
-<div class="center">
+<div >
     <el-container>
         <el-header>
             <NavBar v-bind:activeIndexProp="activeIndexProp" :username = "userstate.username" @user-logout = "userLogout"> </NavBar>
         </el-header>
 
-        <el-row :gutter="20">
-            <el-col :span="4" :offset="11">
-                <div class="home-icon">
-                    <img v-bind:src="homeicon" alt="WooHoo~" />
-                </div>
-            </el-col>
-        </el-row>
+        
     </el-container>
 
-    <div class="clear-space">
-        <section class="info-message">
+    <div >
+        <section class="info-message" >
             <div class="info-title">
                 <span class="active">账号信息</span>
             </div>
@@ -24,13 +18,14 @@
                         <span style="color: #000000;">{{userstate.username}}</span>
                 </el-form-item>
                 <el-form-item label="注册邮箱" class="item">
-                        <span style="color: #000000;">xxx@xx.xx</span>
+                        <span style="color: #000000;">{{userinfo.mail}}</span>
                 </el-form-item>
                 <el-form-item label="密码" class="item">
-                        <span style="color: #42b983;cursor: pointer;" @click="handleRstPass">重置密码</span>
+                        <span style="color: #4283b9;cursor: pointer;" @click="handleRstPass">重置密码</span>
                 </el-form-item>
             </el-form>
         </section>
+        
         <section class="info-message info-message2" id="my-object">
             <div class="info-title">
                 <span class="active">历史足迹</span>
@@ -62,7 +57,7 @@
 
 <script>
 import {getBrowseNewsList} from "../datas/newslist.js";
-import logo from "../assets/search_icon.png";
+import logo from "../assets/home.svg";
 import NavBar from "./NavBar.vue";
 import NewsList from "./NewsList.vue";
 import RstPassDialog from "@/components/RstPassDialog"
@@ -87,6 +82,9 @@ export default {
             //用户状态记录
             userstate:{
                 username:this.$cookies.get("username")?this.$cookies.get("username"):""
+            },
+            userinfo:{
+                mail:"xxx@xx.com"
             },
             newsInfo: {
                 data: [],
@@ -154,12 +152,12 @@ li {
 }
 
 a {
-    color: #42b983;
+    color: #4283b9;
 }
 
 .home-icon {
     margin-top: 20px;
-    height: 100px;
+    height: 0px;
     width: auto;
 }
 
@@ -210,6 +208,19 @@ section {
     left: 0;
     top: 0;
     display: none;
+}
+
+.iconbg {
+    padding: 0;
+    height: 50%;
+    background-position: top;
+    background-repeat:no-repeat;
+    background: #ffffff;
+    background-image: url("../assets/home.svg");
+    background-size: 10;
+    margin-left: 11.6%;
+    margin-right: 11.6%;
+    opacity: 0.9;
 }
 
 </style>

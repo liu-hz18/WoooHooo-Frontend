@@ -26,7 +26,14 @@ const API = {
     POST_USER_SEARCH:{
         path: "/api/searchhis",
         method : "post",
+    },
+    GET_RECOMMEND:{
+        path:"/api/recommend",
+        method:"get",
+    },
+    GET_USERINFO:{
+        path:"/api/user",
+        method:"get",
     }
-
 }
 export default API
