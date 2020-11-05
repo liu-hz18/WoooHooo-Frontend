@@ -32,7 +32,8 @@ export default {
     username:{
       type:String,
       default: () =>"Bob"},
-    newsList: {
+    newsList: 
+    {
       type: Array,
       default: () =>
         new Array(6).fill({

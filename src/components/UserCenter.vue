@@ -21,7 +21,7 @@
             </div>
             <el-form >
                 <el-form-item label="用户名" class="item">
-                        <span style="color: #000000;">David</span>
+                        <span style="color: #000000;">{{userstate.username}}</span>
                 </el-form-item>
                 <el-form-item label="注册邮箱" class="item">
                         <span style="color: #000000;">xxx@xx.xx</span>
@@ -35,12 +35,13 @@
             <div class="info-title">
                 <span class="active">历史足迹</span>
             </div>
-            
+            <NewsList v-bind:username="userstate.username" :newsList="newsInfo.data"> </NewsList>
         </section>
         <RstPassDialog v-bind:oldpass = "rstPassDialog.form.oldpass"
                         v-bind:newpass= "rstPassDialog.form.newpass"
                         v-bind:dialogVisible= "rstPassDialog.visible"
                         @canclebtn = "closedialog"
+                        @rstpass="rstpass"
                         />
         <div class="pup-bg">
             <!--    重设密码弹框-->
@@ -60,16 +61,16 @@
 </template>
 
 <script>
-import {
-    getNewsClassList
-} from "../datas/newslist.js";
+import {getBrowseNewsList} from "../datas/newslist.js";
 import logo from "../assets/search_icon.png";
 import NavBar from "./NavBar.vue";
+import NewsList from "./NewsList.vue";
 import RstPassDialog from "@/components/RstPassDialog"
 
 export default {
     name: "Home",
     components: {
+        NewsList,
         NavBar,
         RstPassDialog
     },
@@ -78,14 +79,20 @@ export default {
             type: String,
             default: () => logo,
         },
+        
     },
     data() {
         return {
 
             //用户状态记录
             userstate:{
-                //username:this.$route.params.username?this.$route.params.username:""
                 username:this.$cookies.get("username")?this.$cookies.get("username"):""
+            },
+            newsInfo: {
+                data: [],
+                time: 0.0001,
+                total: 1000,
+                keywords: [],
             },
             activeIndexProp:"1",
             rstPassDialog:{
@@ -101,9 +108,7 @@ export default {
     computed: {},
     methods: {
         
-        handleClick() {
-            getNewsClassList(this.activeTab, this.pageNumber, 10, this);
-        },
+        
         userLogout(){
             this.$cookies.remove("username")
             this.userstate.username = ""
@@ -114,10 +119,19 @@ export default {
         },
         closedialog(){
             this.rstPassDialog.visible = false
+        },
+        rstpass(){
+            this.rstPassDialog.visible = false
+            this.$message({
+                type: 'success',
+                message: '密码修改成功！',
+                showClose: true
+            })
         }
     },
     created() {
-        getNewsClassList(this.activeTab, 0, 10, this);
+        console.log("个人中心页面加载中")
+        getBrowseNewsList(this.userstate.username,this);
     },
 };
 </script>
