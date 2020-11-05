@@ -54,6 +54,7 @@ export default {
             loginBtnText:(this.username==="")?"登录":this.username,
             activeIndex: this.activeIndexProp,
             subitem: 0,
+            
         };
     },
     computed: {
