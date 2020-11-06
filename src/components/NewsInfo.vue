@@ -123,8 +123,12 @@ a {
 }
 
 a:hover {
-    color: #2440b3;
+    color: #6680ff;
     text-decoration: underline;
+    transition: all .1s;
+    -moz-transition: all .1s;
+    -webkit-transition: all .1s;
+    -o-transition: all .1s;
 }
 
 li {
@@ -147,7 +151,7 @@ li {
     line-height: 140%;
     margin-block-start: 0.1em;
     margin-block-end: 0.4em;
-    color: #00000F;
+    color: #1e272e;
     font-family: "Arial, sans-serif, Courier New";
 }
 

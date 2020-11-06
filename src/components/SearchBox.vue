@@ -21,13 +21,13 @@
                             </div>
                         </dt>
                         <div class="history-tag">
-                            <el-tag v-for="search in historySearchList" :key="search.id" closable :type="search.type" @close="closeHandler(search)" @click="searchinput = search.name">{{ search.name }}</el-tag>
+                            <el-tag v-for="(search, index) in historySearchList" :key="index" closable :type="search.type" @close="closeHandler(search)" @click="searchinput = search.name">{{ search.name }}</el-tag>
                         </div>
                         <dt class="search-title">热门搜索</dt>
-                        <div class="hot-item">
-                            <dd v-for="(search, index) in hotSearchList" :key="index" @click="searchinput = search">
-                                {{ search }}
-                            </dd>
+                        <div class="hot-search">
+                            <el-tag v-for="(search, index) in hotSearchList" :key="index" @click="searchinput = search.title" size="medium" :type="search.type" :effect="search.effect">
+                                {{ search.title }}
+                            </el-tag>
                         </div>
                     </dl>
                     <dl v-if="isSearchList">
@@ -69,6 +69,7 @@ export default {
             searchList: ["暂无数据"], //搜索返回数据,
             history: false,
             types: ["", "success", "info", "warning", "danger"], //搜索历史tag式样
+            effects: ["plain", "light", "dark"],
         }
     },
     computed: {
@@ -194,20 +195,28 @@ export default {
 
 .history-tag {
     cursor: pointer;
-    margin-right: 10px;
-    margin-bottom: 5px;
 }
 
-.hot-item {
+.el-tag {
+    margin-right: 5px;
+    margin-bottom: 3px;
+    font-family: sans-serif;
+}
+
+.el-tag:hover {
+    color: #6680ff;
+    text-decoration: none;
+    transition: all .1s;
+    -moz-transition: all .1s;
+    -webkit-transition: all .1s;
+    -o-transition: all .1s;
+}
+
+.hot-search {
     cursor: pointer;
-    color: #00809d;
-    text-decoration: none;
-    line-height: 1.3em;
-}
-
-dd:hover {
-    color: #4e71f2;
-    text-decoration: none;
+    line-height: 1.6em;
+    font-size: 14px;
+    margin-bottom: -10px;
 }
 
 .search-box {

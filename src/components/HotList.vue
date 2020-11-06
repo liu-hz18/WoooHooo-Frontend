@@ -62,12 +62,16 @@ a {
 }
 
 a:hover {
-    color: #2440b3;
+    color: #6c5ce7;
     text-decoration: underline;
+    transition: all .1s;
+    -moz-transition: all .1s;
+    -webkit-transition: all .1s;
+    -o-transition: all .1s;
 }
 
 .el-icon-date {
-    color: #00000F;
+    color: #636e72;
     cursor: default;
 }
 

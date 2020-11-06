@@ -178,15 +178,20 @@ export function getHotList(that) {
 export function getHotSearchList(that) {
     console.log("fetch hot search list");
     var request = new XMLHttpRequest();
-    request.open(API.GET_HOT_LIST.method, API.GET_HOT_LIST.path, true);
+    request.open(API.GET_HOT_SEARCH_LIST.method, API.GET_HOT_SEARCH_LIST.path, true);
     request.onreadystatechange = function () {
         console.log(request.readyState, request.status)
         if (request.readyState === 4 && request.status === 200) {
             try{
                 var datalist = JSON.parse(request.responseText)["data"];
-                datalist.forEach(e => {
-                    that.hotSearchList.push(e["title"]);
+                datalist.forEach((e, index) => {
+                    that.hotSearchList.push({
+                        title: e["title"],
+                        type: that.types[index % 5],
+                        effect: "light",
+                    });
                 })
+                console.log(that.hotSearchList)
             } catch ( error ) { // do nothing
                 console.log("error:", error)
             }
