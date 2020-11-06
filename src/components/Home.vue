@@ -89,7 +89,8 @@
 
 <script>
 import {
-    getNewsClassList
+    getNewsClassList,
+    getHotList
 } from "../datas/newslist.js";
 import logo from "../assets/home.svg";
 import load from "../assets/loading.gif"
@@ -133,12 +134,7 @@ export default {
                 total: 1000,
                 keywords: [],
             },
-            hotList: new Array(10).fill({
-                uid: 0,
-                link: "https://www.baidu.com",
-                title: "This is a hot news news " + 0,
-                hot: "100万",
-            }),
+            hotList: getHotList(this),
             activeTab: "0",
             pageNumber: 0,
             isLoading: false,

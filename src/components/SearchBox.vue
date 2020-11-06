@@ -46,7 +46,6 @@
 import RandomUtil from "../utils/RandomUtil";
 import Store from "../utils/store";
 import API from "../utils/API.js";
-//import {getNewsList} from "../datas/newslist.js";
 
 export default {
     name: "SearchBox",

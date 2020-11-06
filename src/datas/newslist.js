@@ -121,7 +121,6 @@ export function getBrowseNewsList(username,that){
     var url = urlParam(API.GET_BROWSE.path, params) // 历史记录
     request.open(API.GET_BROWSE.method, url, true)
     console.log(url)
-
     request.onreadystatechange = function () {
         console.log(request.readyState, request.status)
         var newsList
@@ -137,7 +136,6 @@ export function getBrowseNewsList(username,that){
                     time: 0,
                     keywords: [],
                 }
-                
                 console.log(that.newsInfo)
             } catch ( error ) {
                 newsList = randomInitNews(that.userstate.username)
@@ -148,6 +146,28 @@ export function getBrowseNewsList(username,that){
                     time: 0,
                     keywords: [],
                 }
+            }
+        }
+    }
+    request.send(null)
+}
+
+export function getHotList(that) {
+    console.log("fetch hot list");
+    that.isLoading = true;
+    var request = new XMLHttpRequest();
+    request.open(API.GET_HOT_LIST.method, API.GET_HOT_LIST.path, true)
+    request.onreadystatechange = function () {
+        console.log(request.readyState, request.status)
+        if (request.readyState === 4 && request.status === 200) {
+            try{
+                var jsonobj = JSON.parse(request.responseText);
+                that.hotList = jsonobj["data"];
+                that.isLoading = false;
+                console.log(that.hotList)
+            } catch ( error ) {
+                // do nothing
+                that.isLoading = false;
             }
         }
     }

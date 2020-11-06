@@ -38,6 +38,10 @@ const API = {
     GET_USERINFO:{
         path:"/api/user",
         method:"get",
+    },
+    GET_HOT_LIST: {
+        path: "/api/hot",
+        method: "get",
     }
 }
 export default API

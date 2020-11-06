@@ -42,19 +42,19 @@ export default {
     name: "NavBar",
     props: {
         //用户状态记录
-        username:{
-            type:String,
-            default: () =>"Nike"
+        username: {
+            type: String,
+            default: () => "Nike"
         },
         activeIndexProp: String,
         isSearch: String,
     },
     data() {
         return {
-            loginBtnText:(this.username==="")?"登录":this.username,
+            loginBtnText: (this.username === "") ? "登录" : this.username,
             activeIndex: this.activeIndexProp,
             subitem: 0,
-            
+
         };
     },
     computed: {
@@ -67,7 +67,7 @@ export default {
             if (keyPath[0] === "2") {
                 this.subitem = String(keyPath[1].split('-')[1]);
                 console.log(this.subitem);
-                
+                this.$emit("choose-type");
                 this.$router.push({
                     name: 'SearchResult',
                     query: {
@@ -76,19 +76,18 @@ export default {
                     }
                 });
             } else if (keyPath[0] === "0") {
-                
+
                 this.$router.push({
                     name: 'Home'
                 });
             }
             //用户个人中心页面
-            else if(keyPath[0] === "1"){
-                if(this.username != ""){
+            else if (keyPath[0] === "1") {
+                if (this.username != "") {
                     this.$router.push({
                         name: 'Center'
                     });
-                }
-                else{
+                } else {
                     this.$router.push({
                         name: 'Login'
                     });
@@ -96,23 +95,22 @@ export default {
             }
         },
         handleLogin() {
-            if(this.username != ""){
+            if (this.username != "") {
                 this.$notify({
                     type: 'success',
                     message: '您已经在线了！',
                     duration: 3000
                 })
-            }
-            else{
+            } else {
                 this.$router.push({
                     name: 'Login'
                 });
             }
-            
+
         },
         handleQuit() {
             //用户退出
-            if(this.username != ""){
+            if (this.username != "") {
                 this.loginBtnText = "登录"
                 this.$notify({
                     type: 'success',
@@ -123,8 +121,7 @@ export default {
                 //
                 this.$emit("user-logout")
 
-            }
-            else{
+            } else {
                 this.$notify({
                     type: 'error',
                     message: '您已不在线上！',
