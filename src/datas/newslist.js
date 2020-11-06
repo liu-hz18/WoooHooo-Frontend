@@ -48,6 +48,7 @@ export function getNewsList(query, page, number, that) {
 }
 
 export function getNewsClassList(newsclassnumber, page, number, that) {
+    that.isLoading = true
     console.log(newsclassnumber)
     var newsclass = newsClassMap[newsclassnumber];
     console.log(newsclass);
@@ -55,7 +56,6 @@ export function getNewsClassList(newsclassnumber, page, number, that) {
     request.open(API.POST_NEWS_LIST.method, API.POST_NEWS_LIST.path, true)
     var total
     var newsList
-    that.isLoading = true
     request.onreadystatechange = function () {
         console.log(request.readyState, request.status)
         if (request.readyState === 4 && request.status === 200) {
@@ -168,6 +168,27 @@ export function getHotList(that) {
             } catch ( error ) {
                 // do nothing
                 that.isLoading = false;
+            }
+        }
+    }
+    request.send(null)
+}
+
+
+export function getHotSearchList(that) {
+    console.log("fetch hot search list");
+    var request = new XMLHttpRequest();
+    request.open(API.GET_HOT_LIST.method, API.GET_HOT_LIST.path, true);
+    request.onreadystatechange = function () {
+        console.log(request.readyState, request.status)
+        if (request.readyState === 4 && request.status === 200) {
+            try{
+                var datalist = JSON.parse(request.responseText)["data"];
+                datalist.forEach(e => {
+                    that.hotSearchList.push(e["title"]);
+                })
+            } catch ( error ) { // do nothing
+                console.log("error:", error)
             }
         }
     }

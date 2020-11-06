@@ -46,6 +46,9 @@
 import RandomUtil from "../utils/RandomUtil";
 import Store from "../utils/store";
 import API from "../utils/API.js";
+import {
+    getHotSearchList
+} from "../datas/newslist.js";
 
 export default {
     name: "SearchBox",
@@ -61,7 +64,7 @@ export default {
             searchinput: this.searchInputProp, //搜索内容, 为了保证进入类别后输入框清空，请不要更改到data中。
             select: '',
             isFocus: false, //是否聚焦
-            hotSearchList: new Array(5).fill("热门搜索"), //热门搜索数据
+            hotSearchList: [], //热门搜索数据
             historySearchList: [], //历史搜索数据
             searchList: ["暂无数据"], //搜索返回数据,
             history: false,
@@ -158,7 +161,9 @@ export default {
         },
 
     },
-    created() {},
+    created() {
+        getHotSearchList(this);
+    },
     mounted() {},
 
 }
@@ -195,6 +200,14 @@ export default {
 
 .hot-item {
     cursor: pointer;
+    color: #00809d;
+    text-decoration: none;
+    line-height: 1.3em;
+}
+
+dd:hover {
+    color: #4e71f2;
+    text-decoration: none;
 }
 
 .search-box {

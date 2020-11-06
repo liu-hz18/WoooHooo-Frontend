@@ -58,6 +58,17 @@ ul {
 
 a {
     color: #00809d;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #2440b3;
+    text-decoration: underline;
+}
+
+.el-icon-date {
+    color: #00000F;
+    cursor: default;
 }
 
 .hot-list {

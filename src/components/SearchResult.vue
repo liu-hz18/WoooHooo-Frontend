@@ -94,7 +94,7 @@ export default {
             searchinput: "",
             currentClass: 0,
             isSearch: true,
-            isLoading: false,
+            isLoading: true,
             totalpage: 1,
         };
     },
@@ -133,17 +133,17 @@ export default {
         },
     },
     created() {
+        this.isLoading = true;
         console.log("created: ", this.$route.query);
         searchResult(this);
     },
     mounted() {},
     watch: {
         $route() {
-            console.log(this.isLoading)
+            this.isLoading = true;
             console.log("changed: ", this.$route.query);
             searchResult(this);
             console.log(this.isLoading)
-            //this.isLoading = true
         },
     },
 };
