@@ -79,7 +79,7 @@ export default {
                 return "";
             }
             if (keywords && keywords.length > 0 && keywords[0] !== "") {
-                console.log(keywords)
+                //console.log(keywords)
                 let replaceReg = new RegExp('(' + keywords.join('|') + ')', "gi"); // 匹配关键字正则
                 titleString = titleString.replace( // 开始替换
                     replaceReg,

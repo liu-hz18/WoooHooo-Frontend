@@ -2,7 +2,7 @@
 <div class="result">
     <el-container>
         <el-header>
-            <NavBar v-bind:activeIndexProp="activeIndexProp" :isSearch="String(isSearch)" :username="userstate.username" @user-logout="userLogout"> </NavBar>
+            <NavBar v-bind:activeIndexProp="activeIndexProp" :isSearch="String(isSearch)" :username="userstate.username" @user-logout="userLogout" @choose-type="clearInput"> </NavBar>
         </el-header>
         <el-row style="margin-top: 0px; height: 90px;">
             <el-col :span="2" :offset="2">
@@ -10,12 +10,12 @@
             </el-col>
             <el-col :span="20">
                 <div class="search-box">
-                    <SearchBox ref="searchbox" @update-news="updateNews" @text-change="updateInput" v-bind:username="userstate.username" :searchInputProp="searchinput">
+                    <SearchBox ref="searchbox" @update-news="updateNews" @text-change="updateInput" v-bind:username="userstate.username" :searchinputProp="searchinput">
                     </SearchBox>
                 </div>
             </el-col>
         </el-row>
-        <div class="info" v-if="isSearch==='true'">
+        <div class="info" v-if="String(isSearch)==='true'">
             <p>
                 查询到 {{ newsInfo["total"] }}条结果, 用时{{ newsInfo["time"]}}s
             </p>
@@ -49,7 +49,8 @@ import logo from "../assets/home.svg";
 import load from "../assets/loading.gif"
 import {
     getNewsList,
-    getNewsClassList
+    getNewsClassList,
+    getHotList
 } from "../datas/newslist.js";
 
 import {
@@ -88,12 +89,7 @@ export default {
                 total: 1000,
                 keywords: [],
             },
-            hotList: new Array(10).fill({
-                uid: 0,
-                link: "https://www.baidu.com",
-                title: "This is a hot news news" + 0,
-                hot: "100万",
-            }),
+            hotList: getHotList(this),
             currentPage: 1,
             searchinput: "",
             currentClass: 0,
@@ -126,6 +122,11 @@ export default {
         updateInput(searchinput) {
             this.searchinput = searchinput;
             this.isSearch = true;
+        },
+        clearInput() {
+            this.searchinput = "";
+            this.isSearch = false;
+            console.log("clear:", this.searchinput)
         },
         backTop() {
             document.body.scrollTop = document.documentElement.scrollTop = 0;

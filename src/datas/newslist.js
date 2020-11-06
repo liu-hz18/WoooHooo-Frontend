@@ -87,9 +87,10 @@ export function getNewsClassList(newsclassnumber, page, number, that) {
 }
 
 export function getHotList(that) {
+    console.log("fetch hot list");
     that.isLoading = true;
     var request = new XMLHttpRequest();
-    request.open(API.GET_NEWS_LIST.method, API.GET_HOT_LIST.path, true)
+    request.open(API.GET_HOT_LIST.method, API.GET_HOT_LIST.path, true)
     request.onreadystatechange = function () {
         console.log(request.readyState, request.status)
         if (request.readyState === 4 && request.status === 200) {
@@ -100,6 +101,7 @@ export function getHotList(that) {
                 console.log(that.hotList)
             } catch ( error ) {
                 // do nothing
+                that.isLoading = false;
             }
         }
     }

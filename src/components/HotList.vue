@@ -13,7 +13,7 @@
                             </a>
                         </li>
                         <li>
-                            <em class="el-icon-date"> {{ hotnews.time }} </em>
+                            <em class="el-icon-date" type="flex" justify="end"> {{ hotnews.time }} </em>
                         </li>
                     </ul>
                 </div>
@@ -26,7 +26,7 @@
 <script>
 import {
     getHotList
-} from "../datas/newslist.js"
+} from "../datas/newslist.js";
 import load from "../assets/loading.gif"
 export default {
     name: "HotList",
