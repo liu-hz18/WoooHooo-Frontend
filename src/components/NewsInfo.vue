@@ -30,7 +30,7 @@ export default {
     },
     data() {
         return {
-            clicked: false
+            clicked: false,
         };
     },
     computed: {
@@ -45,8 +45,8 @@ export default {
                 //异步？
                 request.open(API.POST_USER_CLICK.method, API.POST_USER_CLICK.path, true)
                 request.onreadystatechange = function () {
-                                console.log("从后端收到：")
-                                console.log(request.readyState, request.status, request.responseText)
+                    console.log("从后端收到：")
+                    console.log(request.readyState, request.status, request.responseText)
                 }
                 request.send(JSON.stringify({
                     username: this.username,
@@ -64,15 +64,15 @@ export default {
                 }))
                 console.log("用户：" + this.username + " 点击了新闻：" + this.title)
                 console.log({
-                        uid: this.uid,
-                        title: this.title,
-                        imgurl: this.imgurl,
-                        content: this.content,
-                        link: this.link,
-                        source: this.source,
-                        time: this.time,
-                        //keywords: this.keywords,
-                    })
+                    uid: this.uid,
+                    title: this.title,
+                    imgurl: this.imgurl,
+                    content: this.content,
+                    link: this.link,
+                    source: this.source,
+                    time: this.time,
+                    //keywords: this.keywords,
+                })
             } else {
                 console.log("用户未登录")
             }
@@ -119,6 +119,12 @@ ul {
 
 a {
     color: #00809d;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #2440b3;
+    text-decoration: underline;
 }
 
 li {
@@ -133,7 +139,6 @@ li {
     font-size: 115%;
     font-family: "Arial, sans-serif, Courier New";
     font-weight: 550;
-    text-decoration-line: underline;
 }
 
 .news-content {
