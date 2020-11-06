@@ -33,7 +33,7 @@
         </el-row>
 
         <div class="pagination">
-            <el-pagination background layout="prev, pager, next" :total="totalpage" @current-change="handleCurrentChange" :current-page.sync="currentPage">
+            <el-pagination layout="prev, pager, next, jumper" :pager-count="11" :total="totalpage" @current-change="handleCurrentChange" :current-page.sync="currentPage">
             </el-pagination>
         </div>
     </el-container>
@@ -49,8 +49,7 @@ import logo from "../assets/home.svg";
 import load from "../assets/loading.gif"
 import {
     getNewsList,
-    getNewsClassList,
-    getHotList
+    getNewsClassList
 } from "../datas/newslist.js";
 
 import {
@@ -89,7 +88,7 @@ export default {
                 total: 1000,
                 keywords: [],
             },
-            hotList: getHotList(this),
+            hotList: [],
             currentPage: 1,
             searchinput: "",
             currentClass: 0,
@@ -184,10 +183,9 @@ a {
 
 .pagination {
     position: relative;
-    margin-left: 14%;
+    margin-left: 15%;
     margin-top: 1%;
     margin-bottom: 5%;
-    color: #909399;
 }
 
 mark {

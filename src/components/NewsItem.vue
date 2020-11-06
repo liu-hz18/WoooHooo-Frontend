@@ -80,6 +80,14 @@ li {
     margin-bottom: 5px;
 }
 
+.el-card {
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+.el-card:hover {
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.4);
+}
+
 .news-img {
     position: relative;
     max-width: 120%;

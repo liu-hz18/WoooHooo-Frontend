@@ -42,6 +42,10 @@ const API = {
     GET_HOT_LIST: {
         path: "/api/hot",
         method: "get",
+    },
+    GET_HOT_SEARCH_LIST: {
+        path: "/api/hotsearch",
+        method: "get",
     }
 }
 export default API
