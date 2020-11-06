@@ -53,7 +53,8 @@ export default {
     },
     computed: {
         haveImg() {
-            return this.imgurl != "";
+            console.log("img:", this.imgurl)
+            return this.imgurl !== "" && this.imgurl !== "blank";
         },
     },
 };
