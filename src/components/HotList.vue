@@ -3,22 +3,39 @@
     <el-card>
         <em class="el-icon-date"> 今日热榜</em>
         <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
-        <ul v-if="!isLoading">
-            <li v-for="(hotnews, index) in hotList" v-bind:key="index">
-                <div class="hot-item">
-                    <ul>
-                        <li>
-                            <a v-bind:href="hotnews.link" target="_blank" v-line-clamp:100="1">
+        <div class="hot-item">
+            <ul v-if="!isLoading">
+                <tbody>
+                    <tr v-for="(hotnews, index) in hotList" v-bind:key="index">
+                        <td v-if="index === 0">
+                            <span style="color: #FE2D46;">{{index+1}}</span>
+                            <a v-bind:href="hotnews.link" target="_blank" :title="hotnews.time">
                                 {{ hotnews.title }}
                             </a>
-                        </li>
-                        <li>
-                            <em class="el-icon-date" type="flex" justify="end"> {{ hotnews.time }} </em>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-        </ul>
+                        </td>
+                        <td v-if="index === 1 ">
+                            <span style="color: #F60;">{{index+1}}</span>
+                            <a v-bind:href="hotnews.link" target="_blank" :title="hotnews.time">
+                                {{ hotnews.title }}
+                            </a>
+                        </td>
+                        <td v-if="index === 2">
+                            <span style="color: #FAA90E;">{{index+1}}</span>
+                            <a v-bind:href="hotnews.link" target="_blank" :title="hotnews.time">
+                                {{ hotnews.title }}
+                            </a>
+                        </td>
+                        <td v-if="index > 2">
+                            <span>{{index+1}}</span>
+                            <a v-bind:href="hotnews.link" target="_blank" :title="hotnews.time">
+                                {{ hotnews.title }}
+                            </a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </ul>
+        </div>
     </el-card>
 </div>
 </template>
@@ -56,9 +73,43 @@ ul {
     padding: 0;
 }
 
+span {
+    opacity: 1;
+    height: 22px;
+    line-height: 30px;
+    margin-right: 6px;
+    margin-left: 3px;
+    display: inline-block;
+    background: 0 0;
+    color: #9195A3;
+    width: 18px;
+    font-size: 16px;
+    letter-spacing: -1px;
+
+}
+
 a {
     color: #00809d;
     text-decoration: none;
+    line-height: 30px;
+    cursor: pointer;
+    font: 17px Arial, sans-serif;
+    max-width: 340px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    vertical-align: middle;
+    display: inline-block;
+    -webkit-line-clamp: 1;
+    text-align: left;
+    word-break: normal;
+}
+
+td {
+    vertical-align: top;
+    display: table-cell;
+    opacity: 1;
+    float: left;
 }
 
 a:hover {
@@ -82,17 +133,5 @@ a:hover {
 .hot-item {
     position: relative;
     width: 100%;
-}
-
-#left {
-    position: relative;
-    float: left;
-    margin-bottom: 4%;
-}
-
-#right {
-    position: relative;
-    float: right;
-    margin-bottom: 4%;
 }
 </style>
