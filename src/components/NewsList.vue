@@ -1,6 +1,6 @@
 <template>
 <div class="news-list">
-    <ul>
+    <ul v-infinite-scroll="load" infinite-scroll-delay="500" infinite-scroll-disabled="loadingmore" infinite-scroll-immediate-check=false>
         <li>
             <NewsItem v-for="(newsitem, index) in newsList" v-bind:key="index" :username="username" :title="newsitem.title" :content="newsitem.content" :source="newsitem.source" :time="newsitem.time" :imgurl="newsitem.imgurl" :uid="newsitem.uid" :link="newsitem.link" :keywords="keywords">
             </NewsItem>
@@ -11,11 +11,16 @@
 
 <script>
 import NewsItem from "./NewsItem.vue";
+import infiniteScroll from 'vue-infinite-scroll';
+import load from "../assets/loading.gif"
 
 export default {
     name: "NewsList",
     components: {
         NewsItem,
+    },
+    directives: {
+        infiniteScroll,
     },
     props: {
         username: {
@@ -38,12 +43,23 @@ export default {
         keywords: {
             type: Array,
             default: () => [""]
-        }
+        },
+        loadgif: {
+            type: String,
+            default: () => load,
+        },
     },
     data() {
         return {
-
+            loadingmore: false,
         };
+    },
+    methods: {
+        load() {
+            if (!this.loadingmore) {
+                this.$emit("load-more")
+            }
+        },
     },
 };
 </script>

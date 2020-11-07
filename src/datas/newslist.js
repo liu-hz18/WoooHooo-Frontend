@@ -47,34 +47,38 @@ export function getNewsList(query, page, number, that) {
     request.send(null)
 }
 
-export function getNewsClassList(newsclassnumber, page, number, that) {
-    that.isLoading = true
+export function getNewsClassList(newsclassnumber, page, number, that, append=false) {
+    if(append){
+        that.loadingmore = true;
+    } else {
+        that.isLoading = true
+    }
     console.log(newsclassnumber)
     var newsclass = newsClassMap[newsclassnumber];
     console.log(newsclass);
     var request = new XMLHttpRequest()
     request.open(API.POST_NEWS_LIST.method, API.POST_NEWS_LIST.path, true)
-    var total
-    var newsList
     request.onreadystatechange = function () {
         console.log(request.readyState, request.status)
         if (request.readyState === 4 && request.status === 200) {
             try{
                 var jsonobj = JSON.parse(request.responseText);
-                newsList = jsonobj["data"];
-                total = jsonobj["total"];
-                that.newsInfo = {
-                    data: newsList,
-                    time: 0.0001,
-                    total: total,
-                    keywords: [],
+                if (append===true) {
+                    console.log("append", jsonobj["data"])
+                    that.newsInfo.data = that.newsInfo.data.concat(jsonobj["data"])
+                    that.newsInfo.total += jsonobj["total"];
+                    that.loadingmore = false;
+                } else {
+                    that.newsInfo = {
+                        data: jsonobj["data"],
+                        time: 0.0001,
+                        total: jsonobj["total"],
+                        keywords: [],
+                    }
                 }
                 that.isLoading = false
-                that.totalpage = Math.floor(total / 10)
-                console.log(that.newsInfo)
+                that.totalpage = Math.floor(that.newsInfo.total / 10)
             } catch ( error ) {
-                newsList = randomInitNews(newsclass)
-                total = 1000
                 that.isLoading = false
             }
         }

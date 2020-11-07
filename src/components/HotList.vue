@@ -89,9 +89,9 @@ span {
 }
 
 a {
-    color: #00809d;
+    color: #5758BB;
     text-decoration: none;
-    line-height: 30px;
+    line-height: 40px;
     cursor: pointer;
     font: 17px Arial, sans-serif;
     max-width: 340px;
@@ -113,12 +113,20 @@ td {
 }
 
 a:hover {
-    color: #6c5ce7;
+    color: #9980FA;
     text-decoration: underline;
     transition: all .1s;
     -moz-transition: all .1s;
     -webkit-transition: all .1s;
     -o-transition: all .1s;
+}
+
+.el-card {
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+.el-card:hover {
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.4);
 }
 
 .el-icon-date {

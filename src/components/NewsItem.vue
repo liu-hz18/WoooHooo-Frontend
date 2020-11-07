@@ -7,7 +7,7 @@
                 <NewsInfo v-bind:username="username" :link="link" :title="title" :content="content" :source="source" :time="time" :keywords="keywords" :imgurl="imgurl" :uid="uid"></NewsInfo>
             </el-col>
             <el-col :span="5">
-                <a v-bind:href="imgurl">
+                <a v-bind:href="link" target="_blank">
                     <img class="news-img" v-bind:src="imgurl" alt="News Image" />
                 </a>
             </el-col>
@@ -53,7 +53,6 @@ export default {
     },
     computed: {
         haveImg() {
-            console.log("img:", this.imgurl)
             return this.imgurl !== "" && this.imgurl !== "blank";
         },
     },
@@ -91,7 +90,7 @@ li {
 .news-img {
     position: relative;
     max-width: 120%;
-    max-height: 110px;
+    max-height: 120px;
     margin-left: 10%;
     background: #f5f5f6;
     justify-content: center;
