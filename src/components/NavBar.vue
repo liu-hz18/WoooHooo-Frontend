@@ -1,20 +1,42 @@
 <template>
 <div class="navigation-bar">
-    <el-menu :default-active="activeIndex" class="el-menu" mode="horizontal" @select="handleSelect" active-text-color="#ffd04b" background-color="#545c64" text-color="#fff">
+    <el-menu :default-active=" activeIndex" class="el-menu" mode="horizontal" @select="handleSelect" active-text-color="#9980FA" text-color="#5758BB">
         <el-menu-item index="0">首页</el-menu-item>
         <el-menu-item index="1">个人中心</el-menu-item>
         <el-submenu index="2">
             <template slot="title">分类新闻</template>
-            <el-menu-item index="2-0">热点</el-menu-item>
-            <el-menu-item index="2-1">国内</el-menu-item>
-            <el-menu-item index="2-2">国际</el-menu-item>
-            <el-menu-item index="2-3">军事</el-menu-item>
-            <el-menu-item index="2-4">财经</el-menu-item>
-            <el-menu-item index="2-5">娱乐</el-menu-item>
-            <el-menu-item index="2-6">体育</el-menu-item>
-            <el-menu-item index="2-7">科技</el-menu-item>
-            <el-menu-item index="2-8">游戏</el-menu-item>
-            <el-menu-item index="2-9">文化</el-menu-item>
+            <el-menu-item index="2-0">
+                <el-badge is-dot class="item">
+                    <el-tag size="medium" type="danger" effect="plain" style="border: 1px solid;">热点</el-tag>
+                </el-badge>
+            </el-menu-item>
+            <el-menu-item index="2-1">
+                <el-tag size="medium" effect="plain" style="border: 2px solid #d9ecff;">时政</el-tag>
+            </el-menu-item>
+            <el-menu-item index="2-2">
+                <el-tag size="medium" effect="plain" style="border: 2px solid #d9ecff;">国际</el-tag>
+            </el-menu-item>
+            <el-menu-item index="2-3">
+                <el-tag size="medium" effect="plain" style="border: 2px solid #d9ecff;">军事</el-tag>
+            </el-menu-item>
+            <el-menu-item index="2-4">
+                <el-tag size="medium" effect="plain" style="border: 2px solid #d9ecff;">财经</el-tag>
+            </el-menu-item>
+            <el-menu-item index="2-5">
+                <el-tag size="medium" effect="plain" style="border: 2px solid #d9ecff;">娱乐</el-tag>
+            </el-menu-item>
+            <el-menu-item index="2-6">
+                <el-tag size="medium" effect="plain" style="border: 2px solid #d9ecff;">体育</el-tag>
+            </el-menu-item>
+            <el-menu-item index="2-7">
+                <el-tag size="medium" effect="plain" style="border: 2px solid #d9ecff;">科技</el-tag>
+            </el-menu-item>
+            <el-menu-item index="2-8">
+                <el-tag size="medium" effect="plain" style="border: 2px solid #d9ecff;">游戏</el-tag>
+            </el-menu-item>
+            <el-menu-item index="2-9">
+                <el-tag size="medium" effect="plain" style="border: 2px solid #d9ecff;">文化</el-tag>
+            </el-menu-item>
         </el-submenu>
         <el-submenu index="3">
             <template slot="title">前往新闻网站</template>
@@ -28,7 +50,7 @@
         <el-row style="margin-top: 10px; margin-bottom: 10px; display: flex; justify-content: flex-end; ">
             <div class="login-bar">
                 <el-button round type="primary" slot="append" icon="el-icon-user-solid" @click="handleLogin">{{loginBtnText}}</el-button>
-                <el-button round type="" slot="append" icon="el-icon-user" @click="handleQuit">退出</el-button>
+                <el-button round plain type="info" slot="append" icon="el-icon-user" @click="handleQuit">退出</el-button>
             </div>
         </el-row>
     </el-menu>
@@ -54,11 +76,13 @@ export default {
             loginBtnText: (this.username === "") ? "登录" : this.username,
             activeIndex: this.activeIndexProp,
             subitem: 0,
-
         };
     },
     computed: {
         newsType() {
+            if (this.subitem == 1) {
+                return "时政";
+            }
             return newsClassMap[this.subitem];
         },
     },
@@ -136,6 +160,7 @@ export default {
         console.log("create", this.subitem)
     },
     watch: {},
+    mounted() {},
 };
 </script>
 
@@ -151,10 +176,33 @@ ul {
 
 li {
     display: inline-block;
-    margin: 0 10px;
+    margin: 0 0px;
 }
 
 a {
     color: #6b9cd3;
+}
+
+.navigation-bar {
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    width: 100%;
+    box-shadow: 10px 5px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+.el-button--primary {
+    background-color: #a3b5ff;
+    border-color: white;
+}
+
+.el-button--primary:hover {
+    background-color: #8c7ae6;
+    border-color: white;
+}
+
+.el-button--info:hover {
+    background-color: #70a1ff;
+    border-color: white;
 }
 </style>

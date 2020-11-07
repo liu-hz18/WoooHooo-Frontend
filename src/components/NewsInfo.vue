@@ -118,7 +118,7 @@ ul {
 }
 
 a {
-    color: #00809d;
+    color: #5758BB;
     text-decoration: none;
 }
 

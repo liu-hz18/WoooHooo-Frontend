@@ -21,7 +21,7 @@
             </p>
         </div>
 
-        <el-row :gutter="20" style="margin-top: 5px">
+        <el-row :gutter="12" style="margin-top: 10px">
             <el-col :span="12" :offset="2">
                 <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
                 <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo['data']" :keywords="newsInfo['keywords']">
@@ -37,6 +37,19 @@
             </el-pagination>
         </div>
     </el-container>
+    <el-backtop>
+        <div style="
+        height: 100%;
+        width: 180%;
+        background-color: #f2f5f6;
+        box-shadow: 0 0 6px rgba(0,0,0, .12);
+        text-align: center;
+        line-height: 40px;
+        color: #1989fa;
+      ">
+            ToTop
+        </div>
+    </el-backtop>
 </div>
 </template>
 
@@ -152,6 +165,15 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 
 <style scoped>
+html,
+body {
+    height: 100%;
+}
+
+#result {
+    height: 100%;
+}
+
 h3 {
     margin: 40px 0 0;
 }
@@ -169,6 +191,10 @@ li {
 
 a {
     color: #42b983;
+}
+
+.el-header {
+    padding: 0 0;
 }
 
 .search-box {
