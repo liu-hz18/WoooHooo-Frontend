@@ -5,7 +5,7 @@
             <NavBar v-bind:activeIndexProp="activeIndexProp" :isSearch="String(isSearch)" :username="userstate.username" @user-logout="userLogout" @choose-type="clearInput"> </NavBar>
         </el-header>
         <el-row style="margin-top: 0px; height: 90px;">
-            <el-col :span="2" :offset="2">
+            <el-col :span="2" :offset="1">
                 <img class="home-img" v-bind:src="homeicon" alt="WoooHooo~" />
             </el-col>
             <el-col :span="20">
@@ -22,12 +22,12 @@
         </div>
 
         <el-row :gutter="20" style="margin-top: 5px">
-            <el-col :span="12" :offset="3">
+            <el-col :span="12" :offset="2">
                 <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
                 <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo['data']" :keywords="newsInfo['keywords']">
                 </NewsList>
             </el-col>
-            <el-col :span="6">
+            <el-col :span="7">
                 <HotList v-bind:hotList="hotList"> </HotList>
             </el-col>
         </el-row>
@@ -95,6 +95,7 @@ export default {
             isSearch: true,
             isLoading: true,
             totalpage: 1,
+            screenHeight: document.body.clientHeight,
         };
     },
     methods: {
@@ -163,6 +164,7 @@ ul {
 li {
     display: inline-block;
     margin: 0 10px;
+    font-size: 15px;
 }
 
 a {
@@ -183,7 +185,7 @@ a {
 
 .pagination {
     position: relative;
-    margin-left: 15%;
+    margin-left: 12%;
     margin-top: 1%;
     margin-bottom: 5%;
 }
