@@ -24,7 +24,7 @@
                             <el-col :span="15">
                                 <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
                                 <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
-                                <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadgif" alt="WoooHooo~" />
+                                <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
                             </el-col>
                             <el-col :span="9">
                                 <HotList v-bind:hotList="hotList"> </HotList>
@@ -35,61 +35,61 @@
                         <span slot="label"><em class="el-icon-date"></em>时政</span>
                         <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
                         <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
-                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>国际</span>
                         <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
                         <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
-                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>军事</span>
                         <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
                         <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
-                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>财经</span>
                         <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
                         <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
-                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>娱乐</span>
                         <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
                         <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
-                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>体育</span>
                         <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
                         <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
-                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>科技</span>
                         <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
                         <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
-                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>游戏</span>
                         <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
                         <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
-                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>文化</span>
                         <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
                         <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
-                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>社会</span>
                         <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
                         <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
-                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
                     </el-tab-pane>
                 </el-tabs>
             </div>
@@ -118,6 +118,7 @@ import {
 } from "../datas/newslist.js";
 import logo from "../assets/home.svg";
 import load from "../assets/loading.gif"
+import loadmore from "../assets/loadmore.gif";
 import NewsList from "./NewsList.vue";
 import HotList from "./HotList.vue";
 import SearchBox from "./SearchBox.vue";
@@ -139,6 +140,10 @@ export default {
         loadgif: {
             type: String,
             default: () => load,
+        },
+        loadmoregif: {
+            type: String,
+            default: () => loadmore,
         },
     },
     data() {
@@ -253,6 +258,8 @@ a {
 
 img {
     position: relative;
+    max-width: 120%;
+    max-height: 120px;
     margin-right: auto;
     margin-left: auto;
     margin-top: 18%;
@@ -262,6 +269,8 @@ img {
     text-align: center;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
+    display: block;
 }
 
 .loadmore-img {

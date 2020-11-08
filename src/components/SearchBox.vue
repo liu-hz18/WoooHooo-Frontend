@@ -172,8 +172,11 @@ export default {
 
 <style>
 .searchbox {
-    margin-top: 20px;
-    margin-right: 600px;
+    position: relative;
+    width: 60%;
+    margin-top: 1.5%;
+    margin-left: 0%;
+    margin-right: 40%;
 }
 
 .search-title {
