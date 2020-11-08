@@ -138,9 +138,8 @@ li {
 .news-heading {
     position: relative;
     margin-top: 0%;
-    margin-bottom: 3%;
-    height: 5px;
-    font-size: 115%;
+    height: 0px;
+    font-size: 1.1875rem;
     font-family: "Arial, sans-serif, Courier New";
     font-weight: 550;
 }
@@ -163,7 +162,8 @@ li {
 
 .news-time {
     position: relative;
-    font-size: 20%;
+    margin-top: 2px;
+    font-size: 10%;
     color: #909399;
 }
 
