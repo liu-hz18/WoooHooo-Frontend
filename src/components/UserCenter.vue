@@ -61,6 +61,7 @@ import logo from "../assets/home.svg";
 import NavBar from "./NavBar.vue";
 import NewsList from "./NewsList.vue";
 import RstPassDialog from "@/components/RstPassDialog"
+import API from "../utils/API.js"
 
 export default {
     name: "Home",
@@ -120,6 +121,17 @@ export default {
         },
         rstpass(){
             this.rstPassDialog.visible = false
+            var request = new XMLHttpRequest()
+            //var parent = this
+            request.open(API.RST_PASS.method,API.RST_PASS.path, false) 
+            request.onreadystatechange = function () {
+                        console.log("从后端收到：")
+                        console.log(request.readyState, request.status, request.responseText)
+            }
+            request.send(JSON.stringify({
+                        username : this.userstate.username,
+                        userpass : this.form.newpass,
+                    }))
             this.$message({
                 type: 'success',
                 message: '密码修改成功！',
