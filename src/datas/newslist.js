@@ -13,6 +13,7 @@ export function getNewsList(query, page, number, that) {
         page: page,
         number: number,
         query: query,
+        relation: 1,
     }
     var url = urlParam(API.GET_NEWS_LIST.path, params) // 查询关键词，未分词
     request.open(API.GET_NEWS_LIST.method, url, true)
@@ -28,7 +29,8 @@ export function getNewsList(query, page, number, that) {
                 var jsonobj = JSON.parse(request.responseText);
                 newsList = jsonobj["data"];       //新闻列表，属性不变
                 total = jsonobj["total"];   //总结果条数
-                keywords = jsonobj["keywords"];   //关键词分词结果，list[str]
+                keywords = jsonobj["keywords"];   //关键词分词结果, list[str]
+                var related = jsonobj["related"]; // 相关新闻
                 that.newsInfo = {
                     data: newsList,
                     total: total,
@@ -37,6 +39,10 @@ export function getNewsList(query, page, number, that) {
                 }
                 that.totalpage = Math.floor(total / 10)
                 that.isLoading = false
+                if (page === 0) {
+                    that.relatedSearch = related;
+                    console.log("relate", related)
+                }
                 console.log(that.newsInfo)
             } catch ( error ) {
                 newsList = randomInitNews(query)
@@ -91,7 +97,6 @@ export function getNewsClassList(newsclassnumber, page, number, that, append=fal
 }
 
 export function getBrowseNewsList(username,that){
-    
     var inforequest = new XMLHttpRequest();
     console.log("getuserinfo")
     var infoparams = {
