@@ -57,7 +57,10 @@ export default {
             type: String,
             default: () => "Searchbox username"
         },
-        searchInputProp: String,
+        searchInputProp: {
+            type: String,
+            default: () => ""
+        },
     },
     data() {
         return {
@@ -160,13 +163,13 @@ export default {
         removeAllHistory() {
             Store.removeAllHistory();
         },
-
     },
     created() {
+        console.log("searchbox create:", this.searchInputProp)
         getHotSearchList(this);
     },
     mounted() {},
-
+    watch: {}
 }
 </script>
 

@@ -10,7 +10,7 @@
             </el-col>
             <el-col :span="20">
                 <div class="search-box">
-                    <SearchBox ref="searchbox" @update-news="updateNews" @text-change="updateInput" v-bind:username="userstate.username" :searchinputProp="searchinput">
+                    <SearchBox ref="searchbox" @update-news="updateNews" @text-change="updateInput" v-bind:username="userstate.username" :searchInputProp.sync="searchinput" :key="searchinput">
                     </SearchBox>
                 </div>
             </el-col>
@@ -26,6 +26,13 @@
                 <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
                 <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo['data']" :keywords="newsInfo['keywords']">
                 </NewsList>
+                <el-divider v-if="!isLoading"></el-divider>
+                <h4 v-if="!isLoading && String(isSearch) === 'true'">相关搜索</h4>
+                <div v-if="!isLoading && String(isSearch) === 'true'" class="related-search">
+                    <el-tag class="related-item" v-for="(search, index) in relatedSearch" :key="index" @click="newSearch(search)" :effect="'light'" :type="''">
+                        {{ search }}
+                    </el-tag>
+                </div>
             </el-col>
             <el-col :span="7">
                 <HotList v-bind:hotList="hotList"> </HotList>
@@ -109,6 +116,7 @@ export default {
             isLoading: true,
             totalpage: 1,
             screenHeight: document.body.clientHeight,
+            relatedSearch: [],
         };
     },
     methods: {
@@ -143,6 +151,17 @@ export default {
         },
         backTop() {
             document.body.scrollTop = document.documentElement.scrollTop = 0;
+        },
+        newSearch(search) {
+            this.searchinput = search;
+            this.$router.push({
+                name: 'SearchResult',
+                query: {
+                    query: this.searchinput,
+                    issearch: true
+                }
+            });
+            this.backTop()
         },
     },
     created() {
@@ -230,7 +249,7 @@ img {
     position: relative;
     margin-right: auto;
     margin-left: auto;
-    margin-top: 18%;
+    margin-top: 20%;
     display: table-cell;
     vertical-align: middle;
     text-align: center;
@@ -251,5 +270,13 @@ img {
     display: block;
     min-height: 0;
     line-height: 0;
+}
+
+.related-item {
+    margin-right: 25px;
+    margin-bottom: 15px;
+    font-family: sans-serif;
+    cursor: pointer;
+    font-size: 14px;
 }
 </style>
