@@ -46,6 +46,10 @@ const API = {
     GET_HOT_SEARCH_LIST: {
         path: "/api/hotsearch",
         method: "get",
+    },
+    RST_PASS:{
+        path:"/api/update",
+        method:"post",
     }
 }
 export default API
