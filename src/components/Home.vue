@@ -2,7 +2,7 @@
 <div class="home">
     <el-container>
         <el-header>
-            <NavBar v-bind:activeIndexProp="activeIndexProp" :username="userstate.username" @user-logout="userLogout"> </NavBar>
+            <NavBar v-bind:activeIndexProp="activeIndexProp" :username="userstate.username" @user-logout="userLogout" @userlogin="userlogin"> </NavBar>
         </el-header>
 
         <el-row :gutter="20">
@@ -150,7 +150,6 @@ export default {
         return {
             //用户状态记录
             userstate: {
-                //username:this.$route.params.username?this.$route.params.username:""
                 username: this.$cookies.get("username") ? this.$cookies.get("username") : ""
             },
             activeIndexProp: "0",
@@ -172,9 +171,9 @@ export default {
     },
     computed: {},
     methods: {
-        /*userlogin(name){
+        userlogin(name) {
             this.userstate.username = name;
-        },*/
+        },
         handleClick() {
             getNewsClassList(this.activeTab, this.pageNumber, 5, this);
         },
