@@ -10,8 +10,8 @@
           <el-form ref="registerForm" :model="user" :rules="rules" status-icon label-width="80px">
                   <p style="margin-top: 0px">
                     已有账号？
-                    <span id = "login_btn">
-                      <a href="/login">
+                    <span id = "login_btn" @click="login">
+                      <a style="color: #4283b9;cursor: pointer;" >
                       登录
                       </a>
                     </span>
@@ -37,6 +37,7 @@
           
         </el-card>
       </div>
+      <LoginDialog v-bind:dialogVisible= "this.loginDialog.visible" v-on:loginsuccess = "jhome" v-on:register = "closeLoginDia"/>
     </div>
 </template>
  

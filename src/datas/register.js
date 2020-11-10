@@ -1,10 +1,23 @@
 import API from "../utils/API.js";
 import md5 from 'js-md5';
 import {vaildateEmail}  from "../utils/communication.js"
-
+import LoginDialog from "@/components/LoginDialog"
 
 export default {
+    components: {
+        LoginDialog,
+    },
+
     methods: {
+        login(){
+            this.loginDialog.visible = true;
+        },
+        jhome(){
+            this.$router.replace('/home')
+        },
+        closeLoginDia(){
+            this.loginDialog.visible = false;
+        },
         register () {
             
             this.$refs.registerForm.validate((valid) => {
@@ -28,6 +41,7 @@ export default {
                                     })
                                     //页面跳转->改为跳转回主页面
                                     parent.$router.replace('/home')
+                                    parent.$cookies.set("username", parent.user.name)
                                 }
                                 else if(request.status === 400){
                                     parent.$message({
@@ -116,7 +130,9 @@ export default {
     data () {
         return {
             user: {},
-            
+            loginDialog:{
+                visible:false,
+            },
             rules: {
                 name: [
                     {required: true, message: '用户名不能为空', trigger: 'blur'}
