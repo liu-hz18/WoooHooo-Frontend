@@ -13,7 +13,7 @@ export function getNewsList(query, page, number, that) {
         page: page,
         number: number,
         query: query,
-        relation: 1,
+        relation: that.relation,
     }
     var url = urlParam(API.GET_NEWS_LIST.path, params) // 查询关键词，未分词
     request.open(API.GET_NEWS_LIST.method, url, true)

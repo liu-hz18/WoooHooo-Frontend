@@ -174,14 +174,6 @@ export default {
 </script>
 
 <style>
-.searchbox {
-    position: relative;
-    width: 60%;
-    margin-top: 1.5%;
-    margin-left: 0%;
-    margin-right: 40%;
-}
-
 .search-title {
     color: #bdbaba;
     font-size: 15px;

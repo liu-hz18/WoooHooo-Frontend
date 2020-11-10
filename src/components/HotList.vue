@@ -135,7 +135,7 @@ a:hover {
 }
 
 .hot-list {
-    margin-top: 15px;
+    margin-top: 0px;
 }
 
 .hot-item {

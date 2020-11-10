@@ -5,22 +5,36 @@
             <NavBar v-bind:activeIndexProp="activeIndexProp" :isSearch="String(isSearch)" :username="userstate.username" @user-logout="userLogout" @choose-type="clearInput"> </NavBar>
         </el-header>
         <el-row style="margin-top: 0px; height: 90px;">
-            <el-col :span="2" :offset="1">
+            <el-col :span="3">
                 <img class="home-img" v-bind:src="homeicon" alt="WoooHooo~" />
             </el-col>
-            <el-col :span="20">
-                <div class="search-box">
+            <el-col :span="8">
+                <div class="search-box" style=" position: relative;margin-right: 0%; margin-top: 3%;">
                     <SearchBox ref="searchbox" @update-news="updateNews" @text-change="updateInput" v-bind:username="userstate.username" :searchInputProp.sync="searchinput" :key="searchinput">
                     </SearchBox>
                 </div>
             </el-col>
+            <el-col :span="8" :offset="1" style="margin-top: 45px;">
+                <el-dropdown trigger="click" @command="handleCommand">
+                    <span class="el-dropdown-link">
+                        时间选择
+                        <em class="el-icon-arrow-down el-icon--right"></em>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item command="0">一天内</el-dropdown-item>
+                        <el-dropdown-item command="1">一周内</el-dropdown-item>
+                        <el-dropdown-item command="2">一月内</el-dropdown-item>
+                        <el-dropdown-item command="3">全部</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </el-col>
         </el-row>
+
         <div class="info" v-if="String(isSearch)==='true'">
             <p>
-                查询到 {{ newsInfo["total"] }}条结果, 用时{{ newsInfo["time"]}}s
+                WoooHooo~ 为您搜索到约 {{ newsInfo["total"] }}条结果, 用时约{{ newsInfo["time"]}}s
             </p>
         </div>
-
         <el-row :gutter="12" style="margin-top: 10px">
             <el-col :span="12" :offset="2">
                 <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
@@ -117,6 +131,7 @@ export default {
             totalpage: 1,
             screenHeight: document.body.clientHeight,
             relatedSearch: [],
+            relation: 3, // 当前搜索时间限制
         };
     },
     methods: {
@@ -153,6 +168,7 @@ export default {
             document.body.scrollTop = document.documentElement.scrollTop = 0;
         },
         newSearch(search) {
+            this.currentPage = 1;
             this.searchinput = search;
             this.$router.push({
                 name: 'SearchResult',
@@ -163,6 +179,11 @@ export default {
             });
             this.backTop()
         },
+        handleCommand(command) {
+            this.relation = Number(command);
+            this.currentPage = 1;
+            getNewsList(this.searchinput, 0, 10, this);
+        }
     },
     created() {
         this.isLoading = true;
@@ -174,6 +195,7 @@ export default {
         $route() {
             this.isLoading = true;
             console.log("changed: ", this.$route.query);
+            this.currentPage = 1;
             searchResult(this);
             console.log(this.isLoading)
         },
@@ -223,9 +245,9 @@ a {
 
 .info {
     position: relative;
-    margin-left: 21%;
+    margin-left: 16%;
     color: #909399;
-    font-size: 9px;
+    font-size: 11px;
 }
 
 .pagination {
@@ -250,6 +272,7 @@ img {
     margin-right: auto;
     margin-left: auto;
     margin-top: 20%;
+    margin-bottom: 20%;
     display: table-cell;
     vertical-align: middle;
     text-align: center;
@@ -262,7 +285,7 @@ img {
     max-width: 100%;
     max-height: 40px;
     margin-left: 60%;
-    margin-top: 35%;
+    margin-top: 23%;
     justify-content: center;
     align-items: center;
     border-radius: 1em;
@@ -278,5 +301,14 @@ img {
     font-family: sans-serif;
     cursor: pointer;
     font-size: 14px;
+}
+
+.el-dropdown-link {
+    cursor: pointer;
+    color: #409EFF;
+}
+
+.el-icon-arrow-down {
+    font-size: 12px;
 }
 </style>
