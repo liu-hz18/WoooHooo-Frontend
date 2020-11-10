@@ -71,7 +71,7 @@ export default {
   },
   methods: {
         register() {
-            this.$router.replace('/register')
+            this.$emit("register",)
         },
         login() {
             this.$refs.loginForm.validate((valid) => {

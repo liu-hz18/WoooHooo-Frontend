@@ -56,7 +56,7 @@
         </el-row>
     </el-menu>
     <div >
-    <LoginDialog v-bind:dialogVisible= "this.loginDialog.visible" v-on:loginsuccess = "closeLoginDia"/>
+    <LoginDialog v-bind:dialogVisible= "this.loginDialog.visible" v-on:loginsuccess = "closeLoginDia" v-on:register = "jregister"/>
     </div>
 </div>
 
@@ -102,6 +102,10 @@ export default {
         },
     },
     methods: {
+        jregister(){
+            this.$router.replace('/register')
+        },
+        
         closeLoginDia(){
             this.loginDialog.visible = false;
             console.log("强制刷新")
