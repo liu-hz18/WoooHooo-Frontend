@@ -1,5 +1,6 @@
 <template>
 <div class="navigation-bar">
+    
     <el-menu :default-active=" activeIndex" class="el-menu" mode="horizontal" @select="handleSelect" active-text-color="#9980FA" text-color="#5758BB">
         <el-menu-item index="0">首页</el-menu-item>
         <el-menu-item index="1">个人中心</el-menu-item>
@@ -54,14 +55,24 @@
             </div>
         </el-row>
     </el-menu>
+    <div >
+    <LoginDialog />
+    </div>
 </div>
+
+
+
 </template>
 
 <script>
 import newsClassMap from "../datas/newslist.js"
+import LoginDialog from "@/components/LoginDialog"
 
 export default {
     name: "NavBar",
+    components: {
+        LoginDialog,
+    },
     props: {
         //用户状态记录
         username: {

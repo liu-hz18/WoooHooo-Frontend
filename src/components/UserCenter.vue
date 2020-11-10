@@ -38,17 +38,6 @@
                         @canclebtn = "closedialog"
                         @rstpass="rstpass"
                         />
-        <div class="pup-bg">
-            <!--    重设密码弹框-->
-            
-        </div>
-        
-        
-        <!--    产品偏好设置-->
-            
-        <!--    重命名昵称-->
-            
-        <!--   密码保护 -->
             
     </div>
 
@@ -97,7 +86,7 @@ export default {
             },
             activeIndexProp:"1",
             rstPassDialog:{
-                visible:false,
+                visible:true,
                   form:{
                       oldpass:"",
                       newpass:""
