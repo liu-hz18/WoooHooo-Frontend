@@ -62,6 +62,7 @@ import NavBar from "./NavBar.vue";
 import NewsList from "./NewsList.vue";
 import RstPassDialog from "@/components/RstPassDialog"
 import API from "../utils/API.js"
+import md5 from 'js-md5';
 
 export default {
     name: "Home",
@@ -82,7 +83,8 @@ export default {
 
             //用户状态记录
             userstate:{
-                username:this.$cookies.get("username")?this.$cookies.get("username"):""
+                username:this.$cookies.get("username")?this.$cookies.get("username"):"",
+                userpass:""
             },
             userinfo:{
                 mail:"xxx@xx.com"
@@ -120,23 +122,32 @@ export default {
             this.rstPassDialog.visible = false
         },
         rstpass(){
-            this.rstPassDialog.visible = false
-            var request = new XMLHttpRequest()
-            //var parent = this
-            request.open(API.RST_PASS.method,API.RST_PASS.path, false) 
-            request.onreadystatechange = function () {
-                        console.log("从后端收到：")
-                        console.log(request.readyState, request.status, request.responseText)
+            if(md5(this.rstPassDialog.form.oldpass) == this.userstate.userpass){
+                this.rstPassDialog.visible = false
+                var request = new XMLHttpRequest()
+                //var parent = this
+                request.open(API.RST_PASS.method,API.RST_PASS.path, false) 
+                request.onreadystatechange = function () {
+                            console.log("从后端收到：")
+                            console.log(request.readyState, request.status, request.responseText)
+                }
+                request.send(JSON.stringify({
+                            username : this.userstate.username,
+                            userpass : this.form.newpass,
+                        }))
+                this.$message({
+                    type: 'success',
+                    message: '密码修改成功！',
+                    showClose: true
+                })
             }
-            request.send(JSON.stringify({
-                        username : this.userstate.username,
-                        userpass : this.form.newpass,
-                    }))
-            this.$message({
-                type: 'success',
-                message: '密码修改成功！',
-                showClose: true
-            })
+            else{
+                this.$message({
+                    type: 'error',
+                    message: '旧密码错误！',
+                    showClose: true
+                })
+            }
         }
     },
     created() {
