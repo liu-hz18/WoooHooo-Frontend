@@ -56,7 +56,7 @@
         </el-row>
     </el-menu>
     <div >
-    <LoginDialog />
+    <LoginDialog v-bind:dialogVisible= "this.loginDialog.visible" v-on:loginsuccess = "closeLoginDia"/>
     </div>
 </div>
 
@@ -81,12 +81,16 @@ export default {
         },
         activeIndexProp: String,
         isSearch: String,
+        
     },
     data() {
         return {
             loginBtnText: (this.username === "") ? "登录" : this.username,
             activeIndex: this.activeIndexProp,
             subitem: 0,
+            loginDialog:{
+                visible:false,
+            },
         };
     },
     computed: {
@@ -98,6 +102,11 @@ export default {
         },
     },
     methods: {
+        closeLoginDia(){
+            this.loginDialog.visible = false;
+            console.log("强制刷新")
+            this.$forceUpdate()
+        },
         handleSelect(key, keyPath) {
             if (keyPath[0] === "2") {
                 this.subitem = String(keyPath[1].split('-')[1]);
@@ -123,9 +132,11 @@ export default {
                         name: 'Center'
                     });
                 } else {
-                    this.$router.push({
+                    /*this.$router.push({
                         name: 'Login'
-                    });
+                    });*/
+                    //弹出登录窗口
+                    this.loginDialog.visible = true;
                 }
             }
         },
@@ -137,16 +148,17 @@ export default {
                     duration: 3000
                 })
             } else {
-                this.$router.push({
+                /*this.$router.push({
                     name: 'Login'
-                });
+                });*/
+                //弹出登录窗口
+                this.loginDialog.visible = true;
             }
 
         },
         handleQuit() {
             //用户退出
             if (this.username != "") {
-                this.loginBtnText = "登录"
                 this.$notify({
                     type: 'success',
                     message: this.username + '，下线成功！',
@@ -165,6 +177,7 @@ export default {
             }
         }
     },
+    
     created() {
         //this.activeIndex = "0";
         this.subitem = Number(this.$route.query.query);
