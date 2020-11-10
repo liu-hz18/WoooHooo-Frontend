@@ -26,8 +26,8 @@ export default {
                                         message: '注册成功,用户名：' + parent.user.name + '！',
                                         duration: 3000 
                                     })
-                                    //页面跳转
-                                    parent.$router.replace('/login')
+                                    //页面跳转->改为跳转回主页面
+                                    parent.$router.replace('/home')
                                 }
                                 else if(request.status === 400){
                                     parent.$message({

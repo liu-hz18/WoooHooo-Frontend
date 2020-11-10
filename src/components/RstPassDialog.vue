@@ -3,6 +3,7 @@
         style="text-align: center"
         title="重设密码"
         :visible="dialogVisible"
+        :modal-append-to-body='false'
         :show-close=false
         width="40%">
     <el-form label-width="80px">
@@ -25,7 +26,10 @@
 export default {
   name: "RstPassDialog",
   props: {
-      dialogVisible: Boolean,
+      dialogVisible: {
+            type: Boolean,
+            default: () => true
+        },
   },
   // 请在下方设计自己的数据结构以及事件函数
   data(){
