@@ -2,7 +2,7 @@
 <div class="result">
     <el-container>
         <el-header>
-            <NavBar v-bind:activeIndexProp="activeIndexProp" :isSearch="String(isSearch)" :username="userstate.username" @user-logout="userLogout" @choose-type="clearInput"> </NavBar>
+            <NavBar v-bind:activeIndexProp="activeIndexProp" :isSearch="String(isSearch)" :username.sync="userstate.username" @user-logout="userLogout" @choose-type="clearInput" @userlogin="userlogin"> </NavBar>
         </el-header>
         <el-row style="margin-top: 0px; height: 90px;">
             <el-col :span="3">
@@ -135,6 +135,10 @@ export default {
         };
     },
     methods: {
+        userlogin(name) {
+            console.log("userlogin in result", name, this.$cookies.get("username"))
+            this.userstate.username = name;
+        },
         userLogout() {
             this.$cookies.remove("username")
             this.userstate.username = ""

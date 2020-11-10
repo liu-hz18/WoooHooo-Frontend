@@ -94,6 +94,7 @@ window.WIDGET = {
 }
 import newsClassMap from "../datas/newslist.js";
 import moment from 'moment';
+import LoginDialog from "./LoginDialog.vue"
 
 export default {
     name: "NavBar",
@@ -134,6 +135,7 @@ export default {
             return newsClassMap[this.subitem];
         },
         loginBtnText() {
+            console.log("compute", this.username)
             return (this.username === "") ? "登录" : this.username;
         }
     },
@@ -141,7 +143,6 @@ export default {
         jregister() {
             this.$router.replace('/register')
         },
-
         closeLoginDia(name) {
             this.loginDialog.visible = false;
             console.log("userlogin" + name)
