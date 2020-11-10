@@ -172,6 +172,9 @@ export default {
     },
     computed: {},
     methods: {
+        /*userlogin(name){
+            this.userstate.username = name;
+        },*/
         handleClick() {
             getNewsClassList(this.activeTab, this.pageNumber, 5, this);
         },

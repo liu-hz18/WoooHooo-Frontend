@@ -103,7 +103,7 @@ export default {
                                     console.log("登录成功，跳转主页面")
                                     parent.$cookies.set("username", parent.user.name)
                                     //parent.$forceUpdate()
-                                    parent.$emit("loginsuccess",)
+                                    parent.$emit("loginsuccess",parent.user.name)
                                     //修改用户状态
                                     //parent.$emit("userLogin",parent.user.name)
                                 }

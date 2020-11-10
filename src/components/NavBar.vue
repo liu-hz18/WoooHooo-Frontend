@@ -106,10 +106,10 @@ export default {
             this.$router.replace('/register')
         },
         
-        closeLoginDia(){
+        closeLoginDia(name){
             this.loginDialog.visible = false;
-            console.log("强制刷新")
-            this.$forceUpdate()
+            console.log("userlogin"+name)
+            this.$emit("userlogin",name)
         },
         handleSelect(key, keyPath) {
             if (keyPath[0] === "2") {
