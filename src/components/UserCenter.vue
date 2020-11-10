@@ -86,7 +86,7 @@ export default {
             },
             activeIndexProp:"1",
             rstPassDialog:{
-                visible:true,
+                visible:false,
                   form:{
                       oldpass:"",
                       newpass:""

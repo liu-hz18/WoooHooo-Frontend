@@ -4,7 +4,7 @@
         title="登录"
         :visible="dialogVisible"
         :modal-append-to-body='false'
-        :show-close=true
+        :show-close=false
         width="40%">
 
         <!--flex弹性盒子模型，justify-content：主抽 -->
@@ -42,12 +42,13 @@
 import API from "../utils/API.js"
 import md5 from 'js-md5';
 import {urlParam}  from "../utils/communication.js"
+
 export default {
   name: "LoginDialog",
   props: {
       dialogVisible: {
             type: Boolean,
-            default: () => false
+            default: () => true
         },
   },
   // 请在下方设计自己的数据结构以及事件函数
@@ -99,13 +100,10 @@ export default {
                                         duration: 3000
                                     })
                                     //页面跳转
-                                    parent.$router.push({
-                                        name: 'Home',
-                                        params: {
-                                            username: parent.user.name
-                                        }
-                                    });
+                                    console.log("登录成功，跳转主页面")
                                     parent.$cookies.set("username", parent.user.name)
+                                    //parent.$forceUpdate()
+                                    parent.$emit("loginsuccess",)
                                     //修改用户状态
                                     //parent.$emit("userLogin",parent.user.name)
                                 }

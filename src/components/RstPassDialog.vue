@@ -3,7 +3,6 @@
         style="text-align: center"
         title="重设密码"
         :visible="dialogVisible"
-        :modal-append-to-body='false'
         :show-close=false
         width="40%">
     <el-form label-width="80px">
