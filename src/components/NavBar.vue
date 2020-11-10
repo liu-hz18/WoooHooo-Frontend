@@ -48,9 +48,17 @@
             <el-tag>{{newsType}}</el-tag>
         </el-menu-item>
         <el-row style="margin-top: 10px; margin-bottom: 10px; display: flex; justify-content: flex-end; ">
+            <div class="date-info__left">{{time}}</div>
+            <div class="date-info__right">
+                <div>{{date}}</div>
+                <div>{{day}}</div>
+            </div>
+            <div id="weather-v2-plugin-simple"></div>
             <div class="login-bar">
-                <el-button round type="primary" slot="append" icon="el-icon-user-solid" @click="handleLogin">{{loginBtnText}}</el-button>
-                <el-button round plain type="info" slot="append" icon="el-icon-user" @click="handleQuit">退出</el-button>
+                <el-button round type="primary" slot="append" icon="el-icon-user-solid" @click="handleLogin" style="margin-right: 15px; margin-left:20px;">{{loginBtnText}}</el-button>
+            </div>
+            <div class="quit-bar">
+                <el-button round plain type="info" slot="append" icon="el-icon-user" @click="handleQuit" style="margin-right: 7px;">退出</el-button>
             </div>
         </el-row>
     </el-menu>
@@ -58,7 +66,30 @@
 </template>
 
 <script>
-import newsClassMap from "../datas/newslist.js"
+window.WIDGET = {
+    CONFIG: {
+        "modules": "01234",
+        "background": 1,
+        "tmpColor": "FFFFFF",
+        "tmpSize": "16",
+        "cityColor": "FFFFFF",
+        "citySize": 16,
+        "aqiSize": 16,
+        "weatherIconSize": 24,
+        "alertIconSize": 18,
+        "padding": "10px 10px 10px 10px",
+        "shadow": "1",
+        "language": "auto",
+        "borderRadius": 5,
+        "fixed": "false",
+        "vertical": "middle",
+        "horizontal": "center",
+        "key": "YSkTePopy7",
+        "margin-right": "10px",
+    }
+}
+import newsClassMap from "../datas/newslist.js";
+import moment from 'moment';
 
 export default {
     name: "NavBar",
@@ -70,12 +101,19 @@ export default {
         },
         activeIndexProp: String,
         isSearch: String,
+        styleObj: {
+            required: false,
+            type: Object
+        },
     },
     data() {
         return {
-            loginBtnText: (this.username === "") ? "登录" : this.username,
             activeIndex: this.activeIndexProp,
             subitem: 0,
+            time: '',
+            date: '',
+            day: '',
+            timeInterval: null,
         };
     },
     computed: {
@@ -85,6 +123,9 @@ export default {
             }
             return newsClassMap[this.subitem];
         },
+        loginBtnText() {
+            return (this.username === "") ? "登录" : this.username;
+        }
     },
     methods: {
         handleSelect(key, keyPath) {
@@ -152,15 +193,40 @@ export default {
                     duration: 3000
                 })
             }
+        },
+        updateTime() {
+            const _this = this;
+            this.timeInterval = setInterval(function () {
+                _this.time = moment().format('HH:mm');
+            }, 1000);
         }
     },
     created() {
         //this.activeIndex = "0";
         this.subitem = Number(this.$route.query.query);
-        console.log("create", this.subitem)
+        console.log("create", this.subitem);
+        const momentNow = moment();
+        this.date = momentNow.format('YYYY-MM-DD');
+        const dayNameMapping = [
+            '星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'
+        ];
+        console.log("dsadas", momentNow.format('e'));
+        this.day = dayNameMapping[momentNow.format('e')];
+        this.updateTime();
     },
     watch: {},
-    mounted() {},
+    mounted() {
+        (function (d) {
+            var c = d.createElement('link')
+            c.rel = 'stylesheet'
+            c.href = 'https://apip.weatherdt.com/simple/static/css/weather-simple.css?v=2.0'
+            var s = d.createElement('script')
+            s.src = 'https://apip.weatherdt.com/simple/static/js/weather-simple.js?v=2.0'
+            var sn = d.getElementsByTagName('script')[0]
+            sn.parentNode.insertBefore(c, sn)
+            sn.parentNode.insertBefore(s, sn)
+        })(document)
+    },
 };
 </script>
 
@@ -188,7 +254,7 @@ a {
     top: 0;
     z-index: 999;
     width: 100%;
-    box-shadow: 10px 5px 12px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 10px 5px 10px 0 rgba(0, 0, 0, 0.14);
 }
 
 .el-button--primary {
@@ -204,5 +270,19 @@ a {
 .el-button--info:hover {
     background-color: #70a1ff;
     border-color: white;
+}
+
+.date-info__left {
+    float: right;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 30px;
+    margin-right: 15px;
+}
+
+.date-info__right {
+    font-size: 14px;
+    line-height: 1.5em;
+    margin-right: 20px;
 }
 </style>

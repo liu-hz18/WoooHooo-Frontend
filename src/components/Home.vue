@@ -13,7 +13,7 @@
             </el-col>
         </el-row>
 
-        <SearchBox class="home-search" v-bind:username="userstate.username"> </SearchBox>
+        <SearchBox class="home-search" v-bind:username="userstate.username" style="position: relative; width: 60%; margin-top: 1.5%; margin-left: 18%; margin-right: 40%;"></SearchBox>
 
         <el-container>
             <div class="news">
@@ -237,13 +237,13 @@ a {
 
 .home-search {
     position: relative;
-    margin-top: 2%;
+    margin-top: 1%;
     margin-left: 19%;
     width: 100%;
 }
 
 .home-icon {
-    margin-top: 20px;
+    margin-top: 17px;
     height: 100px;
     width: auto;
 }

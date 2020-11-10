@@ -79,6 +79,6 @@ a {
 }
 
 .news-list {
-    margin-top: 0px;
+    margin-top: -15px;
 }
 </style>
