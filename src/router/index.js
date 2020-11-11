@@ -5,7 +5,6 @@ import HelloWorld from "../components/HelloWorld.vue"
 import Home from "../components/Home.vue"
 import UserCenter from "../components/UserCenter.vue"
 import SearchResult from "../components/SearchResult.vue"
-import Login from '../components/Login.vue'
 import Register from '../components/Register.vue'
 import NotFound from "../components/NotFound.vue"
 
@@ -35,11 +34,6 @@ const routes = [
       path: '/search',
       name: "SearchResult",
       component: SearchResult
-    },
-    {
-      path: '/login',
-      name: "Login",
-      component: Login
     },
     {
       path: '/register',
