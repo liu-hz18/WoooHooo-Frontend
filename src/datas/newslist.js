@@ -2,7 +2,7 @@ import API from "../utils/API.js";
 import RandomUtil from "../utils/RandomUtil.js"
 import {urlParam}  from "../utils/communication.js"
 
-const newsClassMap = ["热点", "国内", "国际", "军事", "财经", "娱乐", "体育", "科技", "游戏", "文化", "社会"];
+const newsClassMap = ["推荐","热点", "国内", "国际", "军事", "财经", "娱乐", "体育", "科技", "游戏", "文化", "社会"];
 
 export function getNewsList(query, page, number, that) {
     //开始搜索则显示加载页面
