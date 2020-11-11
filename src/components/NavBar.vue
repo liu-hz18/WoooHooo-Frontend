@@ -147,9 +147,14 @@ export default {
             this.loginDialog.visible = false;
             console.log("userlogin" + name)
             this.$emit("userlogin", name)
+            console.log("导航栏的下划线"+this.activeIndex)
+            if (this.activeIndex === "1"){
+                this.$router.replace('/i-center')
+            }
         },
         handleSelect(key, keyPath) {
             if (keyPath[0] === "2") {
+                this.activeIndex = "2"
                 this.subitem = String(keyPath[1].split('-')[1]);
                 console.log(this.subitem);
                 this.$emit("choose-type");
@@ -161,13 +166,14 @@ export default {
                     }
                 });
             } else if (keyPath[0] === "0") {
-
+                this.activeIndex = "0"
                 this.$router.push({
                     name: 'Home'
                 });
             }
             //用户个人中心页面
             else if (keyPath[0] === "1") {
+                this.activeIndex = "1"
                 if (this.username != "") {
                     this.$router.push({
                         name: 'Center'
