@@ -2,7 +2,7 @@
 <div >
     <el-container>
         <el-header>
-            <NavBar v-bind:activeIndexProp="activeIndexProp" :username = "userstate.username" @user-logout = "userLogout"> </NavBar>
+            <NavBar v-bind:activeIndexProp="activeIndexProp" :username = "userstate.username" @user-logout = "userLogout" > </NavBar>
         </el-header>
 
         
@@ -32,9 +32,7 @@
             </div>
             <NewsList v-bind:username="userstate.username" :newsList="newsInfo.data"> </NewsList>
         </section>
-        <RstPassDialog v-bind:oldpass = "rstPassDialog.form.oldpass"
-                        v-bind:newpass= "rstPassDialog.form.newpass"
-                        v-bind:dialogVisible= "rstPassDialog.visible"
+        <RstPassDialog v-bind:dialogVisible= "rstPassDialog.visible"
                         @canclebtn = "closedialog"
                         @rstpass="rstpass"
                         />
@@ -52,6 +50,7 @@ import NewsList from "./NewsList.vue";
 import RstPassDialog from "@/components/RstPassDialog"
 import API from "../utils/API.js"
 import md5 from 'js-md5';
+import {urlParam}  from "../utils/communication.js"
 
 export default {
     name: "Home",
@@ -73,7 +72,6 @@ export default {
             //用户状态记录
             userstate:{
                 username:this.$cookies.get("username")?this.$cookies.get("username"):"",
-                userpass:""
             },
             userinfo:{
                 mail:"xxx@xx.com"
@@ -87,10 +85,6 @@ export default {
             activeIndexProp:"1",
             rstPassDialog:{
                 visible:false,
-                  form:{
-                      oldpass:"",
-                      newpass:""
-                    }
                 },
             
         };
@@ -102,6 +96,7 @@ export default {
         userLogout(){
             this.$cookies.remove("username")
             this.userstate.username = ""
+            this.$router.replace('/home')
         },
         handleRstPass(){
             console.log("修改密码")
@@ -110,8 +105,34 @@ export default {
         closedialog(){
             this.rstPassDialog.visible = false
         },
-        rstpass(){
-            if(md5(this.rstPassDialog.form.oldpass) == this.userstate.userpass){
+        rstpass(md5oldpass,newpass){
+            console.log("验证用户"+this.userstate.username+"的旧密码"+md5oldpass)
+            var validrequest = new XMLHttpRequest()
+            var url = urlParam(API.CHECK_USER_INFO.path, {
+                useraction: "login",
+                username: this.userstate.username,
+                userpass: md5oldpass,
+            }) 
+            console.log(url)
+            var valid = false;
+            validrequest.open(API.CHECK_USER_INFO.method,url, false)
+            validrequest.onreadystatechange = function () {
+                        console.log("从后端收到：")
+                        console.log(validrequest.readyState, validrequest.status, validrequest.responseText)
+                        if (validrequest.readyState === 4) {
+                            if(validrequest.status === 200){
+                                valid = true;
+                            }
+                            
+                        } else if (this.readyState === 1) {
+                            console.log('请求中')
+                        } else {
+                            console.log('请求失败')
+                        }
+                    }
+            validrequest.send(null)
+            
+            if(valid){
                 this.rstPassDialog.visible = false
                 var request = new XMLHttpRequest()
                 //var parent = this
@@ -122,7 +143,7 @@ export default {
                 }
                 request.send(JSON.stringify({
                             username : this.userstate.username,
-                            userpass : this.form.newpass,
+                            userpass : md5(newpass),
                         }))
                 this.$message({
                     type: 'success',

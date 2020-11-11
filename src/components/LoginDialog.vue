@@ -55,18 +55,18 @@ export default {
   data(){
     return {
         user: {},
-            rules: {
-                name: [{
-                    required: true,
-                    message: '用户名不能为空',
-                    trigger: 'blur'
-                }],
-                pass: [{
-                    required: true,
-                    message: '密码不能为空',
-                    trigger: 'blur'
-                }]
-            }
+        rules: {
+            name: [{
+                required: true,
+                message: '用户名不能为空',
+                trigger: 'blur'
+            }],
+            pass: [{
+                required: true,
+                message: '密码不能为空',
+                trigger: 'blur'
+            }]
+        }
     }
   },
   methods: {
