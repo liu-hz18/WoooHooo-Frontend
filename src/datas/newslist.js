@@ -76,28 +76,7 @@ export function getNewsClassList(newsclassnumber, page, number, that, append=fal
             console.log("推荐页面返回")
             console.log(rcmrequest.readyState, rcmrequest.status)
             console.log(rcmrequest.responseText)
-            if (rcmrequest.readyState === 4 && rcmrequest.status === 200) {
-                try{
-                    var jsonobj = JSON.parse(rcmrequest.responseText);
-                    if (append===true) {
-                        console.log("append", jsonobj["data"])
-                        that.newsInfo.data = that.newsInfo.data.concat(jsonobj["data"])
-                        that.newsInfo.total += jsonobj["total"];
-                        that.loadingmore = false;
-                    } else {
-                        that.newsInfo = {
-                            data: jsonobj["data"],
-                            time: 0.0001,
-                            total: jsonobj["total"],
-                            keywords: [],
-                        }
-                    }
-                    that.isLoading = false
-                    that.totalpage = Math.floor(that.newsInfo.total / 10)
-                } catch ( error ) {
-                    that.isLoading = false
-                }
-            }
+            setClassResponseList(append,rcmrequest,that)
         }
         rcmrequest.send(null)
     }
@@ -106,28 +85,7 @@ export function getNewsClassList(newsclassnumber, page, number, that, append=fal
         request.open(API.POST_NEWS_LIST.method, API.POST_NEWS_LIST.path, true)
         request.onreadystatechange = function () {
             console.log(request.readyState, request.status)
-            if (request.readyState === 4 && request.status === 200) {
-                try{
-                    var jsonobj = JSON.parse(request.responseText);
-                    if (append===true) {
-                        console.log("append", jsonobj["data"])
-                        that.newsInfo.data = that.newsInfo.data.concat(jsonobj["data"])
-                        that.newsInfo.total += jsonobj["total"];
-                        that.loadingmore = false;
-                    } else {
-                        that.newsInfo = {
-                            data: jsonobj["data"],
-                            time: 0.0001,
-                            total: jsonobj["total"],
-                            keywords: [],
-                        }
-                    }
-                    that.isLoading = false
-                    that.totalpage = Math.floor(that.newsInfo.total / 10)
-                } catch ( error ) {
-                    that.isLoading = false
-                }
-            }
+            setClassResponseList(append,request,that)
         }
         request.send(JSON.stringify({
             newstype: newsclass,   // 查询新闻类别, str
@@ -264,6 +222,31 @@ function randomInitNews(query) {
         })
     }
     return newsList
+}
+
+function setClassResponseList(append,request,that){
+    if (request.readyState === 4 && request.status === 200) {
+        try{
+            var jsonobj = JSON.parse(request.responseText);
+            if (append===true) {
+                console.log("append", jsonobj["data"])
+                that.newsInfo.data = that.newsInfo.data.concat(jsonobj["data"])
+                that.newsInfo.total += jsonobj["total"];
+                that.loadingmore = false;
+            } else {
+                that.newsInfo = {
+                    data: jsonobj["data"],
+                    time: 0.0001,
+                    total: jsonobj["total"],
+                    keywords: [],
+                }
+            }
+            that.isLoading = false
+            that.totalpage = Math.floor(that.newsInfo.total / 10)
+        } catch ( error ) {
+            that.isLoading = false
+        }
+    }
 }
 
 export default newsClassMap
