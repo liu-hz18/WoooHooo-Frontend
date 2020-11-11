@@ -42,6 +42,9 @@
 import API from "../utils/API.js"
 import md5 from 'js-md5';
 import {urlParam}  from "../utils/communication.js"
+import Vue from 'vue'
+import VueCookies from 'vue-cookies'
+Vue.use(VueCookies)
 
 export default {
   name: "LoginDialog",
