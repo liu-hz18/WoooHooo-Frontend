@@ -185,6 +185,7 @@ export default {
         userlogin(name) {
             this.userstate.username = name;
             this.rec_visible = true;
+            getNewsClassList(this.activeTab, this.pageNumber, 5, this);
         },
         handleClick() {
             if(this.rec_visible){
@@ -199,6 +200,7 @@ export default {
             this.$cookies.remove("username")
             this.userstate.username = ""
             this.rec_visible = false;
+            getNewsClassList(parseInt(this.activeTab)+1, this.pageNumber, 5, this);
         },
         loadmore() {
             let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
@@ -222,7 +224,12 @@ export default {
     },
     created() {
         this.backTop();
-        getNewsClassList(this.activeTab, 0, 5, this);
+        if(this.rec_visible){
+                getNewsClassList(this.activeTab, this.pageNumber, 5, this);
+            }
+            else{
+                getNewsClassList(parseInt(this.activeTab)+1, this.pageNumber, 5, this);
+            }
         window.addEventListener('beforeunload', e => this.backTop(e));
     },
     destroyed() {
