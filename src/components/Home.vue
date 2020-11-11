@@ -18,6 +18,12 @@
         <el-container>
             <div class="news">
                 <el-tabs type="border-card" v-model="activeTab" @tab-click="handleClick">
+                    <el-tab-pane v-if="rec_visible">
+                        <span slot="label"><em class="el-icon-date"></em>推荐</span>
+                        <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
+                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
+                    </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>热点</span>
                         <el-row :gutter="15">
@@ -31,6 +37,7 @@
                             </el-col>
                         </el-row>
                     </el-tab-pane>
+                    
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>时政</span>
                         <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
@@ -148,6 +155,9 @@ export default {
     },
     data() {
         return {
+            //推荐一栏是否可见
+            rec_visible:this.$cookies.get("username") ? true : false,
+            //rec_visible :true,
             //用户状态记录
             userstate: {
                 username: this.$cookies.get("username") ? this.$cookies.get("username") : ""
@@ -173,6 +183,7 @@ export default {
     methods: {
         userlogin(name) {
             this.userstate.username = name;
+            this.rec_visible = true;
         },
         handleClick() {
             getNewsClassList(this.activeTab, this.pageNumber, 5, this);
@@ -180,6 +191,7 @@ export default {
         userLogout() {
             this.$cookies.remove("username")
             this.userstate.username = ""
+            this.rec_visible = false;
         },
         loadmore() {
             let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
