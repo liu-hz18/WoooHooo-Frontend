@@ -8,23 +8,23 @@
             <el-col :span="3">
                 <img class="home-img" v-bind:src="homeicon" alt="WoooHooo~" />
             </el-col>
-            <el-col :span="8">
+            <el-col :span="11">
                 <div class="search-box" style=" position: relative;margin-right: 0%; margin-top: 3%;">
                     <SearchBox ref="searchbox" @update-news="updateNews" @text-change="updateInput" v-bind:username="userstate.username" :searchInputProp.sync="searchinput" :key="searchinput">
                     </SearchBox>
                 </div>
             </el-col>
-            <el-col :span="8" :offset="1" style="margin-top: 45px;">
+            <el-col :span="6" :offset="2" style="margin-top: 50px;" v-if="String(isSearch)==='true'">
                 <el-dropdown trigger="click" @command="handleCommand">
                     <span class="el-dropdown-link">
                         时间选择
                         <em class="el-icon-arrow-down el-icon--right"></em>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item command="0">一天内</el-dropdown-item>
-                        <el-dropdown-item command="1">一周内</el-dropdown-item>
-                        <el-dropdown-item command="2">一月内</el-dropdown-item>
-                        <el-dropdown-item command="3">全部</el-dropdown-item>
+                        <el-dropdown-item command="0">全部</el-dropdown-item>
+                        <el-dropdown-item command="1">一天内</el-dropdown-item>
+                        <el-dropdown-item command="2">一周内</el-dropdown-item>
+                        <el-dropdown-item command="3">一月内</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </el-col>
@@ -131,7 +131,7 @@ export default {
             totalpage: 1,
             screenHeight: document.body.clientHeight,
             relatedSearch: [],
-            relation: 3, // 当前搜索时间限制
+            relation: 0, // 当前搜索时间限制
         };
     },
     methods: {
