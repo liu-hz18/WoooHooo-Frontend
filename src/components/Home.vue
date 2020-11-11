@@ -20,9 +20,16 @@
                 <el-tabs type="border-card" v-model="activeTab" @tab-click="handleClick">
                     <el-tab-pane v-if="rec_visible">
                         <span slot="label"><em class="el-icon-date"></em>推荐</span>
-                        <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
-                        <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
-                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
+                        <el-row :gutter="15">
+                            <el-col :span="15">
+                                <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                                <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
+                                <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
+                            </el-col>
+                            <el-col :span="9">
+                                <HotList v-bind:hotList="hotList"> </HotList>
+                            </el-col>
+                        </el-row>
                     </el-tab-pane>
 
                     <el-tab-pane>
@@ -194,7 +201,6 @@ export default {
             else{
                 getNewsClassList(parseInt(this.activeTab)+1, this.pageNumber, 5, this);
             }
-            
         },
         userLogout() {
             this.$cookies.remove("username")

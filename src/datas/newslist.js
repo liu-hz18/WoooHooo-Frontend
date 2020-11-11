@@ -63,19 +63,19 @@ export function getNewsClassList(newsclassnumber, page, number, that, append=fal
     console.log(newsclassnumber)
     var newsclass = newsClassMap[newsclassnumber];
     console.log(newsclass);
-    if(newsclass== "推荐") {
+    if(newsclass=== "推荐") {
         var rcmrequest = new XMLHttpRequest()
         var params = {
             username: that.userstate.username,
-            number: 10,
-            page:10,
+            number: number,
+            page:page,
         }
         var url = urlParam(API.GET_RECOMMEND.path,params)
         rcmrequest.open(API.GET_RECOMMEND.method,url,true)
         rcmrequest.onreadystatechange = function () {
             console.log("推荐页面返回")
             console.log(rcmrequest.readyState, rcmrequest.status)
-            console.log(rcmrequest.responseText)
+            //console.log(rcmrequest.responseText)
             setClassResponseList(append,rcmrequest,that)
         }
         rcmrequest.send(null)
