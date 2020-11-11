@@ -5,13 +5,13 @@
         :visible="dialogVisible"
         :show-close=false
         width="40%">
-    <el-form label-width="80px">
-        <el-form-item label="旧密码">
-            <el-input v-model="oldpass" type="password"></el-input>
+    <el-form label-width="80px" :rules="rules">
+        <el-form-item label="旧密码" prop="pass">
+            <el-input v-model="oldpass" type="password" ></el-input>
         </el-form-item>
         
-        <el-form-item label="新密码">
-            <el-input v-model="newpass" type="password"></el-input>            
+        <el-form-item label="新密码" prop="pass">
+            <el-input v-model="newpass" type="password" ></el-input>            
         </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import md5 from 'js-md5';
 export default {
   name: "RstPassDialog",
   props: {
@@ -34,9 +35,15 @@ export default {
   data(){
     return {
     
-	oldpass:"",
-	newpass:"",
-	
+      oldpass:"",
+      newpass:"",
+
+      rules: {
+          pass: [
+              {required: true, message: '密码不能为空', trigger: 'blur'},
+              {min:8, message:'密码不能少于8个字符',trigger: 'blur'}
+          ],
+      },
     }
   },
   methods: {
@@ -46,7 +53,7 @@ export default {
     },
     yesbtn(){
         console.log("点击确认修改密码")
-        this.$emit("rstpass")
+        this.$emit("rstpass",md5(this.oldpass),this.newpass)
     },
   },
   
