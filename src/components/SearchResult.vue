@@ -49,7 +49,7 @@
                 </div>
             </el-col>
             <el-col :span="7">
-                <HotList v-bind:hotList="hotList"> </HotList>
+                <HotList class="hotlist" v-bind:hotList="hotList"> </HotList>
             </el-col>
         </el-row>
 
@@ -314,5 +314,9 @@ img {
 
 .el-icon-arrow-down {
     font-size: 12px;
+}
+
+.hotlist {
+    line-height: 32px;
 }
 </style>

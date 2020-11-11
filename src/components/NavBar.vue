@@ -1,7 +1,6 @@
 <template>
 <div class="navigation-bar">
-
-    <el-menu :default-active=" activeIndex" class="el-menu" mode="horizontal" @select="handleSelect" active-text-color="#9980FA" text-color="#5758BB">
+    <el-menu :default-active="activeIndex" class="el-menu" mode="horizontal" @select="handleSelect" active-text-color="#9980FA" text-color="#5758BB">
         <el-menu-item index="0">首页</el-menu-item>
         <el-menu-item index="1">个人中心</el-menu-item>
         <el-submenu index="2">
@@ -179,9 +178,6 @@ export default {
                         name: 'Center'
                     });
                 } else {
-                    /*this.$router.push({
-                        name: 'Login'
-                    });*/
                     //弹出登录窗口
                     this.loginDialog.visible = true;
                 }
@@ -195,13 +191,9 @@ export default {
                     duration: 3000
                 })
             } else {
-                /*this.$router.push({
-                    name: 'Login'
-                });*/
                 //弹出登录窗口
                 this.loginDialog.visible = true;
             }
-
         },
         handleQuit() {
             //用户退出
@@ -211,10 +203,7 @@ export default {
                     message: this.username + '，下线成功！',
                     duration: 3000
                 })
-
-                //
                 this.$emit("user-logout")
-
             } else {
                 this.$notify({
                     type: 'error',
@@ -230,7 +219,6 @@ export default {
             }, 1000);
         }
     },
-
     created() {
         //this.activeIndex = "0";
         this.subitem = Number(this.$route.query.query);
