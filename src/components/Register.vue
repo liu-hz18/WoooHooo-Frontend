@@ -1,6 +1,5 @@
 <template>
     <div class="registerbg"> 
-      
       <!--flex弹性盒子模型，justify-content：主抽 -->
       <div style="display: flex;justify-content: center;opacity: 0.85;border-radius: 96px;" >
         <el-card style="width: 400px;margin-top: 150px">

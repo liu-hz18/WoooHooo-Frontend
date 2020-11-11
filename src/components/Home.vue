@@ -12,7 +12,6 @@
                 </div>
             </el-col>
         </el-row>
-
         <SearchBox class="home-search" v-bind:username="userstate.username" style="position: relative; width: 60%; margin-top: 1.5%; margin-left: 18%; margin-right: 40%;"></SearchBox>
 
         <el-container>
@@ -27,7 +26,7 @@
                                 <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
                             </el-col>
                             <el-col :span="9">
-                                <HotList v-bind:hotList="hotList"> </HotList>
+                                <HotList v-bind:hotList="hotList" :style="styleObject"> </HotList>
                             </el-col>
                         </el-row>
                     </el-tab-pane>
@@ -41,7 +40,7 @@
                                 <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
                             </el-col>
                             <el-col :span="9">
-                                <HotList v-bind:hotList="hotList"> </HotList>
+                                <HotList v-bind:hotList="hotList" :style="styleObject"> </HotList>
                             </el-col>
                         </el-row>
                     </el-tab-pane>
@@ -181,10 +180,10 @@ export default {
             },
             hotList: getHotList(this),
             activeTab: "0",
-            pageNumber: 0,
             isLoading: false,
             count: 0,
             loadingmore: false,
+            styleObject: "",
         };
     },
     computed: {},
@@ -192,34 +191,40 @@ export default {
         userlogin(name) {
             this.userstate.username = name;
             this.rec_visible = true;
-            getNewsClassList(this.activeTab, this.pageNumber, 5, this);
+            this.updateNews()
         },
         handleClick() {
             if(this.rec_visible){
-                getNewsClassList(this.activeTab, this.pageNumber, 5, this);
+                getNewsClassList(parseInt(this.activeTab), this.count, 5, this);
             }
             else{
-                getNewsClassList(parseInt(this.activeTab)+1, this.pageNumber, 5, this);
+                getNewsClassList(parseInt(this.activeTab)+1, this.count, 5, this);
             }
         },
         userLogout() {
             this.$cookies.remove("username")
             this.userstate.username = ""
             this.rec_visible = false;
-            getNewsClassList(parseInt(this.activeTab)+1, this.pageNumber, 5, this);
+            getNewsClassList(parseInt(this.activeTab)+1, this.count, 5, this);
         },
         loadmore() {
             let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            if (scrollTop > 365) {
+                this.styleObject = {position: 'fixed', top: '45px', width: '28.3%'}
+            } else {
+                this.styleObject = ""
+            }
             //变量windowHeight是可视区的高度
             let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
             //变量scrollHeight是滚动条的总高度
             let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
             let bottom = Math.round(scrollTop + windowHeight) >= scrollHeight;
+            console.log(bottom)
             setTimeout(() => {
                 if (bottom && !this.loadingmore) {
                     console.log("loadmore", this.count, bottom)
                     this.count += 1
-                    getNewsClassList(this.activeTab, this.count, 5, this, true);
+                    this.updateNews();
                 }
             }, 800);
         },
@@ -227,15 +232,18 @@ export default {
             console.log("backtop", e)
             document.body.scrollTop = document.documentElement.scrollTop = 0;
         },
+        updateNews() {
+            if(this.rec_visible){
+                getNewsClassList(parseInt(this.activeTab), this.count, 5, this, true);
+            }
+            else{
+                getNewsClassList(parseInt(this.activeTab)+1, this.count, 5, this, true);
+            }
+        }
     },
     created() {
         this.backTop();
-        if(this.rec_visible){
-                getNewsClassList(this.activeTab, this.pageNumber, 5, this);
-            }
-            else{
-                getNewsClassList(parseInt(this.activeTab)+1, this.pageNumber, 5, this);
-            }
+        this.updateNews();
         window.addEventListener('beforeunload', e => this.backTop(e));
     },
     destroyed() {

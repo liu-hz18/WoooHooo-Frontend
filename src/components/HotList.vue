@@ -85,7 +85,6 @@ span {
     width: 18px;
     font-size: 16px;
     letter-spacing: -1px;
-
 }
 
 a {
@@ -94,7 +93,7 @@ a {
     line-height: 40px;
     cursor: pointer;
     font: 17px Arial, sans-serif;
-    max-width: 340px;
+    max-width: 355px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;

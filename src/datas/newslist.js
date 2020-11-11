@@ -61,7 +61,7 @@ export function getNewsClassList(newsclassnumber, page, number, that, append=fal
         that.isLoading = true
     }
     console.log(newsclassnumber)
-    var newsclass = newsClassMap[newsclassnumber];
+    var newsclass = newsClassMap[newsclassnumber+1];
     console.log(newsclass);
     if(newsclass=== "推荐") {
         var rcmrequest = new XMLHttpRequest()
