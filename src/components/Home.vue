@@ -37,7 +37,7 @@
                             </el-col>
                         </el-row>
                     </el-tab-pane>
-                    
+
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>时政</span>
                         <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
@@ -156,7 +156,7 @@ export default {
     data() {
         return {
             //推荐一栏是否可见
-            rec_visible:this.$cookies.get("username") ? true : false,
+            rec_visible: this.$cookies.get("username") ? true : false,
             //rec_visible :true,
             //用户状态记录
             userstate: {
