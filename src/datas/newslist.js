@@ -54,6 +54,7 @@ export function getNewsList(query, page, number, that) {
 }
 
 export function getNewsClassList(newsclassnumber, page, number, that, append=false) {
+    console.log("当前要显示的页面编号：" + newsclassnumber)
     if(append){
         that.loadingmore = true;
     } else {
@@ -62,38 +63,78 @@ export function getNewsClassList(newsclassnumber, page, number, that, append=fal
     console.log(newsclassnumber)
     var newsclass = newsClassMap[newsclassnumber];
     console.log(newsclass);
-    var request = new XMLHttpRequest()
-    request.open(API.POST_NEWS_LIST.method, API.POST_NEWS_LIST.path, true)
-    request.onreadystatechange = function () {
-        console.log(request.readyState, request.status)
-        if (request.readyState === 4 && request.status === 200) {
-            try{
-                var jsonobj = JSON.parse(request.responseText);
-                if (append===true) {
-                    console.log("append", jsonobj["data"])
-                    that.newsInfo.data = that.newsInfo.data.concat(jsonobj["data"])
-                    that.newsInfo.total += jsonobj["total"];
-                    that.loadingmore = false;
-                } else {
-                    that.newsInfo = {
-                        data: jsonobj["data"],
-                        time: 0.0001,
-                        total: jsonobj["total"],
-                        keywords: [],
+    if(newsclass== "推荐") {
+        var rcmrequest = new XMLHttpRequest()
+        var params = {
+            username: that.userstate.username,
+            number: 10,
+            page:10,
+        }
+        var url = urlParam(API.GET_RECOMMEND.path,params)
+        rcmrequest.open(API.GET_RECOMMEND.method,url,true)
+        rcmrequest.onreadystatechange = function () {
+            console.log("推荐页面返回")
+            console.log(rcmrequest.readyState, rcmrequest.status)
+            console.log(rcmrequest.responseText)
+            if (rcmrequest.readyState === 4 && rcmrequest.status === 200) {
+                try{
+                    var jsonobj = JSON.parse(rcmrequest.responseText);
+                    if (append===true) {
+                        console.log("append", jsonobj["data"])
+                        that.newsInfo.data = that.newsInfo.data.concat(jsonobj["data"])
+                        that.newsInfo.total += jsonobj["total"];
+                        that.loadingmore = false;
+                    } else {
+                        that.newsInfo = {
+                            data: jsonobj["data"],
+                            time: 0.0001,
+                            total: jsonobj["total"],
+                            keywords: [],
+                        }
                     }
+                    that.isLoading = false
+                    that.totalpage = Math.floor(that.newsInfo.total / 10)
+                } catch ( error ) {
+                    that.isLoading = false
                 }
-                that.isLoading = false
-                that.totalpage = Math.floor(that.newsInfo.total / 10)
-            } catch ( error ) {
-                that.isLoading = false
             }
         }
+        rcmrequest.send(null)
     }
-    request.send(JSON.stringify({
-        newstype: newsclass,   // 查询新闻类别, str
-        page: page,     // 请求 第page页 的结果, int
-        number: number, // 每个page的新闻个数, int
-    }))
+    else{
+        var request = new XMLHttpRequest()
+        request.open(API.POST_NEWS_LIST.method, API.POST_NEWS_LIST.path, true)
+        request.onreadystatechange = function () {
+            console.log(request.readyState, request.status)
+            if (request.readyState === 4 && request.status === 200) {
+                try{
+                    var jsonobj = JSON.parse(request.responseText);
+                    if (append===true) {
+                        console.log("append", jsonobj["data"])
+                        that.newsInfo.data = that.newsInfo.data.concat(jsonobj["data"])
+                        that.newsInfo.total += jsonobj["total"];
+                        that.loadingmore = false;
+                    } else {
+                        that.newsInfo = {
+                            data: jsonobj["data"],
+                            time: 0.0001,
+                            total: jsonobj["total"],
+                            keywords: [],
+                        }
+                    }
+                    that.isLoading = false
+                    that.totalpage = Math.floor(that.newsInfo.total / 10)
+                } catch ( error ) {
+                    that.isLoading = false
+                }
+            }
+        }
+        request.send(JSON.stringify({
+            newstype: newsclass,   // 查询新闻类别, str
+            page: page,     // 请求 第page页 的结果, int
+            number: number, // 每个page的新闻个数, int
+        }))
+    }
 }
 
 export function getBrowseNewsList(username,that){

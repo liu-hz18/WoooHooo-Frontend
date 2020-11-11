@@ -31,7 +31,7 @@ export default {
             type: Array,
             default: () =>
                 new Array(6).fill({
-                    uid: 0,
+                    uid: "0",
                     link: "www.baidu.com",
                     title: "This is a news Title " + 0,
                     content: "This is a news content",
