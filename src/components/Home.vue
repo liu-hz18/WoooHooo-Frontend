@@ -24,6 +24,7 @@
                         <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
                         <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
                     </el-tab-pane>
+
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>热点</span>
                         <el-row :gutter="15">
@@ -186,7 +187,13 @@ export default {
             this.rec_visible = true;
         },
         handleClick() {
-            getNewsClassList(this.activeTab, this.pageNumber, 5, this);
+            if(this.rec_visible){
+                getNewsClassList(this.activeTab, this.pageNumber, 5, this);
+            }
+            else{
+                getNewsClassList(parseInt(this.activeTab)+1, this.pageNumber, 5, this);
+            }
+            
         },
         userLogout() {
             this.$cookies.remove("username")
