@@ -2,73 +2,137 @@
 <div class="home">
     <el-container>
         <el-header>
-            <NavBar> </NavBar>
+            <NavBar v-bind:activeIndexProp="activeIndexProp" :username="userstate.username" @user-logout="userLogout" @userlogin="userlogin"> </NavBar>
         </el-header>
 
         <el-row :gutter="20">
-            <el-col :span="4" :offset="11">
+            <el-col :span="4" :offset="10">
                 <div class="home-icon">
-                    <img v-bind:src="homeicon" alt="WooHoo~" />
+                    <img v-bind:src="homeicon" alt="WoooHooo~" />
                 </div>
             </el-col>
         </el-row>
-
-        <SearchBox> </SearchBox>
+        <SearchBox class="home-search" v-bind:username="userstate.username" style="position: relative; width: 60%; margin-top: 1.5%; margin-left: 18%; margin-right: 40%;"></SearchBox>
 
         <el-container>
             <div class="news">
                 <el-tabs type="border-card" v-model="activeTab" @tab-click="handleClick">
+                    <el-tab-pane v-if="rec_visible">
+                        <span slot="label"><em class="el-icon-date"></em>推荐</span>
+                        <el-row :gutter="15">
+                            <el-col :span="15">
+                                <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                                <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
+                                <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
+                            </el-col>
+                            <el-col :span="9">
+                                <HotList v-bind:hotList="hotList" :style="styleObject"> </HotList>
+                            </el-col>
+                        </el-row>
+                    </el-tab-pane>
+
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>热点</span>
                         <el-row :gutter="15">
                             <el-col :span="15">
-                                <NewsList v-bind:newsList="newsArray"> </NewsList>
+                                <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                                <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
+                                <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
                             </el-col>
                             <el-col :span="9">
-                                <HotList v-bind:hotList="hotList"> </HotList>
+                                <HotList v-bind:hotList="hotList" :style="styleObject"> </HotList>
                             </el-col>
                         </el-row>
                     </el-tab-pane>
+
                     <el-tab-pane>
-                        <span slot="label"><em class="el-icon-date"></em>国内</span>
-                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                        <span slot="label"><em class="el-icon-date"></em>时政</span>
+                        <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
+                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>国际</span>
-                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                        <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
+                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>军事</span>
-                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                        <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
+                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>财经</span>
-                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                        <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
+                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>娱乐</span>
-                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                        <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
+                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>体育</span>
-                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                        <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
+                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
                     </el-tab-pane>
                     <el-tab-pane>
                         <span slot="label"><em class="el-icon-date"></em>科技</span>
-                        <NewsList v-bind:newsList="newsArray"> </NewsList>
+                        <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
+                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
+                    </el-tab-pane>
+                    <el-tab-pane>
+                        <span slot="label"><em class="el-icon-date"></em>游戏</span>
+                        <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
+                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
+                    </el-tab-pane>
+                    <el-tab-pane>
+                        <span slot="label"><em class="el-icon-date"></em>文化</span>
+                        <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
+                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
+                    </el-tab-pane>
+                    <el-tab-pane>
+                        <span slot="label"><em class="el-icon-date"></em>社会</span>
+                        <img v-if="isLoading" v-bind:src="loadgif" alt="WoooHooo~" />
+                        <NewsList v-if="!isLoading" v-bind:username="userstate.username" :newsList="newsInfo.data" :loadingmore="loadingmore" @load-more="loadmore"> </NewsList>
+                        <img v-if="!isLoading" class="loadmore-img" v-bind:src="loadmoregif" alt="WoooHooo~" />
                     </el-tab-pane>
                 </el-tabs>
             </div>
         </el-container>
     </el-container>
+    <el-backtop>
+        <div style="
+        height: 100%;
+        width: 180%;
+        background-color: #f2f5f6;
+        box-shadow: 0 0 6px rgba(0,0,0, .12);
+        text-align: center;
+        line-height: 40px;
+        color: #1989fa;
+      ">
+            ToTop
+        </div>
+    </el-backtop>
 </div>
 </template>
 
 <script>
 import {
-    getNewsClassList
+    getNewsClassList,
+    getHotList
 } from "../datas/newslist.js";
-import logo from "../assets/logo.png";
+import logo from "../assets/home.svg";
+import load from "../assets/loading.gif"
+import loadmore from "../assets/loadmore.gif";
 import NewsList from "./NewsList.vue";
 import HotList from "./HotList.vue";
 import SearchBox from "./SearchBox.vue";
@@ -87,30 +151,103 @@ export default {
             type: String,
             default: () => logo,
         },
+        loadgif: {
+            type: String,
+            default: () => load,
+        },
+        loadmoregif: {
+            type: String,
+            default: () => loadmore,
+        },
     },
     data() {
         return {
+            //推荐一栏是否可见
+            rec_visible: this.$cookies.get("username") ? true : false,
+            //rec_visible :true,
+            //用户状态记录
+            userstate: {
+                username: this.$cookies.get("username") ? this.$cookies.get("username") : ""
+            },
+            activeIndexProp: "0",
             searchinput: "中国",
             keywordlist: ["news", "is"],
-            newsArray: getNewsClassList("热点", 0, 10),
-            hotList: new Array(10).fill({
-                uid: 0,
-                link: "https://www.baidu.com",
-                title: "This is a hot news news " + 0,
-                hot: "100万",
-            }),
+            newsInfo: {
+                data: [],
+                time: 0.0001,
+                total: 1000,
+                keywords: [],
+            },
+            hotList: getHotList(this),
             activeTab: "0",
-            pageNumber: 0,
+            isLoading: false,
+            count: 0,
+            loadingmore: false,
+            styleObject: "",
         };
     },
     computed: {},
     methods: {
+        userlogin(name) {
+            this.userstate.username = name;
+            this.rec_visible = true;
+            this.updateNews();
+        },
         handleClick() {
-            this.newsArray = getNewsClassList(this.activeTab, this.pageNumber, 10);
+            if(this.rec_visible){
+                getNewsClassList(parseInt(this.activeTab), this.count, 5, this);
+            }
+            else{
+                getNewsClassList(parseInt(this.activeTab)+1, this.count, 5, this);
+            }
+        },
+        userLogout() {
+            this.$cookies.remove("username")
+            this.userstate.username = ""
+            this.rec_visible = false;
+            getNewsClassList(parseInt(this.activeTab)+1, this.count, 5, this);
+        },
+        loadmore() {
+            let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            if (scrollTop > 365) {
+                this.styleObject = {position: 'fixed', top: '45px', width: '28.3%'}
+            } else {
+                this.styleObject = ""
+            }
+            //变量windowHeight是可视区的高度
+            let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+            //变量scrollHeight是滚动条的总高度
+            let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+            let bottom = Math.round(scrollTop + windowHeight) >= scrollHeight;
+            console.log(bottom)
+            setTimeout(() => {
+                if (bottom && !this.loadingmore) {
+                    console.log("loadmore", this.count, bottom)
+                    this.count += 1
+                    this.updateNews();
+                }
+            }, 800);
+        },
+        backTop(e) {
+            console.log("backtop", e)
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
+        },
+        updateNews() {
+            if(this.rec_visible){
+                getNewsClassList(parseInt(this.activeTab), this.count, 5, this, true);
+            }
+            else{
+                getNewsClassList(parseInt(this.activeTab)+1, this.count, 5, this, true);
+            }
         }
     },
     created() {
-        this.newsArray = getNewsClassList(this.activeTab, 0, 10);
+        this.backTop();
+        this.updateNews();
+        window.addEventListener('beforeunload', e => this.backTop(e));
+    },
+    destroyed() {
+        window.removeEventListener('beforeunload', e => this.backTop(e));
     },
 };
 </script>
@@ -118,6 +255,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 
 <style scoped>
+html, body {
+  margin: 0px 0px 0px 0px;
+  width: 100%;
+  height: 100%;
+}
 h3 {
     margin: 40px 0 0;
 }
@@ -136,8 +278,19 @@ a {
     color: #42b983;
 }
 
+.el-header {
+    padding: 0 0;
+}
+
+.home-search {
+    position: relative;
+    margin-top: 1%;
+    margin-left: 19%;
+    width: 100%;
+}
+
 .home-icon {
-    margin-top: 20px;
+    margin-top: 17px;
     height: 100px;
     width: auto;
 }
@@ -149,4 +302,27 @@ a {
     margin-left: 10%;
     margin-right: 10%;
 }
+
+img {
+    position: relative;
+    max-width: 120%;
+    max-height: 120px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 18%;
+    margin-bottom: 18%;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    display: block;
+}
+
+.loadmore-img {
+    margin-top: 0%;
+    margin-bottom: 0%;
+}
+
 </style>

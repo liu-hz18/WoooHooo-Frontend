@@ -21,13 +21,13 @@
                             </div>
                         </dt>
                         <div class="history-tag">
-                            <el-tag v-for="search in historySearchList" :key="search.id" closable :type="search.type" @close="closeHandler(search)" @click="searchinput = search.name">{{ search.name }}</el-tag>
+                            <el-tag v-for="(search, index) in historySearchList" :key="index" closable :type="search.type" @close="closeHandler(search)" @click="searchinput = search.name">{{ search.name }}</el-tag>
                         </div>
                         <dt class="search-title">热门搜索</dt>
-                        <div class="hot-item">
-                            <dd v-for="(search, index) in hotSearchList" :key="index" @click="searchinput = search">
-                                {{ search }}
-                            </dd>
+                        <div class="hot-search">
+                            <el-tag v-for="(search, index) in hotSearchList" :key="index" @click="searchinput = search.title" size="medium" :type="search.type" :effect="search.effect">
+                                {{ search.title }}
+                            </el-tag>
                         </div>
                     </dl>
                     <dl v-if="isSearchList">
@@ -45,25 +45,34 @@
 <script>
 import RandomUtil from "../utils/RandomUtil";
 import Store from "../utils/store";
+import API from "../utils/API.js";
 import {
-    getNewsList
+    getHotSearchList
 } from "../datas/newslist.js";
 
 export default {
     name: "SearchBox",
     props: {
-        searchInputProp: String,
+        username: {
+            type: String,
+            default: () => "Searchbox username"
+        },
+        searchInputProp: {
+            type: String,
+            default: () => ""
+        },
     },
     data() {
         return {
             searchinput: this.searchInputProp, //搜索内容, 为了保证进入类别后输入框清空，请不要更改到data中。
             select: '',
             isFocus: false, //是否聚焦
-            hotSearchList: new Array(5).fill("热门搜索"), //热门搜索数据
+            hotSearchList: [], //热门搜索数据
             historySearchList: [], //历史搜索数据
             searchList: ["暂无数据"], //搜索返回数据,
             history: false,
             types: ["", "success", "info", "warning", "danger"], //搜索历史tag式样
+            effects: ["plain", "light", "dark"],
         }
     },
     computed: {
@@ -101,9 +110,24 @@ export default {
             if (this.searchinput.length === 0)
                 return;
             //随机生成搜索历史tag式样
-            console.log("input:", this.searchinput)
-            this.$emit('update-news', getNewsList(this.searchinput, 0, 10))
+            console.log("input:", this.searchinput);
+            //this.$emit('update-news', getNewsList(this.searchinput, 0, 10));
             this.$emit("text-change", this.searchinput);
+            //将用户的搜索内容发给后端
+            if (this.username != "") {
+                var request = new XMLHttpRequest()
+                //异步？
+                request.open(API.POST_USER_SEARCH.method, API.POST_USER_SEARCH.path, true)
+                /*request.onreadystatechange = function () {
+                                console.log("从后端收到：")
+                                console.log(request.readyState, request.status, request.responseText)
+                }*/
+                request.send(JSON.stringify({
+                    username: this.username,
+                    data: this.searchinput
+                }))
+                console.log("用户：" + this.username + " 搜索了关键词：" + this.searchinput)
+            }
             this.$router.push({
                 name: 'SearchResult',
                 query: {
@@ -111,6 +135,7 @@ export default {
                     issearch: true
                 }
             });
+            console.log("path changed")
             let n = RandomUtil.getRandomNumber(0, 5);
             let exist =
                 this.historySearchList.filter((value) => {
@@ -138,21 +163,17 @@ export default {
         removeAllHistory() {
             Store.removeAllHistory();
         },
-
     },
-    created() {},
+    created() {
+        console.log("searchbox create:", this.searchInputProp)
+        getHotSearchList(this);
+    },
     mounted() {},
-
+    watch: {}
 }
 </script>
 
 <style>
-.searchbox {
-    margin-top: 20px;
-    margin-left: 300px;
-    margin-right: 300px;
-}
-
 .search-title {
     color: #bdbaba;
     font-size: 15px;
@@ -172,20 +193,37 @@ export default {
 
 .history-tag {
     cursor: pointer;
-    margin-right: 10px;
-    margin-bottom: 5px;
 }
 
-.hot-item {
+.el-tag {
+    margin-right: 5px;
+    margin-bottom: 3px;
+    font-family: sans-serif;
+}
+
+.el-tag:hover {
+    color: #6680ff;
+    text-decoration: none;
+    transition: all .1s;
+    -moz-transition: all .1s;
+    -webkit-transition: all .1s;
+    -o-transition: all .1s;
+}
+
+.hot-search {
     cursor: pointer;
+    line-height: 1.6em;
+    font-size: 14px;
+    margin-bottom: -10px;
 }
 
-#search-box {
-    width: 555px;
-    height: auto;
-    padding-bottom: 10px;
-    z-index: 200;
+.search-box {
     position: relative;
+    width: 100%;
+    height: auto;
+    padding-bottom: 0%;
+    margin-left: 0%;
+    z-index: 200;
 }
 
 #search {

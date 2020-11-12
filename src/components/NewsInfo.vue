@@ -1,21 +1,25 @@
 <template>
 <div class="news-info">
-    <h4 class="news-heading">
-        <a v-bind:href="link" v-line-clamp:100="1" v-html="ruleTitle()"></a>
-    </h4>
-    <h6 class="news-content" v-line-clamp:20="3" v-html="ruleContent()"></h6>
-    <p class="news-source">
-        <em>by {{ source + " @ " + time }}</em>
+    <p class="news-heading">
+        <a v-bind:href="link" v-line-clamp:100="1" v-html="ruleTitle()" target="_blank" :class="{active:clicked === true}" @click="clickTitle"></a>
     </p>
+    <span class=news-time> {{time}} </span>
+    <p class="news-content" v-line-clamp:20="3" v-html="ruleContent()"></p>
+    <p class="news-source"> {{ " " + source }} </p>
 </div>
 </template>
 
 <script>
+import API from "../utils/API.js";
 export default {
     name: "NewsInfo",
     components: {},
     props: {
-        uid: Number,
+        username: {
+            type: String,
+            default: () => "Info username"
+        },
+        uid: String,
         title: String,
         imgurl: String,
         content: String,
@@ -25,14 +29,55 @@ export default {
         keywords: Array,
     },
     data() {
-        return {};
+        return {
+            clicked: false,
+        };
     },
     computed: {
 
     },
     methods: {
-        ruleTitle() {
+        clickTitle() {
+            this.clicked = true
+            if (this.username != "") {
+                //将用户行为发送给后端
+                var request = new XMLHttpRequest()
+                //异步？
+                request.open(API.POST_USER_CLICK.method, API.POST_USER_CLICK.path, true)
+                request.onreadystatechange = function () {
+                    console.log("从后端收到：")
+                    console.log(request.readyState, request.status, request.responseText)
+                }
+                request.send(JSON.stringify({
+                    username: this.username,
+                    newsinfo: {
+                        uid: this.uid,
+                        title: this.title,
+                        imgurl: this.imgurl,
+                        content: this.content,
+                        link: this.link,
+                        source: this.source,
+                        time: this.time,
+                        //keywords: this.keywords,
+                    }
 
+                }))
+                console.log("用户：" + this.username + " 点击了新闻：" + this.title)
+                console.log({
+                    uid: this.uid,
+                    title: this.title,
+                    imgurl: this.imgurl,
+                    content: this.content,
+                    link: this.link,
+                    source: this.source,
+                    time: this.time,
+                    //keywords: this.keywords,
+                })
+            } else {
+                console.log("用户未登录")
+            }
+        },
+        ruleTitle() {
             return this.highlightString(this.title, this.keywords);
         },
         ruleContent() {
@@ -43,16 +88,18 @@ export default {
             if (!titleString) {
                 return "";
             }
-            if (keywords && keywords.length > 0) {
-                // 匹配关键字正则
-                let replaceReg = new RegExp('(' + keywords.join('|') + ')', "gi");
-                // 开始替换
-                titleString = titleString.replace(
+            if (keywords && keywords.length > 0 && keywords[0] !== "") {
+                //console.log(keywords)
+                let replaceReg = new RegExp('(' + keywords.join('|') + ')', "gi"); // 匹配关键字正则
+                titleString = titleString.replace( // 开始替换
                     replaceReg,
                     '<span class="highlight-text" style="color:#F75F5F;">$1</span>'
                 );
             }
             return titleString;
+        },
+        openNews() {
+            window.open(this.link)
         },
     },
 };
@@ -71,7 +118,17 @@ ul {
 }
 
 a {
-    color: #42b983;
+    color: #5758BB;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #6680ff;
+    text-decoration: underline;
+    transition: all .1s;
+    -moz-transition: all .1s;
+    -webkit-transition: all .1s;
+    -o-transition: all .1s;
 }
 
 li {
@@ -81,20 +138,40 @@ li {
 .news-heading {
     position: relative;
     margin-top: 0%;
-    height: 5px;
+    height: 0px;
+    font-size: 1.1875rem;
+    font-family: "Arial, sans-serif, Courier New";
+    font-weight: 550;
 }
 
 .news-content {
     position: relative;
-    height: 10%;
-    font-size: 12px;
+    font-size: 87%;
+    line-height: 140%;
+    margin-block-start: 0.1em;
+    margin-block-end: 0.4em;
+    color: #1e272e;
+    font-family: "Arial, sans-serif, Courier New";
 }
 
 .news-source {
     position: relative;
-    margin-top: 5%;
-    height: 5%;
+    font-size: 20%;
+    color: #909399;
+}
+
+.news-time {
+    position: relative;
+    margin-top: 2px;
     font-size: 10%;
     color: #909399;
+}
+
+.news-info {
+    margin-block-end: 0.5em;
+}
+
+.active {
+    color: #771caa;
 }
 </style>

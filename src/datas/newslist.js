@@ -1,81 +1,210 @@
-
 import API from "../utils/API.js";
 import RandomUtil from "../utils/RandomUtil.js"
-import {urlParam}  from "@/utils/communication"
+import {urlParam}  from "../utils/communication.js"
 
-const newsClassMap = ["热点", "国内", "国际", "军事", "财经", "娱乐", "体育", "科技"];
+const newsClassMap = ["推荐", "热点", "国内", "国际", "军事", "财经", "娱乐", "体育", "科技", "游戏", "文化", "社会"];
 
-export function getNewsList(query, page, number) {
-    var request = new XMLHttpRequest()
-
-    var url = urlParam(API.CHECK_USER_INFO.path,"query",query);// 查询关键词，未分词
-    url = urlParam(url,"page",page);// 请求 第page页 的结果
-    url = urlParam(url,"number",number);// 每个page的新闻个数, 也就是后端本次需要返回的新闻个数
-/*
-    var url = API.GET_NEWS_LIST.path;
-    url += (url.indexOf('?') == -1 ) ? '?' : '&' ;
-    url += encodeURIComponent("query") + "=" + encodeURIComponent(query);// 查询关键词，未分词
-    url += (url.indexOf('?') == -1 ) ? '?' : '&' ;
-    url += encodeURIComponent("page") + "=" + encodeURIComponent(page);// 请求 第page页 的结果
-    url += (url.indexOf('?') == -1 ) ? '?' : '&' ;
-    url += encodeURIComponent("number") + "=" + encodeURIComponent(number);// 每个page的新闻个数, 也就是后端本次需要返回的新闻个数
-*/
-    request.open(API.GET_NEWS_LIST.method,url, false)
+export function getNewsList(query, page, number, that) {
+    //开始搜索则显示加载页面
+    that.isLoading = true
+    var request = new XMLHttpRequest();
+    console.log("getNewsList")
+    var params = {
+        page: page,
+        number: number,
+        query: query,
+        relation: that.relation,
+    }
+    var url = urlParam(API.GET_NEWS_LIST.path, params) // 查询关键词，未分词
+    request.open(API.GET_NEWS_LIST.method, url, true)
+    console.log(url)
     var newsList
-    var totalNumber = 100
-    var start = new Date().getMilliseconds()
+    var total = 100
+    var start = new Date().getTime()
     var keywords = [query]
     request.onreadystatechange = function () {
-        console.log(request.readyState, request.status, request.responseText)
+        console.log(request.readyState, request.status)
         if (request.readyState === 4 && request.status === 200) {
             try{
                 var jsonobj = JSON.parse(request.responseText);
                 newsList = jsonobj["data"];       //新闻列表，属性不变
-                totalNumber = jsonobj["total"];   //总结果条数
-                keywords = jsonobj["keywords"];   //关键词分词结果，list[str]
+                total = jsonobj["total"];   //总结果条数
+                keywords = jsonobj["keywords"];   //关键词分词结果, list[str]
+                var related = jsonobj["related"]; // 相关新闻
+                that.newsInfo = {
+                    data: newsList,
+                    total: total,
+                    time: ((new Date().getTime()) - start) / 1000,
+                    keywords: keywords,
+                }
+                that.totalpage = Math.floor(total / 10)
+                that.isLoading = false
+                if (page === 0) {
+                    that.relatedSearch = related;
+                    console.log("relate", related)
+                }
+                console.log(that.newsInfo)
             } catch ( error ) {
                 newsList = randomInitNews(query)
+                that.isLoading = false
             }
-        } else {
-            newsList = randomInitNews(query)
         }
     }
     request.send(null)
-    var ret = {
-        data: newsList,
-        total: totalNumber,
-        time: (new Date().getMilliseconds() - start) / 1000,
-        keywords: keywords,
-    }
-    console.log(ret)
-    return ret
 }
 
-export function getNewsClassList(newsclassnumber, page, number) {
+export function getNewsClassList(newsclassnumber, page, number, that, append=false) {
+    console.log("当前要显示的页面编号：" + newsclassnumber)
+    if(append){
+        that.loadingmore = true;
+    } else {
+        that.isLoading = true
+    }
+    console.log(newsclassnumber)
     var newsclass = newsClassMap[newsclassnumber];
     console.log(newsclass);
-    var request = new XMLHttpRequest()
-    request.open(API.GET_NEWS_LIST.method, API.GET_NEWS_LIST.path, false)
-    var newsList
+    if(newsclass=== "推荐") {
+        var rcmrequest = new XMLHttpRequest()
+        var params = {
+            username: that.userstate.username,
+            number: number,
+            page:page,
+        }
+        var url = urlParam(API.GET_RECOMMEND.path,params)
+        rcmrequest.open(API.GET_RECOMMEND.method,url,true)
+        rcmrequest.onreadystatechange = function () {
+            console.log("推荐页面返回")
+            console.log(rcmrequest.readyState, rcmrequest.status)
+            //console.log(rcmrequest.responseText)
+            setClassResponseList(append,rcmrequest,that)
+        }
+        rcmrequest.send(null)
+    } else {
+        var request = new XMLHttpRequest()
+        request.open(API.POST_NEWS_LIST.method, API.POST_NEWS_LIST.path, true)
+        request.onreadystatechange = function () {
+            console.log(request.readyState, request.status)
+            setClassResponseList(append,request,that)
+        }
+        request.send(JSON.stringify({
+            newstype: newsclass,   // 查询新闻类别, str
+            page: page,     // 请求 第page页 的结果, int
+            number: number, // 每个page的新闻个数, int
+        }))
+    }
+}
+
+export function getBrowseNewsList(username,that){
+    var inforequest = new XMLHttpRequest();
+    console.log("getuserinfo")
+    var infoparams = {
+        username: that.userstate.username,
+    }
+    var infourl = urlParam(API.GET_USERINFO.path, infoparams)
+    inforequest.open(API.GET_USERINFO.method,infourl,true)
+    console.log(infourl)
+    inforequest.onreadystatechange = function () {
+        console.log(inforequest.readyState, inforequest.status)
+        if (inforequest.readyState === 4 && inforequest.status === 200) {
+            try{
+                var jsonobj = JSON.parse(inforequest.responseText);
+                that.userinfo.mail = jsonobj["mail"]
+                console.log("后端返回的邮箱："+jsonobj["mail"])
+            }
+            catch(error){
+                that.userinfo.mail = "error"
+            }
+        }
+    }
+    inforequest.send(null)
+
+    var request = new XMLHttpRequest();
+    console.log("getBrowseNewsList")
+    var params = {
+        username: that.userstate.username,
+        number: 10,
+        page: 0,
+    }
+    var url = urlParam(API.GET_BROWSE.path, params) // 历史记录
+    request.open(API.GET_BROWSE.method, url, true)
+    console.log(url)
     request.onreadystatechange = function () {
-        console.log(request.readyState, request.status, request.responseText)
+        console.log(request.readyState, request.status)
+        var newsList
+        var total
         if (request.readyState === 4 && request.status === 200) {
             try{
                 var jsonobj = JSON.parse(request.responseText);
-                newsList = jsonobj["data"];
+                newsList = jsonobj["data"];       //新闻列表，属性不变
+                total = jsonobj["total"]
+                that.newsInfo = {
+                    data: newsList,
+                    total: total,
+                    time: 0,
+                    keywords: [],
+                }
+                console.log(that.newsInfo)
             } catch ( error ) {
-                newsList = randomInitNews(newsclass)
+                newsList = randomInitNews(that.userstate.username)
+                total = 0
+                that.newsInfo = {
+                    data: newsList,
+                    total: total,
+                    time: 0,
+                    keywords: [],
+                }
             }
-        } else {
-            newsList = randomInitNews(newsclass)
         }
     }
-    request.send(JSON.stringify({
-        newstype: newsclass,   // 查询新闻类别, str
-        page: page,     // 请求 第page页 的结果, int
-        number: number, // 每个page的新闻个数, int
-    }))
-    return newsList
+    request.send(null)
+}
+
+export function getHotList(that) {
+    console.log("fetch hot list");
+    that.isLoading = true;
+    var request = new XMLHttpRequest();
+    request.open(API.GET_HOT_LIST.method, API.GET_HOT_LIST.path, true)
+    request.onreadystatechange = function () {
+        console.log(request.readyState, request.status)
+        if (request.readyState === 4 && request.status === 200) {
+            try{
+                var jsonobj = JSON.parse(request.responseText);
+                that.hotList = jsonobj["data"];
+                that.isLoading = false;
+                console.log(that.hotList)
+            } catch ( error ) {
+                // do nothing
+                that.isLoading = false;
+            }
+        }
+    }
+    request.send(null)
+}
+
+
+export function getHotSearchList(that) {
+    console.log("fetch hot search list");
+    var request = new XMLHttpRequest();
+    request.open(API.GET_HOT_SEARCH_LIST.method, API.GET_HOT_SEARCH_LIST.path, true);
+    request.onreadystatechange = function () {
+        console.log(request.readyState, request.status)
+        if (request.readyState === 4 && request.status === 200) {
+            try{
+                var datalist = JSON.parse(request.responseText)["data"];
+                datalist.forEach((e, index) => {
+                    that.hotSearchList.push({
+                        title: e["title"],
+                        type: that.types[index % 5],
+                        effect: "light",
+                    });
+                })
+                console.log(that.hotSearchList)
+            } catch ( error ) { // do nothing
+                console.log("error:", error)
+            }
+        }
+    }
+    request.send(null)
 }
 
 function randomInitNews(query) {
@@ -94,3 +223,29 @@ function randomInitNews(query) {
     return newsList
 }
 
+function setClassResponseList(append, request, that){
+    if (request.readyState === 4 && request.status === 200) {
+        try{
+            var jsonobj = JSON.parse(request.responseText);
+            if (append === true) {
+                console.log("append", jsonobj["data"])
+                that.newsInfo.data = that.newsInfo.data.concat(jsonobj["data"])
+                that.newsInfo.total += jsonobj["total"];
+                that.loadingmore = false;
+            } else {
+                that.newsInfo = {
+                    data: jsonobj["data"],
+                    time: 0.0001,
+                    total: jsonobj["total"],
+                    keywords: [],
+                }
+            }
+            that.isLoading = false
+            that.totalpage = Math.floor(that.newsInfo.total / 10)
+        } catch ( error ) {
+            that.isLoading = false
+        }
+    }
+}
+
+export default newsClassMap
