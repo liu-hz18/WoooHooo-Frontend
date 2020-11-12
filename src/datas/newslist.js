@@ -2,7 +2,7 @@ import API from "../utils/API.js";
 import RandomUtil from "../utils/RandomUtil.js"
 import {urlParam}  from "../utils/communication.js"
 
-const newsClassMap = ["推荐","热点", "国内", "国际", "军事", "财经", "娱乐", "体育", "科技", "游戏", "文化", "社会"];
+const newsClassMap = ["推荐", "热点", "国内", "国际", "军事", "财经", "娱乐", "体育", "科技", "游戏", "文化", "社会"];
 
 export function getNewsList(query, page, number, that) {
     //开始搜索则显示加载页面
@@ -61,7 +61,7 @@ export function getNewsClassList(newsclassnumber, page, number, that, append=fal
         that.isLoading = true
     }
     console.log(newsclassnumber)
-    var newsclass = newsClassMap[newsclassnumber+1];
+    var newsclass = newsClassMap[newsclassnumber];
     console.log(newsclass);
     if(newsclass=== "推荐") {
         var rcmrequest = new XMLHttpRequest()
@@ -79,8 +79,7 @@ export function getNewsClassList(newsclassnumber, page, number, that, append=fal
             setClassResponseList(append,rcmrequest,that)
         }
         rcmrequest.send(null)
-    }
-    else{
+    } else {
         var request = new XMLHttpRequest()
         request.open(API.POST_NEWS_LIST.method, API.POST_NEWS_LIST.path, true)
         request.onreadystatechange = function () {
@@ -224,11 +223,11 @@ function randomInitNews(query) {
     return newsList
 }
 
-function setClassResponseList(append,request,that){
+function setClassResponseList(append, request, that){
     if (request.readyState === 4 && request.status === 200) {
         try{
             var jsonobj = JSON.parse(request.responseText);
-            if (append===true) {
+            if (append === true) {
                 console.log("append", jsonobj["data"])
                 that.newsInfo.data = that.newsInfo.data.concat(jsonobj["data"])
                 that.newsInfo.total += jsonobj["total"];

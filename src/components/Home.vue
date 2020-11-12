@@ -191,7 +191,7 @@ export default {
         userlogin(name) {
             this.userstate.username = name;
             this.rec_visible = true;
-            this.updateNews()
+            this.updateNews();
         },
         handleClick() {
             if(this.rec_visible){
