@@ -45,7 +45,7 @@
             <el-menu-item index="3-3"><a href="http://www.people.com.cn/" rel="noopener noreferrer" target="_blank">人民网</a></el-menu-item>
         </el-submenu>
         <el-menu-item index="4" v-if="isSearch==='false'">
-            <el-tag>{{newsType}}</el-tag>
+            <el-tag>{{newstype}}</el-tag>
         </el-menu-item>
         <el-row style="margin-top: 10px; margin-bottom: 10px; display: flex; justify-content: flex-end; ">
             <div class="date-info__left">{{time}}</div>
@@ -117,6 +117,7 @@ export default {
         return {
             activeIndex: this.activeIndexProp,
             subitem: 0,
+            newstype: "热点",
             loginDialog: {
                 visible: false,
             },
@@ -127,12 +128,6 @@ export default {
         };
     },
     computed: {
-        newsType() {
-            if (this.subitem == 1) {
-                return "时政";
-            }
-            return newsClassMap[this.subitem];
-        },
         loginBtnText() {
             console.log("compute", this.username)
             return (this.username === "") ? "登录" : this.username;
@@ -152,6 +147,7 @@ export default {
             }
         },
         handleSelect(key, keyPath) {
+            console.log("handleSelect", key, keyPath)
             if (keyPath[0] === "2") {
                 this.activeIndex = "2"
                 this.subitem = String(keyPath[1].split('-')[1]);
@@ -160,10 +156,15 @@ export default {
                 this.$router.push({
                     name: 'SearchResult',
                     query: {
-                        query: this.subitem,
+                        query: parseInt(this.subitem)+1,
                         issearch: false
                     }
                 });
+                console.log(this.subitem)
+                this.newstype = newsClassMap[parseInt(this.subitem)+1];
+                if (this.newstype === "国内") {
+                    this.newstype = "时政";
+                }
             } else if (keyPath[0] === "0") {
                 this.activeIndex = "0"
                 this.$router.push({
@@ -231,6 +232,10 @@ export default {
         console.log("dsadas", momentNow.format('e'));
         this.day = dayNameMapping[momentNow.format('e')];
         this.updateTime();
+        this.newstype = newsClassMap[parseInt(this.subitem)];
+        if (this.newstype === "国内") {
+            this.newstype = "时政";
+        }
     },
     watch: {},
     mounted() {
